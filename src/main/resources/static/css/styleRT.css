@@ -1,0 +1,113 @@
+/* Estilos para el formulario de registro de nuevo miembro en dashboard*/
+.login-card {
+    background: var(--light);
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.login-card h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--dark);
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.login-card .form-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark);
+    margin-bottom: 8px;
+}
+
+.login-card .form-control {
+    width: 100%;
+    padding: 10px 16px;
+    border: 1px solid var(--grey);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--dark);
+    background: var(--light);
+    transition: border-color 0.3s ease;
+}
+
+.login-card .form-control:focus {
+    border-color: var(--blue);
+    outline: none;
+}
+
+.login-card .btn-primary {
+    background: var(--blue);
+    color: var(--light);
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.login-card .btn-primary:hover {
+    background: #2a7bd6; /* Un tono más oscuro de --blue */
+}
+
+.login-card .create-account {
+    text-align: center;
+    margin-top: 16px;
+}
+
+.login-card .create-account a {
+    color: var(--blue);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.login-card .create-account a:hover {
+    color: var(--dark-blue);
+}
+
+
+/* Estilos para el modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+}
+
+.modal-content {
+    background: var(--light);
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    color: var(--dark);
+}
+
+.close {
+    color: var(--dark);
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: var(--red);
+}

@@ -1,0 +1,309 @@
+ /* Variables globales */
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0056b3;
+            --accent-color: #007bff;
+            --text-color: #333;
+            --light-text: #fff;
+            --border-color: #dee2e6;
+            --background-light: #f8f9fa;
+            --background-dark: #003366;
+            --shadow: 0 2px 5px rgba(0,0,0,0.15);
+            --success: #28a745;
+            --pending: #ffc107;
+            --rejected: #dc3545;
+        }
+        
+        /* Reseteo y estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Navbar Estilos */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            padding: 0.5rem 2rem;
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .logo-container {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .logo-nexgen {
+                    font-family: 'Arial Black', sans-serif;
+                    font-size: 17px;
+                    color:#002e5b;
+                    letter-spacing: 1px;
+                    text-transform: uppercase;
+                    position: relative;
+                    transition: color 0.3s;
+                }
+
+                .logo-motors {
+                    font-family: 'Arial', sans-serif;
+                    font-weight: bold;
+                    font-size: 17px;
+                    color: #e53238;
+                    margin-left: 5px;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    transition: color 0.3s;
+                }
+
+                nav.scrolled .logo-nexgen {
+                    color: #002e5b;
+                }
+
+                nav.scrolled .logo-motors {
+                    color: #e53238;
+                }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        /* Sidebar Estilos */
+        #sidebar {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 260px;
+            height: calc(100vh - 70px);
+            background-color: var(--background-dark);
+            color: var(--light-text);
+            z-index: 100;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+            padding-top: 1.5rem;
+        }
+        
+        #sidebar .brand {
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1rem;
+        }
+        
+        #sidebar .side-menu {
+            list-style: none;
+            padding: 0;
+        }
+        
+        #sidebar .side-menu li {
+            padding: 0.5rem 0;
+        }
+        
+        #sidebar .side-menu li a {
+            display: flex;
+            align-items: center;
+            padding: 0.7rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+        
+        #sidebar .side-menu li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        #sidebar .side-menu li a i {
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        #sidebar .side-menu li a.logout {
+            color: #ff6b6b;
+        }
+        
+        /* Main content */
+        main {
+            margin-top: 70px;
+            margin-left: 260px;
+            padding: 2rem;
+            min-height: calc(100vh - 70px);
+        }
+        
+        /* Secciones */
+        section {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* Encabezados */
+        h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        /* Tabla de citas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table th, table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        table th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+        
+        .notas-cell {
+            max-width: 250px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        /* Estados de citas */
+        .estado-pendiente {
+            background-color: var(--pending);
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .estado-aprobada {
+            background-color: var(--success);
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .estado-rechazada {
+            background-color: var(--rejected);
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        /* Botones */
+        .btn-nueva-cita {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: #fff;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            margin-top: 1rem;
+        }
+        
+        .btn-nueva-cita:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.5rem 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            #sidebar {
+                width: 240px;
+            }
+            
+            main {
+                margin-left: 240px;
+                padding: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .navbar {
+                flex-direction: column;
+                height: auto;
+                padding: 0.5rem;
+            }
+            
+            .nav-links {
+                width: 100%;
+                justify-content: space-around;
+                margin-top: 0.5rem;
+                font-size: 0.8rem;
+            }
+            
+            #sidebar {
+                width: 0;
+                opacity: 0;
+            }
+            
+            main {
+                margin-left: 0;
+                margin-top: 100px;
+                padding: 1rem;
+            }
+            
+            #sidebar.active {
+                width: 240px;
+                opacity: 1;
+            }
+        }

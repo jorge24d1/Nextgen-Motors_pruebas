@@ -1,0 +1,321 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+            color: #333;
+            padding-top: 80px;
+            background-color: #f9f9f9;
+        }
+
+        /* Barra de navegación */
+        #mainNav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .nav-logo img {
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #002e5b;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: #e53238;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+            .nav-logo img {
+                height: 30px;
+            }
+            .nav-links {
+                gap: 15px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Hero section */
+        .hero {
+            background: linear-gradient(rgba(0, 46, 91, 0.8), rgba(0, 46, 91, 0.8)), url('https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1400&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 350px;
+            display: flex;
+            align-items: center;
+            padding: 0 50px;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+        }
+
+        /* Contenido principal */
+        .main-content {
+            padding: 60px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #002e5b;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #666;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Sección de ubicaciones */
+        .locations-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .location-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: white;
+        }
+
+        .location-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .location-map {
+            height: 200px;
+            background-color: #f5f5f5;
+            position: relative;
+        }
+
+        .location-map iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .location-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #e53238;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .location-info {
+            padding: 20px;
+        }
+
+        .location-name {
+            font-size: 1.3rem;
+            color: #002e5b;
+            margin-bottom: 10px;
+        }
+
+        .location-address {
+            margin-bottom: 15px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .location-hours {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .location-hours strong {
+            color: #333;
+        }
+
+        .location-contact {
+            margin-bottom: 15px;
+        }
+
+        .location-button {
+            display: inline-block;
+            background: #002e5b;
+            color: white;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .location-button:hover {
+            background: #e53238;
+        }
+
+        /* Footer */
+        footer {
+            background: #111;
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #e53238;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+            list-style: none;
+        }
+
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: white;
+            background: #333;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #e53238;
+        }
+
+        .copyright {
+            margin-top: 30px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+        .logo-container {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .logo-nexgen {
+                    font-family: 'Arial Black', sans-serif;
+                    font-size: 17px;
+                    color: #002e5b;
+                    letter-spacing: 1px;
+                    text-transform: uppercase;
+                    position: relative;
+                    transition: color 0.3s;
+                }
+
+                .logo-motors {
+                    font-family: 'Arial', sans-serif;
+                    font-weight: bold;
+                    font-size: 17px;
+                    color: #e53238;
+                    margin-left: 5px;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    transition: color 0.3s;
+                }
+
+                nav.scrolled .logo-nexgen {
+                    color:white;
+                }
+
+                nav.scrolled .logo-motors {
+                    color: white;
+                }

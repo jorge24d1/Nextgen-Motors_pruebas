@@ -1,0 +1,330 @@
+
+/* estilo de las citas en el dashboard admin */
+body {
+    display: flex;
+    min-height: 100vh;
+}
+
+#mensaje {
+    flex: 1;
+    position: relative; /* Para que los modales se posicionen dentro */
+    padding: 2rem;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+}
+
+/* modal dentro de #mensaje */
+#mensaje .modal-cita {
+    position: absolute; /* Se posiciona dentro de #mensaje */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+/* modal del contenido */
+#mensaje .modal-contenido {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+/* el boton del cierre */
+#mensaje .cerrar-modal {
+    position: absolute;
+    top: 0.8rem;
+    right: 1rem;
+    font-size: 1.8rem;
+    color: #333;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+#mensaje .head-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+#mensaje .head-title h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+    color: #333;
+}
+
+#mensaje .filtro-estado {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+}
+
+/* == la tabla de citas*/
+.tabla-citas {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.tabla-citas thead {
+    background-color: #f5f5f5;
+}
+
+.tabla-citas th,
+.tabla-citas td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95rem;
+}
+
+.tabla-citas tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* == estado badges */
+.estado-badge {
+    padding: 0.3rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: white;
+    display: inline-block;
+}
+
+tr.Pendiente .estado-badge {
+    background-color: #f0ad4e;
+}
+
+tr.Aprobada .estado-badge {
+    background-color: #5cb85c;
+}
+
+tr.Rechazada .estado-badge {
+    background-color: #d9534f;
+}
+
+/* botones de accion */
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    /* flex-direction: column; */
+    gap: 10rem;
+    justify-content: center;
+}
+
+.btn-accion {
+    padding: 0.4rem 0.7rem;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    
+}
+
+.btn-aprobar {
+    background-color: #28a745;
+}
+
+.btn-rechazar {
+    background-color: #dc3545;
+}
+
+.btn-asignar {
+    background-color: #007bff;
+}
+
+.btn-volver {
+    background-color: #6c757d;
+}
+
+.btn-notas {
+    background-color: #17a2b8;
+}
+
+.btn-accion:hover {
+    opacity: 0.9;
+}
+
+/* para que sea responsive la tabla de citas*/
+@media (max-width: 768px) {
+    .tabla-citas thead {
+        display: none;
+    }
+
+    .tabla-citas, 
+    .tabla-citas tbody, 
+    .tabla-citas tr, 
+    .tabla-citas td {
+        display: block;
+        width: 100%;
+    }
+
+    .tabla-citas tr {
+        margin-bottom: 1rem;
+        border-bottom: 2px solid #eee;
+    }
+
+    .tabla-citas td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .tabla-citas td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 1rem;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+        color: #777;
+    }
+
+    .acciones {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .btn-accion {
+        min-width: 100px;
+    }
+}
+
+/* esto es para los modales de fecha y notas en cita, veamos si funciona*/
+/* Modal overlay centrado */
+.modal-cita {
+    display: none; /* Se mostrará con JS */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Contenido del modal */
+.modal-contenido {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: slideUp 0.3s ease;
+}
+
+/* Animación para subir contenido */
+@keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Título */
+.modal-contenido h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    color: #333;
+}
+
+/* Botón cerrar (X) */
+.cerrar-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.cerrar-modal:hover {
+    color: #e63946;
+}
+
+/* Inputs y textarea */
+.modal-contenido input[type="datetime-local"],
+.modal-contenido textarea {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s;
+}
+
+.modal-contenido input:focus,
+.modal-contenido textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Botón confirmar/guardar */
+.btn-confirmar {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-confirmar:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 480px) {
+    .modal-contenido {
+        padding: 1.5rem;
+    }
+
+    .modal-contenido h3 {
+        font-size: 1.2rem;
+    }
+
+    .btn-confirmar {
+        font-size: 0.95rem;
+    }
+}

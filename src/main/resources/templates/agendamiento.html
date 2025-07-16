@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agendamiento Online - Concesionario NexGen Motors</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link th:href="@{/css/agendamiento.css}" rel="stylesheet">
+  <link th:href="@{/css/stilechatbot.css}" rel="stylesheet">
+</head>
+<body>
+<!-- Barra de navegación -->
+<nav id="mainNav">
+  <div class="nav-logo">
+    <span class="logo-nexgen">NexGen</span>
+    <span class="logo-motors">Motors</span>
+
+  </div>
+  <div class="nav-links">
+    <a th:href="@{/usuario/Inicio}">Inicio</a>
+    <a href="/vehiculos">Vehículos</a>
+    <a th:href="@{/usuario/agendamiento}">Agendamiento online</a>
+    <!-- <a href="/login">Iniciar sesión</a> -->
+    <!-- <a href="/usuario/cita">Cita</a> -->
+    <a href="/usuario/perfil"> perfil</a>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <h1 class="hero-title">Agendamiento Online</h1>
+  <p class="hero-subtitle">Programa tu servicio con facilidad y comodidad</p>
+</section>
+
+<!-- Contenido principal -->
+<main class="main-content">
+  <h2 class="section-title">Proceso en 3 Pasos</h2>
+
+  <div class="steps-container">
+    <div class="step-card">
+      <div class="step-number">1</div>
+      <h3 class="step-title">Crea tu cuenta</h3>
+      <p class="step-content">Comienza tu registro para acceder a ofertas exclusivas.</p>
+      <a href="#" class="step-action">Iniciar sesión</a>
+    </div>
+
+    <div class="step-card">
+      <div class="step-number">2</div>
+      <h3 class="step-title">Diligencia tus datos</h3>
+      <p class="step-content">Acepta términos, condiciones y política de privacidad.</p>
+    </div>
+
+    <div class="step-card">
+      <div class="step-number">3</div>
+      <h3 class="step-title">Confirma tu cita</h3>
+      <p class="step-content">Selecciona fecha, hora y tipo de servicio.</p>
+      <p class="success-message">¡Listo para tu servicio!</p>
+    </div>
+  </div>
+
+  <!-- Sección de agendamiento -->
+  <div class="scheduling-section">
+    <div class="scheduling-image">
+      <img src="f1.jpg" alt="Servicio NexGen Motors">
+    </div>
+
+    <div class="scheduling-content">
+      <h2 class="scheduling-title">Tú eliges <span class="scheduling-highlight">el momento perfecto</span> para el cuidado de tu Vehiculo</h2>
+      <p class="scheduling-text">Nuestro sistema de <strong>Agendamiento Online</strong> te permite programar el mantenimiento de tu vehículo de manera rápida y sencilla, adaptándose a tu horario.</p>
+
+      <p class="scheduling-text">Beneficios exclusivos:</p>
+
+      <ul class="benefits-list">
+        <li>Reserva en cualquier momento, las 24 horas</li>
+        <li>Selección de asesor especializado</li>
+        <li>Confirmación inmediata</li>
+        <li>Recordatorio automático</li>
+        <li>Transparencia en costos</li>
+      </ul>
+
+      <a th:href="@{/usuario/cita}" class="btn btn-secondary">Agendar Servicio Ahora</a>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-column">
+      <h3>Vehículos</h3>
+      <ul>
+        <li><a href="/vehiculos">Nuevos modelos</a></li>
+        <li><a href="/vehiculos">Promociones</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h3>Servicios</h3>
+      <ul>
+        <li><a th:href="@{/usuario/Inicio#services}">Agendar servicio</a></li>
+        <li><a href="/garantias">Garantías</a></li>
+
+
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h3>Concesionario</h3>
+      <ul>
+        <li><a href="/nosotros">Sobre nosotros</a></li>
+        <li><a href="/ubicaciones">Ubicaciones</a></li>
+        <li><a href="#contact">Contáctanos</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h3>Legal</h3>
+      <ul>
+        <li><a href="/terminos">Términos y condiciones</a></li>
+        <li><a href="/cookies">Cookies y Aviso legal</a></li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="copyright">
+    <p>&copy; 2023 Concesionario. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<!-- Botón de WhatsApp -->
+
+<div th:replace="~{fragments/chatbot :: chatbot}"></div>
+
+
+<script th:src="@{/js/chatbot.js}"></script>
+<script th:src="@{/js/agendamiento.js}"></script>
+</body>
+</html>

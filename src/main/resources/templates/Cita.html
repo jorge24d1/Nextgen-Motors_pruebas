@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Cita - Concesionario Oficial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link th:href="@{/css/Cita.css}" rel="stylesheet">
+    <link th:href="@{/css/stilechatbot.css}" rel="stylesheet">
+</head>
+<body>
+<!-- Barra de navegación -->
+<nav id="mainNav">
+    <div class="nav-logo logo-container">
+        <span class="logo-nexgen">NexGen</span>
+        <span class="logo-motors">Motors</span>
+    </div>
+    <div class="nav-links">
+        <a href="/vehiculos">Vehículos</a>
+        <a th:href="@{/usuario/agendamiento}">Agendamiento online</a>
+        <!-- <a href="/login">Iniciar sesión</a> -->
+        <a href="/usuario/cita">Cita</a>
+        <a href="/usuario/perfil"> perfil</a>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<div class="hero">
+    <div class="hero-content">
+        <h1>Agenda tu cita con nosotros</h1>
+        <p>Nuestros expertos están listos para atenderte y brindarte la mejor experiencia Nexgen Motors</p>
+    </div>
+</div>
+
+<!-- Form Container -->
+<div class="form-container">
+    <div class="form-header">
+        <h2 class="section-title">Formulario de Cita</h2>
+        <p class="section-subtitle">Completa los siguientes datos para agendar tu cita</p>
+    </div>
+
+    <form class="appointment-form" action="#" th:action="@{/usuario/cita/guardar}" th:object="${cita}" method="post">
+        <div class="categoria-container">
+            <div class="categoria-item" onclick="seleccionarCategoria('Interés en Vehículo', this)" th:classappend="${cita.tipo == 'Interés en Vehículo'} ? 'selected' : ''">
+                <i class="fas fa-car"></i>
+                <p>Interés en Vehículo</p>
+            </div>
+            <div class="categoria-item" onclick="seleccionarCategoria('Información Taller', this)" th:classappend="${cita.tipo == 'Información Taller'} ? 'selected' : ''">
+                <i class="fas fa-tools"></i>
+                <p>Información Taller</p>
+            </div>
+            <div class="categoria-item" onclick="seleccionarCategoria('Mantenimiento', this)" th:classappend="${cita.tipo == 'Mantenimiento'} ? 'selected' : ''">
+                <i class="fas fa-wrench"></i>
+                <p>Mantenimiento</p>
+            </div>
+            <div class="categoria-item" onclick="seleccionarCategoria('Garantías', this)" th:classappend="${cita.tipo == 'Garantías'} ? 'selected' : ''">
+                <i class="fas fa-shield-alt"></i>
+                <p>Garantías</p>
+            </div>
+            <div class="categoria-item" onclick="seleccionarCategoria('Otros', this)" th:classappend="${cita.tipo == 'Otros'} ? 'selected' : ''">
+                <i class="fas fa-ellipsis-h"></i>
+                <p>Otros</p>
+            </div>
+        </div>
+        <input type="hidden" id="tipo" th:field="*{tipo}" required>
+
+        <!-- <div id="vehiculoContainer" th:style="${cita.tipo == 'Interés en Vehículo'} ? 'display: block;' : 'display: none;'"> -->
+        <div id="vehiculoContainer">
+
+            <div class="form-group">
+                <label for="vehiculo">Selecciona un vehículo:</label>
+                <select id="vehiculo" class="select2" th:field="*{vehiculoId}" onchange="actualizarNombreVehiculo()">
+                    <option value="">-- Selecciona un vehículo --</option>
+                    <option th:each="vehiculo : ${vehiculos}"
+                            th:value="${vehiculo.id}"
+                            th:data-nombre="${vehiculo.marca + ' ' + vehiculo.modelo}"
+                            th:data-colores="${vehiculo.colores != null ? #strings.listJoin(vehiculo.colores, ',') : ''}"
+                            th:selected="${cita.vehiculoId == vehiculo.id}"
+                            th:text="${vehiculo.marca + ' ' + vehiculo.modelo + ' (' + vehiculo.año + ')'}">
+                    </option>
+                </select>
+                <input type="hidden" id="nombreVehiculo" th:field="*{nombreVehiculo}">
+            </div>
+            <!-- <div class="form-group">
+                <label for="vehiculo">Selecciona un vehículo:</label>
+                <select id="vehiculo" class="select2"  th:field="*{vehiculoId}" onchange="actualizarNombreVehiculo()">
+                    <option value="">-- Selecciona un vehículo --</option>
+                    <option th:each="vehiculo : ${vehiculos}"
+                            th:value="${vehiculo.id}"
+                            th:data-nombre="${vehiculo.marca + ' ' + vehiculo.modelo}"
+                            th:data-colores="${vehiculo.colores != null ? #strings.listJoin(vehiculo.colores, ',') : ''}"
+                            th:selected="${cita.vehiculoId == vehiculo.id}"
+                            th:text="${vehiculo.marca + ' ' + vehiculo.modelo + ' (' + vehiculo.año + ')'}">
+                    </option>
+                </select>
+                <input type="hidden" id="nombreVehiculo" th:field="*{nombreVehiculo}">
+            </div> -->
+
+            <!-- AÑADE ESTE NUEVO BLOQUE PARA LOS COLORES -->
+            <!-- <div class="form-group" id="colorContainer" th:style="${cita.tipo == 'Interés en Vehículo' and cita.vehiculoId != null} ? 'display: block;' : 'display: none;'"></div> -->
+            <div class="form-group" id="colorContainer" style="display: block;">
+                <label for="colorVehiculo">Color del vehículo:</label>
+                <select id="colorVehiculo" th:field="*{colorVehiculo}">
+                    <option value="">-- Selecciona un color --</option>
+                    <option th:each="color : ${coloresVehiculo ?: #strings.listSplit('Rojo,Azul,Blanco,Negro,Gris', ',')}"
+                            th:value="${color}"
+                            th:selected="${cita.colorVehiculo == color}"
+                            th:text="${color}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <!-- <div id="modeloContainer" th:style="${cita.tipo == 'Interés en Vehículo'} ? 'display: none;' : 'display: block;'">
+            <div class="form-group">
+                <label for="modelo">Modelo:</label>
+                <input type="text" id="modelo" th:field="*{modelo}">
+            </div>
+        </div> -->
+
+        <div class="form-group">
+            <label for="nombres">Nombres:</label>
+            <input type="text" id="nombres"
+                   th:value="${cita?.usuario?.nombres}"
+                   th:field="*{nombres}"readonly
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="apellidos">Apellidos:</label>
+            <input type="text" id="apellidos" th:field="*{apellidos}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="cedula">Cédula:</label>
+            <input type="text" id="cedula" th:field="*{cedula}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="correoElectronico">Correo electrónico:</label>
+            <input type="email" id="correoElectronico" th:field="*{correoElectronico}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="telefono">Teléfono:</label>
+            <input type="text" id="telefono" th:field="*{telefono}" required>
+        </div>
+        <div class="form-group">
+            <label for="trabajador">Seleccione un trabajador:</label>
+            <select id="trabajador" class="select2" th:field="*{trabajadorId}">
+                <option value="">-- Seleccione un trabajador --</option>
+                <option th:each="trabajador : ${trabajadores}"
+                        th:value="${trabajador.id}"
+                        th:data-dias="${trabajador.diasTrabajo}"
+                        th:data-horainicio="${trabajador.horaInicioTrabajo}"
+                        th:data-horafin="${trabajador.horaFinTrabajo}"
+                        th:text="${trabajador.nombre + ' ' + trabajador.apellido}">
+                </option>
+            </select>
+        </div>
+
+        <!-- Campos para mostrar el horario -->
+        <div id="horarioContainer" style="display: none;">
+            <label>Horario disponible:</label>
+            <div class="horario-info">
+                <p><strong>Días:</strong> <span id="diasTrabajo"></span></p>
+                <p><strong>Horario:</strong> <span id="horarioTrabajo"></span></p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="fechaCita">Fecha de la cita:</label>
+            <input type="date" id="fechaCita" th:field="*{fechaCita}" required>
+            <div id="fecha-error" style="display: none; color: red; margin-top: 5px;"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="horaCita">Hora de la cita:</label>
+            <input type="time" id="horaCita" th:field="*{horaCita}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="sede">Sede:</label>
+            <select id="sede" th:field="*{sede}" required>
+                <option value="">-- Selecciona una sede --</option>
+                <option value="NexGen Motors Bocagrande">NexGen Motors Bocagrande</option>
+                <option value="NexGen Motors La Boquilla">NexGen Motors La Boquilla</option>
+                <option value="NexGen Motors El Laguito">NexGen Motors El Laguito</option>
+                <option value="NexGen Motors Manga">NexGen Motors Manga</option>
+            </select>
+        </div>
+
+        <!-- Campo de comentario (solo visible si no es "Interés en Vehículo") -->
+        <!-- <div id="comentarioContainer" th:style="${cita.tipo == 'Interés en Vehículo'} ? 'display: none;' : 'display: block;'"></div> -->
+        <div id="comentarioContainer" th:style="${cita.tipo == 'Otros'} ? 'display: block;' : 'display: none;'">
+            <div class="form-group">
+                <label for="comentario">Comentario:</label>
+                <textarea id="comentario" th:field="*{comentario}"></textarea>
+            </div>
+        </div>
+
+        <!-- <input type="hidden" name="cedula" th:value="${cita.cedula}"> -->
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Enviar solicitud</button>
+            <a href="/" class="btn btn-secondary">Regresar</a>
+        </div>
+    </form>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Vehículos</h3>
+            <ul>
+                <li><a href="/vehiculos">Nuevos modelos</a></li>
+                <li><a href="/vehiculos">Promociones</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Servicios</h3>
+            <ul>
+                <li><a th:href="@{/usuario/Inicio#services}">Agendar servicio</a></li>
+                <li><a href="/garantias">Garantías</a></li>
+
+
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Concesionario</h3>
+            <ul>
+                <li><a href="/nosotros">Sobre nosotros</a></li>
+                <li><a href="/ubicaciones">Ubicaciones</a></li>
+                <li><a href="#contact">Contáctanos</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Legal</h3>
+            <ul>
+                <li><a href="/terminos">Términos y condiciones</a></li>
+                <li><a href="/cookies">Cookies y Aviso legal</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="copyright">
+        <p>&copy; 2023 Concesionario. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<!-- Snackbar -->
+<div id="snackbar">Some text some message..</div>
+
+<!-- Botón de WhatsApp -->
+<div th:replace="~{fragments/chatbot :: chatbot}"></div>
+<script th:src="@{/js/chatbot.js}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar Select2
+    $('.select2').select2();
+
+    // Configurar evento para el select de trabajador
+    document.getElementById('trabajador').addEventListener('change', function() {
+        const trabajadorSelect = document.getElementById('trabajador');
+        const selectedOption = trabajadorSelect.options[trabajadorSelect.selectedIndex];
+
+        if (selectedOption.value) {
+            const dias = selectedOption.getAttribute('data-dias');
+            const horaInicio = selectedOption.getAttribute('data-horainicio');
+            const horaFin = selectedOption.getAttribute('data-horafin');
+
+            // Mostrar información del horario
+            document.getElementById('diasTrabajo').textContent = dias.replace(/[\[\]']+/g, '').replace(/,/g, ', ');
+            document.getElementById('horarioTrabajo').textContent = `${horaInicio} - ${horaFin}`;
+            document.getElementById('horarioContainer').style.display = 'block';
+
+            // Limpiar fecha al cambiar trabajador
+            document.getElementById('fechaCita').value = '';
+            document.getElementById('fecha-error').style.display = 'none';
+        } else {
+            document.getElementById('horarioContainer').style.display = 'none';
+        }
+    });
+
+    // Validar fecha al cambiar
+    document.getElementById('fechaCita').addEventListener('change', async function() {
+        const trabajadorId = document.getElementById('trabajador').value;
+        const fecha = this.value;
+        const errorDiv = document.getElementById('fecha-error');
+
+        if (!trabajadorId || !fecha) {
+            errorDiv.style.display = 'none';
+            return;
+        }
+
+        try {
+            const response = await fetch(`/usuario/check-dia-trabajador?trabajadorId=${trabajadorId}&fecha=${fecha}`);
+            const data = await response.json();
+
+            if (!data.valido) {
+                errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${data.mensaje}<br>
+                                    <small>Días laborales: ${data.diasLaborales.join(', ')}</small>`;
+                errorDiv.style.display = 'block';
+                this.value = '';
+            } else {
+                errorDiv.style.display = 'none';
+            }
+        } catch (error) {
+            console.error("Error al validar fecha:", error);
+        }
+    });
+
+    // Validar antes de enviar el formulario
+    document.querySelector('.appointment-form').addEventListener('submit', function(e) {
+        const trabajadorId = document.getElementById('trabajador').value;
+        const fecha = document.getElementById('fechaCita').value;
+        const errorDiv = document.getElementById('fecha-error');
+
+        if (!trabajadorId || !fecha) {
+            e.preventDefault();
+            errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Complete todos los campos`;
+            errorDiv.style.display = 'block';
+            errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    });
+});
+</script>
+<script>
+    function cargarHorarioTrabajador() {
+    const trabajadorSelect = document.getElementById('trabajador');
+    const horarioContainer = document.getElementById('horarioContainer');
+    const diasTrabajoSpan = document.getElementById('diasTrabajo');
+    const horarioTrabajoSpan = document.getElementById('horarioTrabajo');
+    const selectedOption = trabajadorSelect.options[trabajadorSelect.selectedIndex];
+
+    if (selectedOption.value) {
+        const dias = selectedOption.getAttribute('data-dias');
+        const horaInicio = selectedOption.getAttribute('data-horainicio');
+        const horaFin = selectedOption.getAttribute('data-horafin');
+
+        // Mostrar información del horario
+        const diasFormateados = dias.replace(/[\[\]']+/g, '').replace(/,/g, ', ');
+        diasTrabajoSpan.textContent = diasFormateados;
+        horarioTrabajoSpan.textContent = `${horaInicio} - ${horaFin}`;
+        horarioContainer.style.display = 'block';
+
+        // Configurar validación de fecha
+        configurarValidacionFecha(dias);
+
+        // Forzar cierre del dropdown de Select2
+        setTimeout(() => {
+            $('#trabajador').select2('close');
+        }, 0);
+    } else {
+        horarioContainer.style.display = 'none';
+    }
+}
+
+function configurarValidacionFecha(diasDisponibles) {
+    const fechaInput = document.getElementById('fechaCita');
+    const form = document.querySelector('.appointment-form');
+
+    // Convertir el string de días a array
+    const diasArray = JSON.parse(diasDisponibles.replace(/'/g, '"'));
+
+    // Mapear nombres de días a números (0=Dom, 1=Lun, etc.)
+    const diasNumericos = diasArray.map(dia => {
+        const diaUpper = dia.toUpperCase();
+        const diasMap = {
+            'LUNES': 1,
+            'MARTES': 2,
+            'MIERCOLES': 3,
+            'JUEVES': 4,
+            'VIERNES': 5,
+            'SABADO': 6,
+            'DOMINGO': 0
+        };
+        return diasMap[diaUpper] !== undefined ? diasMap[diaUpper] : -1;
+    }).filter(num => num !== -1);
+
+    // Validar cuando cambia la fecha
+    fechaInput.addEventListener('change', function() {
+        if (!this.value) return;
+
+        const fecha = new Date(this.value);
+        const diaSemana = fecha.getDay(); // 0-6 (Dom-Sab)
+
+        if (!diasNumericos.includes(diaSemana)) {
+            mostrarErrorFecha(`El trabajador no labora ese día. Días laborales: ${diasArray.join(', ')}`);
+            this.value = '';
+        }
+    });
+
+    // Validar antes de enviar el formulario
+    form.addEventListener('submit', function(e) {
+        if (fechaInput.value) {
+            const fecha = new Date(fechaInput.value);
+            const diaSemana = fecha.getDay();
+
+            if (!diasNumericos.includes(diaSemana)) {
+                e.preventDefault();
+                mostrarErrorFecha(`No se puede agendar cita: El trabajador no labora ese día.`);
+                fechaInput.focus();
+            }
+        }
+    });
+}
+
+function mostrarErrorFecha(mensaje) {
+    // Puedes usar un toast, alert o actualizar un elemento en el DOM
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = mensaje;
+    errorDiv.style.color = 'red';
+    errorDiv.style.marginTop = '10px';
+
+    // Eliminar mensajes anteriores
+    const mensajesAnteriores = document.querySelectorAll('.error-message');
+    mensajesAnteriores.forEach(msg => msg.remove());
+
+    // Insertar después del campo de fecha
+    const fechaContainer = document.getElementById('fechaCita').parentNode;
+    fechaContainer.appendChild(errorDiv);
+
+    // Hacer scroll al mensaje
+    errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
+<script>
+    // Función para actualizar el nombre del vehículo y colores
+    function actualizarNombreVehiculo() {
+        const vehiculoSelect = document.getElementById('vehiculo');
+        const nombreVehiculoInput = document.getElementById('nombreVehiculo');
+        const colorSelect = document.getElementById('colorVehiculo');
+        const selectedOption = vehiculoSelect.options[vehiculoSelect.selectedIndex];
+
+        nombreVehiculoInput.value = selectedOption.getAttribute('data-nombre') || '';
+
+        // Mantener el color seleccionado actual
+        const colorActual = colorSelect.value;
+        colorSelect.innerHTML = '<option value="">-- Selecciona un color --</option>';
+
+        if (selectedOption.value) {
+            const colores = selectedOption.getAttribute('data-colores')?.split(',') || [];
+            const coloresGenericos = ['Rojo', 'Azul', 'Blanco', 'Negro', 'Gris'];
+            const coloresDisponibles = colores.length > 0 ? colores : coloresGenericos;
+
+            coloresDisponibles.forEach(color => {
+                if (color.trim()) {
+                    const option = new Option(color.trim(), color.trim());
+                    colorSelect.add(option);
+                    // Restaurar selección previa si coincide
+                    if (color.trim() === colorActual) {
+                        option.selected = true;
+                    }
+                }
+            });
+        }
+    }
+
+    // Función para seleccionar categoría (modificada)
+    function seleccionarCategoria(categoria, elemento) {
+        // Limpiar selecciones previas
+        document.querySelectorAll('.categoria-item').forEach(item => {
+            item.classList.remove('selected');
+        });
+
+        // Seleccionar nueva categoría
+        elemento.classList.add('selected');
+        document.getElementById('tipo').value = categoria;
+
+        // Mostrar/ocultar comentario según categoría
+        if (categoria === 'Otros') {
+            document.getElementById('comentarioContainer').style.display = 'block';
+        } else {
+            document.getElementById('comentarioContainer').style.display = 'none';
+        }
+    }
+
+    // Inicialización cuando el DOM está listo
+    $(document).ready(function() {
+        // Inicializar Select2
+        $('#vehiculo').select2({
+            placeholder: "-- Selecciona un vehículo --",
+            allowClear: true,
+            width: '100%'
+        });
+
+        // Verificar si viene de explorar vehículo
+        const urlParams = new URLSearchParams(window.location.search);
+        const vehiculoId = urlParams.get('vehiculoId');
+        const color = urlParams.get('color');
+
+        if(vehiculoId) {
+            // Seleccionar automáticamente la categoría "Interés en Vehículo"
+            const categoriaInteres = document.querySelector('.categoria-item:first-child');
+            seleccionarCategoria('Interés en Vehículo', categoriaInteres);
+
+            // Esperar a que Select2 se inicialice
+            setTimeout(() => {
+                // Seleccionar el vehículo en el dropdown
+                $('#vehiculo').val(vehiculoId).trigger('change');
+
+                // Si hay color, seleccionarlo
+                if(color) {
+                    setTimeout(() => {
+                        $('#colorVehiculo').val(color).trigger('change');
+                    }, 300);
+                }
+            }, 300);
+        }
+
+        // Inicializar el campo de colores
+        actualizarNombreVehiculo();
+    });
+
+    // Resto de funciones existentes (scroll, snackbar, etc.) se mantienen igual
+</script>
+<script>
+    // ==============================================
+    // VALIDACIÓN DE HORAS OCUPADAS - CÓDIGO COMPLETO
+    // ==============================================
+
+    // 1. Función para verificar disponibilidad
+    async function verificarDisponibilidad(trabajadorId, fecha, hora) {
+        try {
+            const response = await fetch(`/usuario/check-disponibilidad?trabajadorId=${trabajadorId}&fecha=${fecha}&hora=${hora}`);
+            return await response.json();
+        } catch (error) {
+            console.error("Error:", error);
+            return { disponible: false, mensaje: "Error al verificar disponibilidad" };
+        }
+    }
+
+    // 2. Función para cargar horas ocupadas
+    async function cargarHorasOcupadas(trabajadorId, fecha) {
+        try {
+            const response = await fetch(`/usuario/horas-ocupadas?trabajadorId=${trabajadorId}&fecha=${fecha}`);
+            return await response.json();
+        } catch (error) {
+            console.error("Error:", error);
+            return [];
+        }
+    }
+
+    // 3. Evento al cambiar fecha
+    document.getElementById('fechaCita').addEventListener('change', async function() {
+        const trabajadorId = document.getElementById('trabajador').value;
+        const fecha = this.value;
+
+        if (trabajadorId && fecha) {
+            const horasOcupadas = await cargarHorasOcupadas(trabajadorId, fecha);
+            console.log("Horas ocupadas:", horasOcupadas);
+            // Aquí puedes deshabilitar las horas ocupadas en tu input de tiempo
+        }
+    });
+
+    // 4. Validación al enviar el formulario
+    document.querySelector('.appointment-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const trabajadorId = document.getElementById('trabajador').value;
+        const fecha = document.getElementById('fechaCita').value;
+        const hora = document.getElementById('horaCita').value;
+
+        if (trabajadorId && fecha && hora) {
+            const respuesta = await verificarDisponibilidad(trabajadorId, fecha, hora);
+
+            if (!respuesta.disponible) {
+                alert(respuesta.mensaje || "La hora seleccionada no está disponible");
+                return;
+            }
+        }
+
+        this.submit();
+    });
+</script>
+
+</body>
+</html>

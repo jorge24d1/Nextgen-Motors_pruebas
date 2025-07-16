@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crédito Automotriz - NexGen Motors Concesionario Oficial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link th:href="@{/css/credito.css}" rel="stylesheet">
+</head>
+<body>
+<nav>
+    <div class="nav-logo">
+        <img src="https://via.placeholder.com/150x50?text=NexGen+Motors" alt="NexGen Motors Logo">
+    </div>
+    <div class="nav-links">
+        <a href="/vehiculos">Vehículos</a>
+        <a th:href="@{/usuario/agendamiento}">Agendamiento online</a>
+        <a href="/login">Iniciar sesión</a>
+        <a href="/usuario/cita">Cita</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Crédito Automotriz NexGen Motors</h1>
+        <p>Obtén las mejores condiciones de financiamiento para tu nuevo vehículo. ¡Aprobación rápida y tasas competitivas!</p>
+        <a href="#calculator" class="hero-button">Calcula tu crédito</a>
+    </div>
+</section>
+
+<section class="financing-options">
+    <h2 class="section-title">Opciones de Financiamiento</h2>
+    <p class="section-subtitle">Encuentra el plan que mejor se adapte a tus necesidades y haz realidad tu sueño de tener un vehículo NexGen</p>
+
+    <div class="options-grid">
+        <div class="option-card">
+            <div class="option-icon">
+                <i class="fas fa-hand-holding-usd"></i>
+            </div>
+            <h3 class="option-name">Crédito Tradicional</h3>
+            <p class="option-description">Financiamiento a plazos fijos con pagos mensuales. Elige entre 12 a 60 meses con tasas desde el 8.9% anual.</p>
+            <a href="#calculator" class="option-button">Más información</a>
+        </div>
+
+        <div class="option-card">
+            <div class="option-icon">
+                <i class="fas fa-business-time"></i>
+            </div>
+            <h3 class="option-name">Plan Empresarial</h3>
+            <p class="option-description">Soluciones especiales para empresas y flotillas con beneficios fiscales y planes personalizados según tus necesidades.</p>
+            <a href="#calculator" class="option-button">Más información</a>
+        </div>
+
+        <div class="option-card">
+            <div class="option-icon">
+                <i class="fas fa-exchange-alt"></i>
+            </div>
+            <h3 class="option-name">Plan Renovación</h3>
+            <p class="option-description">Cambia tu auto usado por un nuevo NexGen con facilidad. Aplicamos el valor de tu auto como enganche.</p>
+            <a href="#calculator" class="option-button">Más información</a>
+        </div>
+
+        <div class="option-card">
+            <div class="option-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3 class="option-name">Leasing Operativo</h3>
+            <p class="option-description">Ideal para empresas que buscan deducciones fiscales. Paga solo la depreciación del vehículo durante el contrato.</p>
+            <a href="#calculator" class="option-button">Más información</a>
+        </div>
+    </div>
+</section>
+
+<section class="calculator" id="calculator">
+    <h2 class="section-title">Calculadora de Pagos</h2>
+    <p class="section-subtitle">Simula tu crédito y descubre cuál es el plan de pagos que mejor se ajusta a tu presupuesto</p>
+
+    <div class="calculator-container">
+        <div class="calculator-grid">
+            <div class="calculator-form">
+                <label for="vehicle-price">Precio del vehículo (MXN)</label>
+                <input type="number" id="vehicle-price" placeholder="Ej: 450,000" min="100000" max="3000000">
+
+                <label for="down-payment">Enganche (MXN)</label>
+                <input type="number" id="down-payment" placeholder="Ej: 90,000" min="0" max="3000000">
+
+                <label for="loan-term">Plazo (meses)</label>
+                <select id="loan-term">
+                    <option value="12">12 meses</option>
+                    <option value="24">24 meses</option>
+                    <option value="36" selected>36 meses</option>
+                    <option value="48">48 meses</option>
+                    <option value="60">60 meses</option>
+                </select>
+
+                <label for="interest-rate">Tasa de interés anual (%)</label>
+                <input type="number" id="interest-rate" placeholder="Ej: 9.5" step="0.1" min="5" max="25" value="9.5">
+            </div>
+
+            <div class="calculator-results">
+                <div class="result-item">
+                    <div class="result-label">Monto a financiar</div>
+                    <div class="result-value" id="financed-amount">$0</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Pago mensual estimado</div>
+                    <div class="result-value" id="monthly-payment">$0</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Intereses totales</div>
+                    <div class="result-value" id="total-interest">$0</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Costo total del crédito</div>
+                    <div class="result-value" id="total-cost">$0</div>
+                </div>
+                <button class="calculator-button" id="calculate-button">Calcular</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="requirements">
+    <h2 class="section-title">Requisitos para tu Crédito</h2>
+    <p class="section-subtitle">Prepara tu documentación para un proceso de aprobación rápido y sencillo</p>
+
+    <div class="requirements-grid">
+        <div class="requirement-card">
+            <h3 class="requirement-title"><i class="fas fa-user-tie"></i> Personas Físicas</h3>
+            <ul class="requirement-list">
+                <li>Identificación oficial vigente (INE/IFE, pasaporte)</li>
+                <li>Comprobante de domicilio no mayor a 3 meses</li>
+                <li>Comprobante de ingresos (3 últimos recibos de nómina o estados de cuenta)</li>
+                <li>Referencias personales y bancarias</li>
+                <li>Historial crediticio positivo</li>
+                <li>Edad mínima: 18 años, máxima: 70 al término del crédito</li>
+            </ul>
+        </div>
+
+        <div class="requirement-card">
+            <h3 class="requirement-title"><i class="fas fa-building"></i> Personas Morales</h3>
+            <ul class="requirement-list">
+                <li>Acta constitutiva de la empresa</li>
+                <li>Identificación oficial del representante legal</li>
+                <li>Comprobante de domicilio fiscal</li>
+                <li>Estados financieros del último año</li>
+                <li>Declaraciones de impuestos</li>
+                <li>Referencias comerciales y bancarias</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="partners">
+    <h2 class="section-title">Bancos Aliados</h2>
+    <p class="section-subtitle">Trabajamos con las instituciones financieras más sólidas del país</p>
+
+    <div class="partners-grid">
+        <div class="partner-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Bancomer_logo.svg/1200px-Bancomer_logo.svg.png" alt="BBVA">
+        </div>
+        <div class="partner-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Santander_Bank_logo.svg/1200px-Santander_Bank_logo.svg.png" alt="Santander">
+        </div>
+        <div class="partner-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/HSBC_logo.svg/1200px-HSBC_logo.svg.png" alt="HSBC">
+        </div>
+        <div class="partner-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Scotiabank_Logo_2012.svg/1200px-Scotiabank_Logo_2012.svg.png" alt="Scotiabank">
+        </div>
+        <div class="partner-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Banamex_logo.svg/1200px-Banamex_logo.svg.png" alt="Citibanamex">
+        </div>
+    </div>
+</section>
+
+<section class="testimonials">
+    <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+    <p class="section-subtitle">Experiencias reales de personas que financiaron su vehículo con nosotros</p>
+
+    <div class="testimonials-grid">
+        <div class="testimonial-card">
+            <p class="testimonial-text">"El proceso de financiamiento fue muy sencillo y rápido. Me aprobaron el crédito en menos de 24 horas y con una tasa mejor de lo que esperaba. ¡Ahora disfruto de mi NexGen X1!"</p>
+            <div class="testimonial-author">
+                <div class="author-avatar"></div>
+                <div class="author-info">
+                    <h4>Roberto Sánchez</h4>
+                    <p>Dueño de NexGen X1 2023</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card">
+            <p class="testimonial-text">"Como empresario, el plan de leasing operativo me ha permitido renovar mi flotilla con beneficios fiscales importantes. Excelente asesoría por parte del equipo de NexGen Motors."</p>
+            <div class="testimonial-author">
+                <div class="author-avatar"></div>
+                <div class="author-info">
+                    <h4>Carlos Mendoza</h4>
+                    <p>Dueño de 5 NexGen E1 para su empresa</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card">
+            <p class="testimonial-text">"Aprobamos el crédito para mi NexGen S1 con mi historial crediticio que no era perfecto. Trabajaron conmigo para encontrar un plan de pagos que pudiera manejar cómodamente."</p>
+            <div class="testimonial-author">
+                <div class="author-avatar"></div>
+                <div class="author-info">
+                    <h4>Laura González</h4>
+                    <p>Dueña de NexGen S1 2022</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <h2>¿Listo para adquirir tu NexGen?</h2>
+    <p>Nuestros asesores financieros están disponibles para ayudarte a encontrar la mejor opción de crédito para tu nuevo vehículo.</p>
+    <a href="#" class="cta-button">Solicitar crédito ahora</a>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Vehículos</h3>
+            <ul>
+                <li><a href="/vehiculos">Nuevos modelos</a></li>
+                <li><a href="/vehiculos">Promociones</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Servicios</h3>
+            <ul>
+                <li><a th:href="@{/usuario/Inicio#services}">Agendar servicio</a></li>
+                <li><a href="/garantias">Garantías</a></li>
+
+
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Concesionario</h3>
+            <ul>
+                <li><a href="/nosotros">Sobre nosotros</a></li>
+                <li><a href="/ubicaciones">Ubicaciones</a></li>
+                <li><a href="#contact">Contáctanos</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Legal</h3>
+            <ul>
+                <li><a href="/terminos">Términos y condiciones</a></li>
+                <li><a href="/cookies">Cookies y Aviso legal</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="copyright">
+        <p>&copy; 2023 Concesionario. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<a href="https://wa.me/525512345678" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
+<script th:src="@{/js/credito.js}"></script>
+</body>
+</html>

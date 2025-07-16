@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexgen Motors - Concesionario Oficial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link th:href="@{/css/styleinicio.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link th:href="@{/css/stilechatbot.css}" rel="stylesheet">
+
+</head>
+<body>
+<!-- Barra de navegación -->
+<nav id="mainNav">
+
+        <div class="nav-logo logo-container">
+            <span class="logo-nexgen">NexGen</span>
+            <span class="logo-motors">Motors</span>
+
+        </div>
+
+    <div class="nav-links">
+
+        <a href="/vehiculos">Vehículos</a>
+        <a th:href="@{/usuario/agendamiento}">Agendamiento online</a>
+        <!-- <a href="/login">Iniciar sesión</a> -->
+        <!-- <a href="/usuario/cita">Cita</a> -->
+        <a href="/usuario/perfil"> Mi perfil </a>
+    </div>
+</nav>
+
+<!-- Carrusel -->
+<div class="carousel">
+    <div class="carousel-inner">
+        <div th:each="vehiculo : ${destacados}" class="carousel-item">
+            <img th:src="${vehiculo.imagenUrl}" alt="Vehículo destacado" class="carousel-img">
+            <div class="carousel-content">
+                <h2 th:text="${vehiculo.marca + ' ' + vehiculo.modelo}"></h2>
+                <p th:text="${vehiculo.descripcion}"></p>
+                <div class="carousel-buttons">
+                    <a th:href="@{/vehiculos/explorar/{id}(id=${vehiculo.id})}">Conoce más</a>
+                    <a th:href="@{/usuario/cita?vehiculoId={id}(id=${vehiculo.id})}">Cotizar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Servicios -->
+<section class="services" id="services">
+    <h2 class="section-title">Nuestros Servicios</h2>
+    <p class="section-subtitle">Ofrecemos soluciones integrales para todas las necesidades de tu vehículo</p>
+
+    <div class="services-grid">
+        <!-- Nota: Eliminé "Interés en Vehículo" ya que ese se maneja desde los listados de vehículos -->
+
+        <div class="service-card">
+            <div class="service-icon">
+                <i class="fas fa-tools"></i>
+            </div>
+            <h3 class="service-title">Información Taller</h3>
+            <p class="service-description">Conoce nuestros servicios de taller y programa una visita para evaluar tu vehículo.</p>
+            <a th:href="@{/usuario/cita(tipo='Información Taller')}" class="model-button">Agendar cita</a>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon">
+                <i class="fas fa-wrench"></i>
+            </div>
+            <h3 class="service-title">Mantenimiento</h3>
+            <p class="service-description">Servicio técnico especializado con repuestos originales y garantía en todas las reparaciones.</p>
+            <a th:href="@{/usuario/cita(tipo='Mantenimiento')}" class="model-button">Agendar cita</a>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3 class="service-title">Garantías</h3>
+            <p class="service-description">Protege tu inversión con nuestros planes de garantía extendida y servicio de asistencia vial.</p>
+            <a th:href="@{/usuario/cita(tipo='Garantías')}" class="model-button">Agendar cita</a>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon">
+                <i class="fas fa-ellipsis-h"></i>
+            </div>
+            <h3 class="service-title">Otros Servicios</h3>
+            <p class="service-description">¿Necesitas algo más? Contáctanos para cualquier otra consulta o servicio que necesites.</p>
+            <a th:href="@{/usuario/cita(tipo='Otros')}" class="model-button">Agendar cita</a>
+        </div>
+    </div>
+</section>
+<!-- Inserta el fragmento -->
+<div th:replace="~{fragments/chatbot :: chatbot}"></div>
+<!-- Testimonios -->
+<section class="testimonials">
+    <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+    <p class="section-subtitle">Experiencias reales de personas que confiaron en nosotros</p>
+
+    <div class="testimonials-grid">
+        <div class="testimonial-card">
+            <p class="testimonial-text">"Excelente atención en el concesionario. Me asesoraron perfectamente para elegir mi Sportage y el proceso de financiamiento fue muy sencillo. ¡Totalmente recomendados!"</p>
+            <div class="testimonial-author">
+                <div class="author-avatar"></div>
+                <div class="author-info">
+                    <h4>Carlos Méndez</h4>
+                    <p>Dueño de NexGen Motors Sportage 2023</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card">
+            <p class="testimonial-text">"Llevo mi Rio a servicio cada 6 meses y siempre recibo un trato profesional. Los técnicos son expertos y me explican claramente todo lo que necesita mi auto."</p>
+            <div class="testimonial-author">
+                <div class="author-avatar"></div>
+                <div class="author-info">
+                    <h4>Ana Rodríguez</h4>
+                    <p>Dueña de NexGen Motors Rio 2021</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card">
+            <p class="testimonial-text">"Compré mi EV6 eléctrico aquí y ha sido la mejor decisión. El equipo me ayudó con toda la instalación del cargador en casa y me han dado seguimiento constante."</p>
+            <div class="testimonial-author">
+                <div class="author-avatar"></div>
+                <div class="author-info">
+                    <h4>Javier López</h4>
+                    <p>Dueño de NexGen Motors EV6 2023</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contacto -->
+<section class="contact" id="contact">
+    <h2 class="section-title">Contáctanos</h2>
+    <p class="section-subtitle">Estamos aquí para responder todas tus preguntas</p>
+
+    <div class="contact-container">
+        <div class="contact-info">
+            <h3>Información de contacto</h3>
+            <div class="contact-details">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Ve a nuestro enlace de ubicaciones para mas informacion</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <p><a href="/ubicaciones">Ubicaciones</a></p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <p>Nexgenmotors@gmail.com </p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-clock"></i>
+                    <p>Lunes a Viernes: 9:00 - 19:00<br>Sábado: 9:00 - 15:00</p>
+                </div>
+            </div>
+
+            <h3>Visítanos</h3>
+            <div style="width: 100%; height: 250px; background: #ddd; border-radius: 5px; overflow: hidden;">
+                <!-- Aquí iría un mapa de Google Maps -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125715.64043749604!2d-75.54462260000001!3d10.3992244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef6251c1e6a8a3b%3A0x4a1e3b1b1b1b1b1b!2sBocagrande%2C%20Cartagena%2C%20Bol%C3%ADvar!5e0!3m2!1ses!2sco!4v1712345678901!5m2!1ses!2sco" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Vehículos</h3>
+            <ul>
+                <li><a href="/vehiculos">Nuevos modelos</a></li>
+                <li><a href="/vehiculos">Promociones</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Servicios</h3>
+            <ul>
+                <li><a href="#services">Agendar servicio</a></li>
+                <li><a href="/garantias">Garantías</a></li>
+
+
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Concesionario</h3>
+            <ul>
+                <li><a href="/nosotros">Sobre nosotros</a></li>
+                <li><a href="/ubicaciones">Ubicaciones</a></li>
+                <li><a href="#contact">Contáctanos</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Legal</h3>
+            <ul>
+                <li><a href="/terminos">Términos y condiciones</a></li>
+                <li><a href="/cookies">Cookies y Aviso legal</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="copyright">
+        <p>&copy; 2023 Concesionario. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<script th:src="@{/js/chatbot.js}"></script>
+
+<script th:src="@{/js/index.js}"></script>
+</body>
+</html>

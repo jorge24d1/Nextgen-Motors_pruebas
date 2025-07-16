@@ -1,0 +1,284 @@
+body {
+  background: white; /* Fondo completamente blanco */
+  width: 600px; /* Ancho fijo del body */
+  height: 551.6px; /* Alto fijo del body */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* Centra el body horizontalmente */
+  font-family: 'Arial', sans-serif;
+  overflow: hidden; /* Evita el desbordamiento del contenido */
+}
+
+.container {
+  width: 100%; /* Ancho completo dentro del body */
+}
+
+.card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  width: 100%; /* Ocupa el 100% del contenedor */
+}
+
+.card-header {
+  background-color: #ffffff;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.card-header h2 {
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  text-transform: uppercase; /* Convertir texto a mayúsculas */
+}
+
+.card-body {
+  background-color: #ffffff;
+  padding: 40px; /* Aumenté el padding para más espacio interno */
+}
+
+.form-control {
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.form-control:focus {
+  border-color: #6a11cb;
+  box-shadow: 0 0 5px rgba(106, 17, 203, 0.5);
+}
+
+.text-center {
+  text-align: center;
+  margin-top: 30px; /* Aumenté el margen superior */
+  margin-bottom: 30px; /* Aumenté el margen inferior */
+  font-size: 14px;
+  color: #555;
+}
+
+/* Estilo para los elementos redondos */
+.circle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px; /* Aumenté el espacio entre los círculos y la línea */
+  margin-bottom: 30px; /* Aumenté el margen inferior */
+}
+
+.circle {
+  width: 40px; /* Tamaño del círculo */
+  height: 40px; /* Tamaño del círculo */
+  border-radius: 50%; /* Hace que el elemento sea redondo */
+  background-color: white; /* Fondo blanco */
+  border: 2px solid #00387b; /* Borde azul oscuro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #00387b; /* Color del texto azul oscuro */
+  font-size: 18px; /* Tamaño del texto */
+  font-weight: bold;
+  transition: all 0.3s ease; /* Transición suave */
+}
+
+.circle.active {
+  background-color: #00387b; /* Fondo azul oscuro cuando está activo */
+  color: white; /* Texto blanco cuando está activo */
+  border-color: #00387b; /* Borde azul oscuro cuando está activo */
+}
+
+/* Estilo para la imagen dentro del círculo */
+.circle img {
+  width: 24px; /* Tamaño de la imagen */
+  height: 24px; /* Tamaño de la imagen */
+}
+
+/* Estilo para la línea divisora */
+.divider-line {
+  width: 50px; /* Ancho de la línea */
+  height: 2px; /* Grosor de la línea */
+  background-color: #ddd; /* Color de la línea */
+}
+
+/* Estilo para el contenedor de cada círculo y su texto */
+.circle-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra horizontalmente */
+  gap: 10px; /* Espacio entre el círculo y el texto */
+}
+
+/* Estilo para el texto bajo cada círculo */
+.circle-text {
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Estilo para el botón Siguiente */
+.btn-primary {
+  background-color: #00387b;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background-color: #002a5d;
+}
+
+/* Estilo para el botón Retroceder */
+.btn-secondary {
+  background-color: #6c757d;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+/* Estilos para la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--grey);
+}
+
+table th {
+    background: var(--light-blue);
+    color: var(--blue);
+    font-weight: 600;
+}
+
+table tr:hover {
+    background: var(--grey);
+}
+
+/* Estilos para los botones */
+.btn-añadir {
+    background: var(--blue);
+    color: var(--light);
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.btn-añadir:hover {
+    background: #2a7bd6; /* Un tono más oscuro de --blue */
+}
+
+.btn-editar {
+    background: var(--yellow);
+    color: var(--dark);
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-right: 8px;
+    transition: background 0.3s ease;
+}
+
+.btn-editar:hover {
+    background: #e6b800; /* Un tono más oscuro de --yellow */
+}
+
+.btn-eliminar {
+    background: var(--red);
+    color: var(--light);
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.btn-eliminar:hover {
+    background: #c82333; /* Un tono más oscuro de --red */
+}
+
+
+/* Estilos para el modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+}
+
+.modal-content {
+    background: var(--light);
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    color: var(--dark);
+}
+
+.close {
+    color: var(--dark);
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: var(--red);
+}
+
+/* Estilos para los botones del formulario */
+.btn-guardar {
+    background: var(--blue);
+    color: var(--light);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-guardar:hover {
+    background: #2a7bd6; /* Un tono más oscuro de --blue */
+}
+
+.btn-cancelar {
+    background: var(--grey);
+    color: var(--dark);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-left: 10px;
+    transition: background 0.3s ease;
+}
+
+.btn-cancelar:hover {
+    background: var(--dark-gray);
+}

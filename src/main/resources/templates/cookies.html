@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aviso Legal | Cookies | Accesorios - NexGen Motors</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link th:href="@{/css/cookies.css}" rel="stylesheet">
+</head>
+<body>
+<nav id="mainNav">
+    <div class="nav-logo">
+        <img src="https://via.placeholder.com/150x50?text=NexGen+Motors" alt="NexGen Motors Logo">
+    </div>
+    <div class="nav-links">
+        <a th:href="@{/usuario/Inicio}">Inicio</a>
+        <a href="/vehiculos">Vehículos</a>
+        <a th:href="@{/usuario/agendamiento}">Agendamiento online</a>
+        <a href="/usuario/perfil">Mi perfil</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Aviso Legal y Cookies</h1>
+        <p>Información legal y accesorios exclusivos para tu vehículo NexGen Motors</p>
+    </div>
+</section>
+
+<div class="main-content">
+    <!-- Aviso Legal -->
+    <div class="content-section">
+        <h2 class="section-title">Aviso Legal</h2>
+        <p class="section-subtitle">Información legal sobre el uso de nuestro sitio web y servicios</p>
+
+        <div class="content-section">
+            <h2>1. Identificación del titular</h2>
+            <p>NexGen Motors México S.A. de C.V. con domicilio en Av. Insurgentes Sur 1234, Col. Del Valle, Ciudad de México, C.P. 03100.</p>
+            <p>RFC: NGM230101ABC</p>
+        </div>
+
+        <div class="content-section">
+            <h2>2. Propiedad intelectual</h2>
+            <p>Todos los contenidos de este sitio web (textos, imágenes, logotipos, diseño) son propiedad exclusiva de NexGen Motors o de sus licenciantes y están protegidos por las leyes de propiedad intelectual.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>3. Limitación de responsabilidad</h2>
+            <p>NexGen Motors no se hace responsable por:</p>
+            <ul>
+                <li>Daños derivados de la imposibilidad de acceso al sitio web</li>
+                <li>Errores u omisiones en los contenidos</li>
+                <li>Uso indebido de los contenidos por parte de los usuarios</li>
+                <li>Problemas técnicos fuera de nuestro control</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>4. Legislación aplicable</h2>
+            <p>Este aviso legal se rige por la legislación mexicana, específicamente por la Ley Federal de Protección al Consumidor y la Ley Federal del Derecho de Autor.</p>
+        </div>
+    </div>
+
+    <!-- Política de Cookies -->
+    <div class="content-section">
+        <h2 class="section-title">Política de Cookies</h2>
+        <p class="section-subtitle">Cómo utilizamos las cookies en nuestro sitio web</p>
+
+        <div class="content-section">
+            <h2>1. ¿Qué son las cookies?</h2>
+            <p>Las cookies son pequeños archivos de texto que se almacenan en su dispositivo cuando visita nuestro sitio web.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>2. Tipos de cookies que utilizamos</h2>
+            <ul>
+                <li><strong>Cookies técnicas:</strong> Necesarias para el funcionamiento básico del sitio</li>
+                <li><strong>Cookies de preferencias:</strong> Recuerdan sus configuraciones</li>
+                <li><strong>Cookies analíticas:</strong> Nos ayudan a mejorar el sitio</li>
+                <li><strong>Cookies de marketing:</strong> Para mostrar anuncios relevantes</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>3. Gestión de cookies</h2>
+            <p>Puede configurar su navegador para rechazar todas o algunas cookies. Sin embargo, esto puede afectar la funcionalidad de nuestro sitio.</p>
+            <p>Para más información sobre cómo gestionar cookies, consulte la ayuda de su navegador.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Vehículos</h3>
+                <ul>
+                    <li><a href="/vehiculos">Nuevos modelos</a></li>
+                    <li><a href="/vehiculos">Promociones</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Servicios</h3>
+                <ul>
+                    <li><a th:href="@{/usuario/Inicio#services}">Agendar servicio</a></li>
+                    <li><a href="/garantias">Garantías</a></li>
+
+
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Concesionario</h3>
+                <ul>
+                    <li><a href="/nosotros">Sobre nosotros</a></li>
+                    <li><a href="/ubicaciones">Ubicaciones</a></li>
+                    <li><a href="#contact">Contáctanos</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="/terminos">Términos y condiciones</a></li>
+                    <li><a href="/cookies">Cookies y Aviso legal</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="copyright">
+            <p>&copy; 2023 Concesionario. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/525512345678" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
+    <script th:src="@{/js/cookies.js}"></script>
+
+</body>
+</html>

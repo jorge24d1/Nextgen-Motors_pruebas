@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<!-- <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"> -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <!-- CSS -->
+    <link th:href="@{/css/style.css}" rel="stylesheet"> <!--estilo general del dashboard-->
+    <link th:href="@{/css/styleRT.css}" rel="stylesheet"> <!-- esto tiene lo de los vehiculos -->
+    <link th:href="@{/css/noti.css}" rel="stylesheet"> <!-- este es el estilo de las notificaciones -->
+    <link th:href="@{/css/citasadstyle.css}" rel="stylesheet"> <!-- este es el estilo de las citas-->
+    <link th:href="@{/css/auto.css}" rel="stylesheet">
+    <title>AdminHub</title>
+    <style>
+
+
+    </style>
+</head>
+<body>
+
+<!-- ===================== SIDEBAR ===================== -->
+<section id="sidebar">
+    <a href="#" class="brand">
+        <!-- <i class='bx bxs-smile'></i> -->
+        <span class="text">Administrador</span>
+    </a>
+    <ul class="side-menu top">
+        <li class="active">
+            <a href="#dashboard">
+                <i class='bx bxs-dashboard'></i>
+                <span class="text">Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="#vehiculos">
+                <i class='bx bxs-shopping-bag-alt'></i>
+                <span class="text">Vehículos</span>
+            </a>
+        </li>
+        <li>
+            <a href="#anuncios">
+                <i class='bx bxs-shopping-bag-alt'></i>
+                <span class="text">Anuncios</span>
+            </a>
+        </li>
+        <li>
+            <a href="#analytics">
+                <i class='bx bxs-doughnut-chart'></i>
+                <span class="text">Analytics</span>
+            </a>
+        </li>
+        <li>
+            <a href="#mensaje">
+                <i class='bx bxs-message-dots'></i>
+                <span class="text">Mensaje</span>
+            </a>
+        </li>
+        <li sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+            <a href="#team">
+                <i class='bx bxs-group'></i>
+                <span class="text">Team</span>
+            </a>
+        </li>
+    </ul>
+    <ul class="side-menu">
+
+        <li>
+            <a href="/logout" class="logout">
+                <i class='bx bxs-log-out-circle'></i>
+                <span class="text">Logout</span>
+            </a>
+            
+        </li>
+    </ul>
+</section>
+<!-- ===================== END SIDEBAR ===================== -->
+
+<!-- ===================== CONTENT ===================== -->
+
+<section id="content">
+    <!-- Navbar -->
+    <nav>
+        <i class='bx bx-menu'></i>
+        <a href="#" class="nav-link">Categories</a>
+        <form action="#">
+            <div class="form-input">
+                <input type="search" placeholder="search...">
+                <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+            </div>
+        </form>
+        <a href="#" class="notification" id="notification-bell">
+            <i class='bx bxs-bell'></i>
+            <span class="num" id="notification-count">0</span>
+        </a>
+
+        <div class="notification-dropdown" id="notification-dropdown">
+            <div class="notification-list" id="notification-list">
+                <!-- Las notificaciones aparecerán aquí -->
+            </div>
+        </div>
+        <!-- <a href="#" class="profile">
+            <img src="img/people.png" alt="">
+        </a> -->
+    </nav>
+    <!-- End Navbar -->
+
+    <!-- ===================== MAIN CONTENT ===================== -->
+    <main>
+
+        <!-- ===================== DASHBOARD SECTION ===================== -->
+        <section id="dashboard">
+            <div class="head-title">
+                <div class="left">
+                    <h1>Dashboard</h1>
+                    <ul class="breacrumb">
+                        <li>
+                            <a href="#">Dashboard</a>
+                        </li>
+                        <li><i class='bx bx-chevron-right'></i></li>
+                        <li>
+                            <a class="active" href="#">Home</a>
+                        </li>
+                    </ul>
+                </div>
+                <a href="#" class="btn-download">
+                    <i class='bx bxs-cloud-download'></i>
+                    <span class="text">Download PDF</span>
+                </a>
+            </div>
+            <ul class="box-info">
+                <li>
+                    <i class='bx bxs-calendar-check'></i>
+                    <span class="text">
+                <h3 th:text="${totalCitas}">0</h3>
+                <p>Citas Totales</p>
+            </span>
+                </li>
+                <li>
+                    <i class='bx bxs-group'></i>
+                    <span class="text">
+                <h3 th:text="${totalUsuarios}">0</h3>
+                <p>Usuarios Registrados</p>
+            </span>
+                </li>
+                <li>
+                    <i class='bx bxs-car'></i>
+                    <span class="text">
+                <h3 th:text="${totalVehiculos}">0</h3>
+                <p>Vehículos en Stock</p>
+            </span>
+                </li>
+            </ul>
+            <iframe title="concesionariotablero" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiMDljY2M3NWUtMWM1ZS00NjFiLTljNjgtMDQ3NGRlNDVjZGJjIiwidCI6IjlkMTJiZjNmLWU0ZjYtNDdhYi05MTJmLTFhMmYwZmM0OGFhNCIsImMiOjR9" frameborder="0" allowFullScreen="true"></iframe>
+        </section>
+        <!-- ===================== END DASHBOARD SECTION ===================== -->
+
+        <!-- ===================== VEHÍCULOS SECTION ===================== -->
+        <main>
+            <section id="vehiculos" style="display: none;">
+                <div class="head-title">
+                    <div class="left">
+                        <h1>Vehículos</h1>
+                        <ul class="breacrumb">
+                            <li>
+                                <a href="#">Dashboard</a>
+                            </li>
+                            <li><i class='bx bx-chevron-right'></i></li>
+                            <li>
+                                <a class="active" href="#">Vehículos</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="table-data">
+                    <div class="order">
+                        <div class="head">
+                            <h3>Vehículos en Stock</h3>
+                            <button onclick="mostrarModal('modal-vehiculo')" class="btn-añadir">+ Añadir Vehículo</button>
+                        </div>
+                        <table id="tabla-vehiculos">
+                            <thead>
+                            <tr>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Año</th>
+                                <th>Precio</th>
+                                <th>Categoría</th>
+                                <th>Imagen</th>
+                                <th>Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="vehiculo : ${vehiculos}">
+                                <td th:text="${vehiculo.marca}"></td>
+                                <td th:text="${vehiculo.modelo}"></td>
+                                <td th:text="${vehiculo.año}"></td>
+                                <td th:text="${vehiculo.precio}"></td>
+                                <td th:text="${vehiculo.categoria}"></td>
+                                <td><img th:src="${vehiculo.imagenUrl}" width="100"></td>
+                                <td>
+                                    <a href="#" th:attr="onclick=|mostrarModalEditar('${vehiculo.id}')|" class="btn-editar">Editar</a>
+                                    <a th:href="@{/admin/eliminar/{id}(id=${vehiculo.id})}" class="btn-eliminar">Eliminar</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            <!-- ===================== END VEHÍCULOS SECTION ===================== -->
+
+            <!-- Modal para Añadir Vehículo -->
+            <div id="modal-vehiculo" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="cerrarModal('modal-vehiculo')">&times;</span>
+                    <h2>Añadir Nuevo Vehículo</h2>
+                    <form th:action="@{/admin/guardar-vehiculo}" method="post" enctype="multipart/form-data">
+                        <!-- Campos del vehículo -->
+
+                        <input type="text" name="marca" placeholder="Marca" required>
+                        <input type="text" name="modelo" placeholder="Modelo" required>
+                        <input type="number" name="año" placeholder="Año" required>
+                        <input type="number" step="0.01" name="precio" placeholder="Precio" required>
+                        <select name="categoria" required>
+                            <option value="Pick-Ups">Pick-Ups</option>
+                            <option value="Camionetas">Camionetas</option>
+                            <option value="Automóviles">Automóviles</option>
+                        </select>
+                        <input type="text" name="motor" placeholder="Motor" required>
+                        <select name="transmision" required>
+                            <option value="Automática">Automática</option>
+                            <option value="Manual">Manual</option>
+                        </select>
+                        <select name="combustible" required>
+                            <option value="Gasolina">Gasolina</option>
+                            <option value="Diésel">Diésel</option>
+                        </select>
+                        <input type="number" name="pasajeros" placeholder="Pasajeros" required min="1" max="10">
+                        <textarea name="descripcion" placeholder="Descripción técnica" required></textarea>
+                        <div class="form-group">
+                            <label for="colores">Colores disponibles (separados por comas):</label>
+                            <input type="text" id="colores" name="colores"
+                                   placeholder="Ej: Rojo, Azul, Negro"> <!-- Quita el th:value -->
+                        </div>
+                        <input type="file" name="imagen" required>
+                        <button type="submit" class="btn-guardar">Guardar Vehículo</button>
+                    </form>
+                </div>
+            </div>
+            <!-- Modal para Editar Vehículo -->
+            <div id="modal-editar-vehiculo" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="cerrarModal('modal-editar-vehiculo')">&times;</span>
+                    <h2>Editar Vehículo</h2>
+                    <form id="form-editar-vehiculo" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="id" id="editar-id">
+
+                        <div class="form-group">
+                            <label for="editar-marca">Marca:</label>
+                            <input type="text" id="editar-marca" name="marca" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editar-modelo">Modelo:</label>
+                            <input type="text" id="editar-modelo" name="modelo" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editar-año">Año:</label>
+                            <input type="number" id="editar-año" name="año" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editar-precio">Precio:</label>
+                            <input type="number" step="0.01" id="editar-precio" name="precio" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editar-categoria">Categoría:</label>
+                            <select id="editar-categoria" name="categoria" required>
+                                <option value="Pick-Ups">Pick-Ups</option>
+                                <option value="Camionetas">Camionetas</option>
+                                <option value="Automóviles">Automóviles</option>
+                                <option value="Performance">Performance</option>
+                                <option value="Híbridos">Híbridos</option>
+                                <option value="Comerciales">Comerciales</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editar-motor">Motor:</label>
+                            <input type="text" id="editar-motor" name="motor" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editar-transmision">Transmisión:</label>
+                            <select id="editar-transmision" name="transmision" required>
+                                <option value="Automática">Automática</option>
+                                <option value="Manual">Manual</option>
+                                <option value="CVT">CVT</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editar-combustible">Combustible:</label>
+                            <select id="editar-combustible" name="combustible" required>
+                                <option value="Gasolina">Gasolina</option>
+                                <option value="Diésel">Diésel</option>
+                                <option value="Híbrido">Híbrido</option>
+                                <option value="Eléctrico">Eléctrico</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editar-pasajeros">Pasajeros:</label>
+                            <input type="number" id="editar-pasajeros" name="pasajeros" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editar-descripcion">Descripción:</label>
+                            <textarea id="editar-descripcion" name="descripcion" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="editar-colores">Colores disponibles (separados por comas):</label>
+                            <input type="text" id="editar-colores" name="colores"
+                                   th:value="${vehiculo?.colores != null ? #strings.listJoin(vehiculo.colores, ', ') : ''}"
+                                   placeholder="Ej: Rojo, Azul, Negro">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editar-imagen">Imagen:</label>
+                            <input type="file" id="editar-imagen" name="imagen">
+                            <img id="editar-imagen-preview" src="" alt="Imagen actual" class="current-image" style="max-width: 200px; display: none;">
+                        </div>
+
+                        <button type="submit" class="btn-guardar">Guardar Cambios</button>
+                        <button type="button" class="btn-cancelar" onclick="cerrarModal('modal-editar-vehiculo')">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <!-- ===================== ANUNCIOS SECTION ===================== -->
+        <section id="anuncios" style="display: none;">
+            <div class="head-title">
+                <div class="left">
+                    <h1>Anuncios</h1>
+                    <ul class="breacrumb">
+                        <li>
+                            <a href="#">Dashboard</a>
+                        </li>
+                        <li><i class='bx bx-chevron-right'></i></li>
+                        <li>
+                            <a class="active" href="#">Anuncios</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- <div class="left">
+                    <h1>Gestión de Anuncios</h1>
+                    <button onclick="document.getElementById('modal-anuncio').style.display='block'">
+                        + Nuevo Anuncio
+                    </button>
+                </div> -->
+            </div>
+
+            <!-- Tabla de Anuncios -->
+            <div class="table-data">
+                <div class="order">
+                    <div class="head">
+                        <h3>Anuncios Destacados</h3>
+                        <button onclick="mostrarModal('modal-anuncio')" class="btn-añadir">+ Crear Anuncio</button>
+                    </div>
+                    <table id="tabla-anuncios">
+                        <thead>
+                        <tr>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>Año</th>
+                            <th>Precio</th>
+                            <th>Categoría</th>
+                            <th>Imagen</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="anuncio : ${anuncios}">
+                            <td th:text="${anuncio.marca}"></td>
+                            <td th:text="${anuncio.modelo}"></td>
+                            <td th:text="${anuncio.año}"></td>
+                            <td th:text="${anuncio.precio}"></td>
+                            <td th:text="${anuncio.categoria}"></td>
+                            <td><img th:src="${anuncio.imagenUrl}" width="100"></td>
+                            <td>
+                                <a href="#" th:attr="onclick=|mostrarModalEditar('${anuncio.id}')|" class="btn-editar">Editar</a>
+                                <a th:href="@{/admin/eliminar/{id}(id=${anuncio.id})}" class="btn-eliminar">Eliminar</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Modal para crear anuncio (en el mismo dashboard) -->
+            <div id="modal-anuncio" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="cerrarModal('modal-anuncio')">&times;</span>
+                    <h2>Crear Nuevo Anuncio</h2>
+                    <form th:action="@{/admin/guardar-anuncio}" method="post" enctype="multipart/form-data">
+                        <!-- Todos los campos del anuncio (igual que vehículo pero con destacado=true) -->
+                        <input type="text" name="marca" placeholder="Marca" required>
+                        <input type="text" name="modelo" placeholder="Modelo" required>
+                        <input type="number" name="año" placeholder="Año" required>
+                        <input type="number" step="0.01" name="precio" placeholder="Precio" required>
+                        <select name="categoria" required>
+                            <option value="Pick-Ups">Pick-Ups</option>
+                            <option value="Camionetas">Camionetas</option>
+                            <option value="Automóviles">Automóviles</option>
+                        </select>
+                        <input type="text" name="motor" placeholder="Motor" required>
+                        <select name="transmision" required>
+                            <option value="Automática">Automática</option>
+                            <option value="Manual">Manual</option>
+                        </select>
+                        <select name="combustible" required>
+                            <option value="Gasolina">Gasolina</option>
+                            <option value="Diésel">Diésel</option>
+                        </select>
+                        <input type="number" name="pasajeros" placeholder="Pasajeros" required min="1" max="10">
+                        <textarea name="descripcion" placeholder="Descripción destacada" required></textarea>
+                        <div class="form-group">
+                            <label for="colores-anuncio">Colores disponibles (separados por comas):</label>
+                            <input type="text" id="colores-anuncio" name="colores"
+                                   placeholder="Ej: Rojo, Azul, Negro">
+                        </div>
+                        <input type="file" name="imagen" required>
+                        <button type="submit">Crear Anuncio</button>
+                    </form>
+                </div>
+            </div>
+
+            <script>
+                // Funciones para manejar los modales
+                function mostrarModal(modalId) {
+                    document.getElementById(modalId).style.display = 'block';
+                }
+
+                function cerrarModal(modalId) {
+                    document.getElementById(modalId).style.display = 'none';
+                }
+
+                // Cerrar modales al hacer clic fuera
+                window.onclick = function(event) {
+                    if (event.target.className === 'modal') {
+                        event.target.style.display = 'none';
+                    }
+                }
+            </script>
+        </section>
+        <!-- ===================== END ANUNCIOS SECTION ===================== -->
+
+        <!-- ===================== ANALYTICS SECTION ===================== -->
+        <section id="analytics" style="display: none;">
+            <div class="head-title">
+                <div class="left">
+                    <h1>Analytics</h1>
+                    <ul class="breacrumb">
+                        <li>
+                            <a href="#">Dashboard</a>
+                        </li>
+                        <li><i class='bx bx-chevron-right'></i></li>
+                        <li>
+                            <a class="active" href="#">Analytics</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="table-data">
+                <div class="order">
+                    <div class="head">
+                        <h3>Gráficos y Estadísticas</h3>
+                    </div>
+                    <iframe title="concesionariotablero" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiMDljY2M3NWUtMWM1ZS00NjFiLTljNjgtMDQ3NGRlNDVjZGJjIiwidCI6IjlkMTJiZjNmLWU0ZjYtNDdhYi05MTJmLTFhMmYwZmM0OGFhNCIsImMiOjR9" frameborder="0" allowFullScreen="true"></iframe>
+                </div>
+            </div>
+        </section>
+        <!-- ===================== END ANALYTICS SECTION ===================== -->
+
+        <!-- ===================== MENSAJE SECTION ===================== -->
+        <section id="mensaje" style="display: none;">
+            <div class="head-title">
+                <div class="left">
+                    <h1>Gestión de Citas</h1>
+                    <select id="filtro-estado" class="filtro-estado">
+                        <option value="TODAS">Todas las citas</option>
+                        <option value="Pendiente">Pendientes</option>
+                        <option value="Aprobada">Aprobadas</option>
+                        <option value="Rechazada">Rechazadas</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-data">
+                <div class="order">
+                    <table id="tabla-citas" class="tabla-citas">
+                        <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Tipo</th>
+                            <th>Auto</th>
+                            <th>Fecha Solicitud</th>
+                            <th>Comentario</th>
+                            <th>Estado</th>
+                            <th>Fecha Asignada</th>
+                            <th>Notas</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            
+                        <tr th:each="cita : ${citas}" th:data-id="${cita.id}" th:classappend="${cita.estado}">
+                            <td th:text="${cita.usuario != null ? cita.usuario.nombre + ' ' + cita.usuario.apellido : 'Sin usuario'}"></td>
+                            <!-- <td th:text="${cita.usuario.nombre + ' ' + cita.usuario.apellido}"></td> -->
+
+                            <!-- esto de aquí funciona perfectamente: -->
+                            <td th:text="${cita.tipo}"></td>
+                            <td>
+                            <span th:if="${cita.vehiculo != null}"
+                            th:text="${cita.vehiculo.marca + ' ' + cita.vehiculo.modelo}"></span>
+                            <span th:unless="${cita.vehiculo != null}" th:text="${cita.modelo}">N/A</span>
+                            </td>
+                            <!-- <td th:text="${cita.vehiculo != null ? cita.vehiculo.marca + ' ' + cita.vehiculo.modelo : 'Sin vehículo'}"></td> -->
+                            
+                            <!-- <td th:text="${cita.vehiculo.marca + ' ' + cita.vehiculo.modelo}"></td> -->
+
+                            <td th:text="${#temporals.format(cita.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></td>
+
+                            <td th:text="${cita.comentario}"></td>
+                            <td>
+                                <span th:text="${cita.estado}" class="estado-badge"></span>
+                            </td>
+                            <td>
+                            <span th:if="${cita.fechaAsignada != null}"
+                                  th:text="${#temporals.format(cita.fechaAsignada, 'dd/MM/yyyy hh:mm a')}"></span>
+                                <span th:unless="${cita.fechaAsignada != null}">-</span>
+                            </td>
+                            <td th:text="${cita.notasAdmin ?: 'Sin notas'}"></td>
+                            <td class="acciones">
+                                <!-- Botones para citas Pendientes -->
+                                <div th:if="${cita.estado == 'Pendiente'}" class="acciones-pendiente">
+                                    <button class="btn-accion btn-aprobar" th:data-id="${cita.id}">Aprobar</button>
+                                    <button class="btn-accion btn-rechazar" th:data-id="${cita.id}">Rechazar</button>
+                                    <button class="btn-accion btn-notas" th:data-id="${cita.id}">Notas</button>
+                                </div>
+
+                                <!-- Botones para citas Aprobadas -->
+                                <div th:if="${cita.estado == 'Aprobada'}" class="acciones-aprobada">
+                                    <button class="btn-accion btn-asignar" th:data-id="${cita.id}">Asignar Fecha</button>
+                                    <button class="btn-accion btn-volver" th:data-id="${cita.id}">A Pendiente</button>
+                                    <button class="btn-accion btn-notas" th:data-id="${cita.id}">Notas</button>
+                                </div>
+
+                                <!-- Botones para citas Rechazadas -->
+                                <div th:if="${cita.estado == 'Rechazada'}" class="acciones-rechazada">
+                                    <button class="btn-accion btn-volver" th:data-id="${cita.id}">A Pendiente</button>
+                                    <button class="btn-accion btn-notas" th:data-id="${cita.id}">Notas</button>
+                                </div>
+                            </td>
+                        </tr> 
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <!-- Modal para Asignar Fecha -->
+            <div id="modal-fecha" class="modal-cita">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal">&times;</span>
+                    <h3>Asignar Fecha</h3>
+                    <input type="datetime-local" id="fecha-asignacion" min="">
+                    <button id="confirmar-fecha" class="btn-confirmar">Confirmar</button>
+                </div>
+            </div>
+
+            <!-- Modal para Notas -->
+            <div id="modal-notas" class="modal-cita">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal">&times;</span>
+                    <h3>Notas Administrativas</h3>
+                    <textarea id="texto-notas" rows="5"></textarea>
+                    <button id="guardar-notas" class="btn-confirmar">Guardar</button>
+                </div>
+            </div>
+        </section>
+
+        <script>
+
+        </script>
+        <!-- ===================== END MENSAJE SECTION ===================== -->
+
+        <!-- ===================== TEAM SECTION ===================== -->
+
+        <section id="team" th:style="${error != null} ? 'display: block;' : 'display: none;'">
+            <div class="head-title">
+                <div class="left">
+                    <h1>Registro de Trabajadores</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="#">Dashboard</a></li>
+                        <li><i class='bx bx-chevron-right'></i></li>
+                        <li><a class="active" href="#">Nuevo Trabajador</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="table-data">
+                <div class="order">
+                    <div class="head">
+                        <h3>Datos del Trabajador</h3>
+                    </div>
+
+                    <div class="login-card">
+                        <!-- Mensaje de error -->
+                        <div th:if="${error != null}" class="alert alert-danger" role="alert">
+                            <span th:text="${error}"></span>
+                        </div>
+
+                        <form th:action="@{/admin/RegistroT}" method="post">
+                            <!-- Datos Personales -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre" name="nombre"
+                                           th:value="${nombre != null} ? ${nombre} : ''" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="apellido" class="form-label">Apellido</label>
+                                    <input type="text" class="form-control" id="apellido" name="apellido"
+                                           th:value="${apellido != null} ? ${apellido} : ''" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="identificacion" class="form-label">Identificación</label>
+                                    <input type="text" class="form-control" id="identificacion" name="identificacion"
+                                           th:value="${identificacion != null} ? ${identificacion} : ''" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="correo" class="form-label">Correo Electrónico</label>
+                                    <input type="email" class="form-control" id="correo" name="correo"
+                                           th:value="${correo != null} ? ${correo} : ''" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Contraseña</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+
+                            <!-- Horario de Trabajo -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="horaInicio" class="form-label">Hora de Inicio</label>
+                                    <input type="time" class="form-control" id="horaInicio" name="horaInicio"
+                                           th:value="${horaInicio != null} ? ${horaInicio} : '08:00'" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="horaFin" class="form-label">Hora de Fin</label>
+                                    <input type="time" class="form-control" id="horaFin" name="horaFin"
+                                           th:value="${horaFin != null} ? ${horaFin} : '17:00'" required>
+                                </div>
+                            </div>
+
+                            <!-- Días de Trabajo -->
+                            <div class="mb-3">
+                                <label class="form-label">Días de Trabajo</label>
+                                <div class="dias-checkbox-container">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="diasTrabajo" value="LUNES" id="lunes">
+                                        <label class="form-check-label" for="lunes">Lunes</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="diasTrabajo" value="MARTES" id="martes">
+                                        <label class="form-check-label" for="martes">Martes</label>
+                                    </div>
+                                    <!-- Repetir para los demás días -->
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="diasTrabajo" value="MIERCOLES" id="miercoles">
+                                        <label class="form-check-label" for="miercoles">Miércoles</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="diasTrabajo" value="JUEVES" id="jueves">
+                                        <label class="form-check-label" for="jueves">Jueves</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="diasTrabajo" value="VIERNES" id="viernes">
+                                        <label class="form-check-label" for="viernes">Viernes</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100">Registrar Trabajador</button>
+                            <div class="text-center mt-3">
+                                <a href="/admin/Dashboard" class="btn btn-secondary">Cancelar</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ===================== END TEAM SECTION ===================== -->
+
+    </main>
+    <!-- ===================== END MAIN CONTENT ===================== -->
+</section>
+<!-- ===================== END CONTENT ===================== -->
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
+<!-- <script src="/js/script.js"></script> -->
+<script th:src="@{/js/script.js}" defer></script>
+<!-- <script th:src="@{/js/script.js}" defer></script> -->
+            <script>
+                // Funciones para manejar los modales
+                function mostrarModal(modalId) {
+                    document.getElementById(modalId).style.display = 'block';
+                }
+
+                function cerrarModal(modalId) {
+                    document.getElementById(modalId).style.display = 'none';
+                }
+
+                // Cerrar modales al hacer clic fuera
+                window.onclick = function(event) {
+                    if (event.target.className === 'modal') {
+                        event.target.style.display = 'none';
+                    }
+
+
+
+            </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.forms['RegistroT'];
+        const correoInput = document.getElementById('CorreoUser');
+        const passwordInput = document.getElementById('password');
+        const identificacionInput = document.getElementById('Identifiacion');
+
+        // Crear elemento para mensajes de error
+        const errorDiv = document.createElement('div');
+        errorDiv.style.color = 'red';
+        errorDiv.style.margin = '10px 0';
+        errorDiv.style.padding = '10px';
+        errorDiv.style.borderRadius = '5px';
+        errorDiv.style.backgroundColor = '#ffeeee';
+        errorDiv.style.display = 'none';
+        form.insertBefore(errorDiv, form.querySelector('.create-account'));
+
+        // Función para validar email
+        function isValidEmail(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email);
+        }
+
+        // Función para validar solo números
+        function isOnlyNumbers(input) {
+            return /^\d+$/.test(input);
+        }
+
+        // Validar identificación en tiempo real (solo números)
+        identificacionInput.addEventListener('input', function() {
+            if (!isOnlyNumbers(this.value)) {
+                this.setCustomValidity('La identificación debe contener solo números');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+
+        // Validar formulario al enviar
+        form.addEventListener('submit', function(e) {
+            let errorMessages = [];
+
+            // Validar email
+            const email = correoInput.value.trim();
+            if (!email) {
+                errorMessages.push('Por favor introduzca su correo electrónico');
+            } else if (!isValidEmail(email)) {
+                errorMessages.push('Por favor introduzca un correo electrónico válido');
+            }
+
+            // Validar contraseña (8 caracteres)
+            const password = passwordInput.value.trim();
+            if (!password) {
+                errorMessages.push('Por favor introduzca una contraseña');
+            } else if (password.length < 8) {
+                errorMessages.push('La contraseña debe tener al menos 8 caracteres');
+            }
+
+            // Validar identificación (solo números)
+            const identificacion = identificacionInput.value.trim();
+            if (!identificacion) {
+                errorMessages.push('Por favor introduzca su identificación');
+            } else if (!isOnlyNumbers(identificacion)) {
+                errorMessages.push('La identificación debe contener solo números');
+            }
+
+            // Validar otros campos obligatorios
+            const nombre = document.getElementById('NombreUser').value.trim();
+            const apellido = document.getElementById('ApellidoUser').value.trim();
+
+            if (!nombre) {
+                errorMessages.push('Por favor introduzca su nombre');
+            }
+
+            if (!apellido) {
+                errorMessages.push('Por favor introduzca su apellido');
+            }
+
+            // Mostrar errores o enviar formulario
+            if (errorMessages.length > 0) {
+                e.preventDefault();
+                errorDiv.innerHTML = errorMessages.join('<br>');
+                errorDiv.style.display = 'block';
+
+                // Desplazarse al primer error
+                window.scrollTo({
+                    top: errorDiv.offsetTop - 20,
+                    behavior: 'smooth'
+                });
+            }
+        });
+
+        // Ocultar mensajes de error al empezar a editar
+        const inputs = form.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                if (errorDiv.style.display === 'block') {
+                    errorDiv.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

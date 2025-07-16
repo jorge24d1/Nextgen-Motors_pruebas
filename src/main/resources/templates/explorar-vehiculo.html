@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${vehiculo.marca + ' ' + vehiculo.modelo}">Explorar Vehículo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link th:href="@{/css/styles4.css}" rel="stylesheet">
+    <link th:href="@{/css/explorar-vehiculo.css}" rel="stylesheet">
+
+</head>
+<body>
+<header class="main-header">
+    <nav id="mainNav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-nexgen">NexGen</span>
+                <span class="logo-motors">Motors</span>
+            </div>
+
+            <div class="nav-links">
+                <a th:href="@{/usuario/Inicio}" class="nav-link">Inicio</a>
+                <a href="/vehiculos" class="nav-link">Vehículos</a>
+                <a th:href="@{/usuario/agendamiento}" class="nav-link active">Agendamiento</a>
+                <a href="/usuario/perfil" class="nav-link">Perfil</a>
+            </div>
+
+        </div>
+    </nav>
+</header>
+
+<main class="main-content explorar-container">
+    <div class="vehicle-header">
+        <h1 class="vehicle-title" th:text="${vehiculo.marca + ' ' + vehiculo.modelo}"></h1>
+        <div class="vehicle-subtitle" th:text="${vehiculo.año} + ' • ' + ${vehiculo.categoria}"></div>
+        <div class="vehicle-price" th:text="'$' + ${#numbers.formatDecimal(vehiculo.precio, 1, 2, 'COMMA')}"></div>
+    </div>
+
+    <div class="vehicle-content">
+        <div class="vehicle-image-container">
+            <img th:src="${vehiculo.imagenUrl}" alt="Vehículo" class="vehicle-image">
+        </div>
+
+        <div>
+            <div class="specs-container">
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <i class="fas fa-tachometer-alt spec-icon"></i>
+                        <div>
+                            <span class="spec-label">Motor:</span>
+                            <span th:text="${vehiculo.motor ?: 'N/A'}"></span>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-gas-pump spec-icon"></i>
+                        <div>
+                            <span class="spec-label">Combustible:</span>
+                            <span th:text="${vehiculo.combustible ?: 'N/A'}"></span>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-cog spec-icon"></i>
+                        <div>
+                            <span class="spec-label">Transmisión:</span>
+                            <span th:text="${vehiculo.transmision ?: 'N/A'}"></span>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-users spec-icon"></i>
+                        <div>
+                            <span class="spec-label">Pasajeros:</span>
+                            <span th:text="${vehiculo.pasajeros != null ? vehiculo.pasajeros : 'N/A'}"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección de colores -->
+                <div class="color-section" th:if="${vehiculo.colores != null and !vehiculo.colores.isEmpty()}">
+                    <h3>Colores disponibles</h3>
+                    <div class="color-options">
+                        <div th:each="color : ${vehiculo.colores}"
+                             class="color-option"
+                             th:text="${color}"
+                             th:data-color="${color}"
+                             onclick="seleccionarColor(this)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vehicle-description" th:text="${vehiculo.descripcion ?: 'Este vehículo no tiene descripción disponible.'}"></div>
+
+            <div class="action-buttons">
+                <a href="#" class="btn-cotizar" id="cotizarBtn" onclick="irACita()">
+                    <i class="fas fa-file-alt"></i> SOLICITAR COTIZACIÓN
+                </a>
+                <a href="/vehiculos" class="btn-back">
+                    <i class="fas fa-arrow-left"></i> VOLVER
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+<script th:src="@{/js/chatbot.js}"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    document.addEventListener('DOMContentLoaded', function() {
+        const vehiculoId = [[${vehiculo?.id}]];
+        let colorSeleccionado = null;
+
+        console.log("ID del vehículo:", vehiculoId);
+
+        // Función para seleccionar color
+        window.seleccionarColor = function(elemento) {
+            document.querySelectorAll('.color-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            elemento.classList.add('selected');
+            colorSeleccionado = elemento.getAttribute('data-color');
+            localStorage.setItem('colorVehiculo_' + vehiculoId, colorSeleccionado);
+            console.log("Color seleccionado:", colorSeleccionado);
+        };
+        function seleccionarCategoria(categoria, elemento) {
+    // Limpiar selecciones previas
+    document.querySelectorAll('.categoria-item').forEach(item => {
+        item.classList.remove('selected');
+    });
+
+    // Seleccionar nueva categoría
+    elemento.classList.add('selected');
+    document.getElementById('tipo').value = categoria;
+
+    // No limpiar la selección de vehículo si ya hay uno seleccionado
+    const vehiculoSelect = document.getElementById('vehiculo');
+    const tieneVehiculoSeleccionado = vehiculoSelect.value !== '';
+
+    if (categoria === 'Otros') {
+        document.getElementById('comentarioContainer').style.display = 'block';
+    } else {
+        document.getElementById('comentarioContainer').style.display = 'none';
+    }
+
+    // Solo resetear si no hay vehículo seleccionado
+    if (!tieneVehiculoSeleccionado) {
+        vehiculoSelect.selectedIndex = 0;
+        document.getElementById('nombreVehiculo').value = '';
+        document.getElementById('colorVehiculo').innerHTML = '<option value="">-- Selecciona un color --</option>';
+        document.getElementById('colorContainer').style.display = 'none';
+    }
+}
+
+        // Función para ir a cita
+        window.irACita = function() {
+            if (!vehiculoId) {
+                console.error("No hay ID de vehículo");
+                return;
+            }
+
+            let url = '/usuario/cita?vehiculoId=' + vehiculoId;
+
+            if (colorSeleccionado) {
+                url += '&color=' + encodeURIComponent(colorSeleccionado);
+            }
+
+            console.log("Redirigiendo a:", url);
+            window.location.href = url;
+        };
+
+        // Configurar el botón
+        document.getElementById('cotizarBtn')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            irACita();
+        });
+
+        // Cargar color seleccionado previamente
+        if (vehiculoId) {
+            const colorGuardado = localStorage.getItem('colorVehiculo_' + vehiculoId);
+            if (colorGuardado) {
+                document.querySelectorAll('.color-option').forEach(opt => {
+                    if (opt.getAttribute('data-color') === colorGuardado) {
+                        opt.classList.add('selected');
+                        colorSeleccionado = colorGuardado;
+                    }
+                });
+            }
+        }
+    });
+    /*]]>*/
+</script>
+</body>
+</html>

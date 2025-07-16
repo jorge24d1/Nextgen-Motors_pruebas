@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>perfil</title>
+    <link th:href="@{/css/perfilst.css}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<style>
+    main section {
+        display: none;
+    }
+
+    main section#bienvenida {
+        display: block;
+    }
+</style>
+
+</head>
+<body>
+    // navbar
+    <nav class="navbar">
+    <div class="nav-logo">
+        <span class="logo-nexgen">NexGen</span>
+        <span class="logo-motors">Motors</span>
+
+    </div>
+    <div class="nav-links">
+        <a th:href="@{/usuario/Inicio}">Inicio</a>
+        <a href="/vehiculos">Vehículos</a>
+        <a th:href="@{/usuario/agendamiento}">Agendamiento online</a>
+        <a href="/usuario/perfil"> perfil</a>
+    </div>
+    </nav>
+
+    //barra lateral
+    <!-- SIDEBAR LATERAL -->
+    <section id="sidebar">
+        <a href="#" class="brand">
+            <span th:text="${nombreUsuario}">Nombre Usuario</span>
+        </a>
+        <ul class="side-menu top">
+            <li>
+                <a href="#bienvenida">
+                    <i class='bx bxs-shopping-bag-alt'></i>
+                    <span class="text">Inicio</span>
+                </a>
+            </li>
+            <li>
+                <a href="#citas">
+                    <i class='bx bxs-calendar'></i>
+                    <span class="text">Mis Citas</span>
+                </a>
+            </li>
+            <li>
+                <a href="#terminos">
+                    <i class='bx bxs-file-doc'></i>
+                    <span class="text">Términos</span>
+                </a>
+            </li>
+            <li>
+                <a href="/logout" class="logout">
+                    <i class='bx bxs-log-out-circle'></i>
+                    <span class="text">Cerrar sesión</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    
+    <!-- CONTENIDO PRINCIPAL -->
+    <main>
+    <!-- Bienvenida -->
+    <section id="bienvenida">
+        <h1>Bienvenido, <span th:text="${nombreUsuario}">Usuario</span></h1>
+        <p>Gracias por confiar en nuestro concesionario. Nos especializamos en ofrecerte la mejor experiencia en compra, mantenimiento y soporte de vehículos. Explora nuestros servicios desde este panel.</p>
+     </section>
+    
+
+    <!-- Sección Citas -->
+    <section id="citas">
+        <h2>Mis Citas</h2>
+        <div th:if="${citas.empty}">
+            <p>No tienes citas registradas.</p>
+        </div>
+        <div th:unless="${citas.empty}">
+            <table id="tabla-miscitas">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Auto</th>
+                        <th>Fecha Solicitud</th>
+                        <th>Estado</th>
+                        <th>Fecha Asignada</th>
+                        <th>Notas del Administrador</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cita : ${citas}">
+                        <td th:text="${cita.tipo}"></td>
+                        <td>
+                            <span th:if="${cita.vehiculo != null}"
+                            th:text="${cita.vehiculo.marca + ' ' + cita.vehiculo.modelo}"></span>
+                            <span th:unless="${cita.vehiculo != null}" th:text="${cita.modelo}">N/A</span>
+                            
+                        </td>
+                        <td th:text="${#temporals.format(cita.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></td>
+                        
+                        <td>
+                            <span th:text="${cita.estado}"
+                                  th:class="${cita.estado == 'Pendiente'} ? 'estado-pendiente' :
+                                            (${cita.estado == 'Aprobada'} ? 'estado-aprobada' : 'estado-rechazada')"></span>
+                        </td>
+                        <td th:text="${cita.fechaAsignada != null} ?
+                                     ${#temporals.format(cita.fechaAsignada, 'dd/MM/yyyy HH:mm')} :
+                                     'Por asignar'"></td>
+                        <td th:text="${cita.notasAdmin ?: 'No hay notas'}" class="notas-cell"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <a th:href="@{/usuario/cita}" class="btn-nueva-cita">Solicitar Nueva Cita</a>
+    </section>
+    
+
+    <!-- Términos y condiciones -->
+    <section id="terminos">
+        <h2>Términos y Condiciones</h2>
+        <p>
+            Al utilizar los servicios de nuestro concesionario, aceptas nuestros términos de uso y política de privacidad. Nos reservamos el derecho de modificar los términos sin previo aviso. Consulta regularmente esta sección para estar al tanto de los cambios.
+        </p>
+    </section>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script th:src="@{/js/perfil.js}"></script>
+</body>
+</html>

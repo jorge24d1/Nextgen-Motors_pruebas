@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehículos - Concesionario NexGen Motors</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link th:href="@{/css/stilechatbot.css}" rel="stylesheet">
+    <link th:href="@{/css/vehiculos.css}" rel="stylesheet">
+</head>
+<body>
+<!-- Barra de navegación -->
+<nav id="mainNav">
+    <div class="nav-logo">
+        <span class="logo-nexgen">NexGen</span>
+        <span class="logo-motors">Motors</span>
+
+    </div>
+    <div class="nav-links">
+        <a th:href="@{/usuario/Inicio}">Inicio</a>
+        <a href="/vehiculos">Vehículos</a>
+        <a th:href="@{/usuario/agendamiento}">Agendamiento online</a>
+        <!-- <a href="/login">Iniciar sesión</a> -->
+        <!-- <a href="/usuario/cita">Cita</a> -->
+        <a href="/usuario/perfil">Perfil</a>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+    <h1 class="hero-title">Nuestros Vehículos</h1>
+</section>
+
+<!-- Contenido principal -->
+<main class="main-content">
+    <h2 class="section-title">Explora Nuestra Gama</h2>
+
+    <div th:each="categoria : ${categorias}" class="category-section" th:id="${'categoria-' + categoria.replace(' ', '-').toLowerCase()}">
+        <h3 class="category-title" th:text="${categoria}"></h3>
+        <div class="vehicle-grid">
+            <div th:each="vehiculo : ${vehiculosPorCategoria.get(categoria)}" class="vehicle-card">
+                <img th:src="${vehiculo.imagenUrl}" alt="Imagen del vehículo" class="vehicle-image">
+                <div class="vehicle-info">
+                    <h3 th:text="${vehiculo.marca + ' ' + vehiculo.modelo}"></h3>
+                    <div class="vehicle-specs">
+                        <span th:text="${vehiculo.año}"></span>
+                        <span th:text="${vehiculo.combustible}"></span>
+                        <span th:text="${vehiculo.transmision}"></span>
+                    </div>
+                    <div class="price">Precio: <span th:text="${'$' + #numbers.formatDecimal(vehiculo.precio, 1, 'COMMA', 2, 'POINT')}"></span></div>
+                    <div class="vehicle-actions">
+                        <a th:href="@{/vehiculos/explorar/{id}(id=${vehiculo.id})}" class="btn-explorar">
+                            <i class="fas fa-search"></i> EXPLORAR
+                        </a>
+                        <a th:href="@{/usuario/cita?vehiculoId={id}(id=${vehiculo.id})}" class="btn-cotizar">
+                            <i class="fas fa-file-alt"></i> COTIZAR
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:replace="~{fragments/chatbot :: chatbot}"></div>
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Vehículos</h3>
+            <ul>
+                <li><a href="/vehiculos">Nuevos modelos</a></li>
+                <li><a href="/vehiculos">Promociones</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Servicios</h3>
+            <ul>
+                <li><a th:href="@{/usuario/Inicio#services}">Agendar servicio</a></li>
+                <li><a href="/garantias">Garantías</a></li>
+
+
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Concesionario</h3>
+            <ul>
+                <li><a href="/nosotros">Sobre nosotros</a></li>
+                <li><a href="/ubicaciones">Ubicaciones</a></li>
+                <li><a href="#contact">Contáctanos</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Legal</h3>
+            <ul>
+                <li><a href="/terminos">Términos y condiciones</a></li>
+                <li><a href="/cookies">Cookies y Aviso legal</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="copyright">
+        <p>&copy; 2023 Concesionario. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<script th:src="@{/js/chatbot.js}"></script>
+<script th:src="@{/js/vehiculos.js}"></script>
+</body>
+</html>

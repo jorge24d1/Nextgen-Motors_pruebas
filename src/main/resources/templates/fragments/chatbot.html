@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Concesionario</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link th:href="@{/css/stilechatbot.css}" rel="stylesheet">
+</head>
+<body>
+<!-- Botón para abrir/cerrar el chat -->
+<div th:fragment="chatbot">
+    <!-- Botón toggle -->
+    <div class="chat-toggle" id="chat-toggle">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <!-- Contenedor del chat (inicialmente oculto) -->
+    <div class="chat-container hidden" id="chat-container">
+        <div class="chat-header">
+            <h3>Dante</h3>
+            
+            <button class="close-chat" id="close-chat">×</button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <!-- Mensajes aparecerán aquí -->
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Escribe aquí...">
+            <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/chatbot.js}"></script>
+</body>
+</html>
