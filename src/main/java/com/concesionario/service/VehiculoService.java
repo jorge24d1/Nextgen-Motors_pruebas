@@ -2,21 +2,15 @@ package com.concesionario.service;
 
 import com.concesionario.model.Vehiculo;
 import com.concesionario.repository.VehiculoRepository;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-// import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,34 +18,37 @@ public class VehiculoService {
     private static final Logger log = LoggerFactory.getLogger(VehiculoService.class);
 
     private final VehiculoRepository vehiculoRepository;
+    private final Cloudinary cloudinary;
 
-    @Value("${upload.dir}")
-    private String uploadDir;
+    // ELIMINAR esta línea ya que no usaremos uploadDir local
+    // @Value("${upload.dir}")
+    // private String uploadDir;
 
-    public VehiculoService(VehiculoRepository vehiculoRepository) {
+    public VehiculoService(VehiculoRepository vehiculoRepository, Cloudinary cloudinary) {
         this.vehiculoRepository = vehiculoRepository;
+        this.cloudinary = cloudinary;
     }
 
-    // Métodos para todos los vehículos
+    
     public List<Vehiculo> obtenerTodos() {
         return vehiculoRepository.findAll().stream()
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
-    // Métodos para vehículos normales (no destacados)
+    
     public List<Vehiculo> obtenerVehiculosNormales() {
         return vehiculoRepository.findByDestacadoFalse();
     }
 
     public void crearVehiculoNormal(Vehiculo vehiculo, MultipartFile imagen) throws IOException {
-        String rutaImagen = guardarImagen(imagen);
+        String rutaImagen = guardarImagenEnCloudinary(imagen);
         vehiculo.setImagenUrl(rutaImagen);
-        vehiculo.setDestacado(false); // Asegura que no sea destacado
+        vehiculo.setDestacado(false); 
         vehiculoRepository.save(vehiculo);
     }
 
-    // Métodos para anuncios destacados
+    
     public List<Vehiculo> obtenerDestacados() {
         try {
             List<Vehiculo> destacados = vehiculoRepository.findByDestacadoTrue();
@@ -63,20 +60,20 @@ public class VehiculoService {
     }
 
     public void crearAnuncio(Vehiculo vehiculo, MultipartFile imagen) throws IOException {
-        String rutaImagen = guardarImagen(imagen);
+        String rutaImagen = guardarImagenEnCloudinary(imagen);
         vehiculo.setImagenUrl(rutaImagen);
-        vehiculo.setDestacado(true); // Asegura que sea destacado
+        vehiculo.setDestacado(true); 
         vehiculoRepository.save(vehiculo);
     }
 
     public void crearAnuncioCompleto(Vehiculo vehiculo, MultipartFile imagen) throws IOException {
-        String rutaImagen = guardarImagen(imagen);
+        String rutaImagen = guardarImagenEnCloudinary(imagen);
         vehiculo.setImagenUrl(rutaImagen);
-        vehiculo.setDestacado(true); // Asegura que sea destacado
+        vehiculo.setDestacado(true); 
         vehiculoRepository.save(vehiculo);
     }
 
-    // Métodos comunes
+    
     public Vehiculo obtenerPorId(String id) {
         return vehiculoRepository.findById(id).orElse(null);
     }
@@ -105,29 +102,30 @@ public class VehiculoService {
         return vehiculoRepository.countByDestacadoTrue();
     }
 
+    
+    private String guardarImagenEnCloudinary(MultipartFile imagen) throws IOException {
+        try {
+            
+            Map<String, Object> uploadOptions = new HashMap<>();
+            uploadOptions.put("folder", "auto_plus/vehiculos"); 
 
+            
+            Map<String, Object> uploadResult = cloudinary.uploader()
+                    .upload(imagen.getBytes(), uploadOptions); 
 
-    // Método privado para manejo de imágenes
-    private String guardarImagen(MultipartFile imagen) throws IOException {
-        Path uploadPath = Paths.get(uploadDir);
+            String imageUrl = uploadResult.get("url").toString();
+            String publicId = uploadResult.get("public_id").toString();
 
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
+            System.out.println("✅ Imagen subida EXITOSAMENTE");
+            System.out.println("📁 URL: " + imageUrl);
+            System.out.println("📂 Public ID: " + publicId);
+            System.out.println("📊 Respuesta completa: " + uploadResult);
+
+            return imageUrl;
+
+        } catch (Exception e) {
+            System.err.println(" Error: " + e.getMessage());
+            throw new IOException("Error al subir la imagen: " + e.getMessage(), e);
         }
-
-        String nombreArchivo = System.currentTimeMillis() + "_" +
-                Objects.requireNonNull(imagen.getOriginalFilename());
-        Path rutaCompleta = uploadPath.resolve(nombreArchivo);
-        Files.copy(imagen.getInputStream(), rutaCompleta, StandardCopyOption.REPLACE_EXISTING);
-
-        return "/uploads/" + nombreArchivo;
-    }
-
-    // Manejo de estado
-    public void cambiarEstadoDestacado(String id, boolean destacado) {
-        vehiculoRepository.findById(id).ifPresent(vehiculo -> {
-            vehiculo.setDestacado(destacado);
-            vehiculoRepository.save(vehiculo);
-        });
     }
 }

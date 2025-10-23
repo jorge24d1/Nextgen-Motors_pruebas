@@ -59,6 +59,13 @@
 			<version>2.0.1</version>
 		</dependency>
 
+		<!-- Cloudinary para manejo de imágenes en la nube -->
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>1.33.0</version>
+		</dependency>
+
 		<!-- Desarrollo -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

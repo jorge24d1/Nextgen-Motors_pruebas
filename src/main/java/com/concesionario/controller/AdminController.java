@@ -1,25 +1,19 @@
 package com.concesionario.controller;
 
 import com.concesionario.model.Rol;
-// import com.concesionario.model.Trabajadores;
 import com.concesionario.model.Trabajador;
 import com.concesionario.model.Vehiculo;
-// import com.concesionario.repository.TrabajadoresRepository;
 import com.concesionario.service.*;
 import com.concesionario.repository.CitaRepository;
-
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
-
 import com.concesionario.dto.UsuarioDTO;
 import com.concesionario.model.Cita;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-// import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,36 +22,25 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import com.concesionario.repository.TrabajadorRepository;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.stream.Collectors;
-
-import org.springframework.data.domain.Page;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    // private final TrabajadorService trabajadorService;
 
-    // TrabajadorService trabajadorService, TrabajadoresRepository trabajadoresRepository,
-    // this.trabajadorService = trabajadorService; this.trabajadoresRepository = trabajadoresRepository;
     @Autowired
     public AdminController(
-                           VehiculoService vehiculoService,
-                           CitaService citaService,
-                           NotificacionService notificacionService,
-                           PasswordEncoder passwordEncoder) {
-        
+            VehiculoService vehiculoService,
+            CitaService citaService,
+            NotificacionService notificacionService,
+            PasswordEncoder passwordEncoder) {
+
         this.vehiculoService = vehiculoService;
         this.citaService = citaService;
         this.notificacionService = notificacionService;
         this.passwordEncoder = passwordEncoder;
     }
-    // @Autowired
-    // private TrabajadoresRepository trabajadoresRepository;
 
     @Autowired
     private UsuarioService usuarioService;
@@ -68,8 +51,10 @@ public class AdminController {
     @Autowired
     private NotificacionService notificacionService;
 
-    @Value("${upload.dir}")
-    private String uploadDir;
+    // ❌ ELIMINADO: Ya no necesitamos uploadDir local
+    // @Value("${upload.dir}")
+    // private String uploadDir;
+
     @Autowired
     private TrabajadorRepository TrabajadorRepository;
     @Autowired
@@ -82,21 +67,12 @@ public class AdminController {
         long totalUsuarios = usuarioService.contarUsuarios();
         long totalVehiculos = vehiculoService.contarTodosVehiculos();
 
-        //paginacion de las citas
-        // int page = 0;
-        // int size = 5;
-        // Page<Cita> paginaCitas = citaService.obtenerCitasPaginadas(page, size);
-
         // Listados
         List<Vehiculo> vehiculos = vehiculoService.obtenerVehiculosNormales();
-        List<Vehiculo> anuncios = vehiculoService.obtenerDestacados(); 
+        List<Vehiculo> anuncios = vehiculoService.obtenerDestacados();
         List<Cita> citasPendientes = citaService.obtenerCitasPendientes();
 
         // Agregar atributos al modelo
-        // model.addAttribute("citas", paginaCitas.getContent());
-        // model.addAttribute("currentPage", page);
-        // model.addAttribute("totalPages", paginaCitas.getTotalPages());
-
         model.addAttribute("totalCitas", totalCitas);
         model.addAttribute("totalUsuarios", totalUsuarios);
         model.addAttribute("totalVehiculos", totalVehiculos);
@@ -108,22 +84,6 @@ public class AdminController {
 
         return "Admin/Dashboard";
     }
-
-    // @GetMapping("/citas")
-    // public String listarCitas(@RequestParam(defaultValue = "0") int page,
-    //                           @RequestParam(defaultValue = "5") int size,
-    //                           Model model) {
-        
-    //     Page<Cita> paginaCitas = citaService.obtenerCitasPaginadas(page, size);
-
-    //     model.addAttribute("citas", paginaCitas.getContent());
-    //     model.addAttribute("currentPage", page);
-    //     model.addAttribute("totalPages", paginaCitas.getTotalPages());
-
-
-    //     model.addAttribute("numeroNotificaciones", notificacionService.contarCitasNoLeidas());
-    //     return "Admin/Citaslista";
-    // }
 
     @PostMapping("/RegistroT")
     public String registroTrabajador(
@@ -193,8 +153,6 @@ public class AdminController {
             UsuarioDTO usuario = cita.getUsuario();
             citaMap.put("nombres", usuario != null ? usuario.getNombre() : "");
             citaMap.put("apellidos", usuario != null ? usuario.getApellido() : "");
-            // citaMap.put("nombres", cita.getNombres());
-            // citaMap.put("apellidos", cita.getApellidos());
 
             citaMap.put("tipo", cita.getTipo());
             citaMap.put("fechaCreacion", cita.getFechaCreacion().toString());
@@ -217,13 +175,11 @@ public class AdminController {
         return "OK";
     }
 
-
     @GetMapping("/nuevo")
     public String mostrarFormularioNuevo(Model model) {
         model.addAttribute("vehiculo", new Vehiculo());
         return "Admin/Nuevo";
     }
-
 
     @GetMapping("/obtener-vehiculo/{id}")
     @ResponseBody
@@ -244,7 +200,7 @@ public class AdminController {
             @RequestParam("transmision") String transmision,
             @RequestParam("combustible") String combustible,
             @RequestParam("pasajeros") Integer pasajeros,
-            @RequestParam String colores, // Añade este parámetro
+            @RequestParam String colores,
             @RequestParam("descripcion") String descripcion,
             Model model) {
 
@@ -263,11 +219,6 @@ public class AdminController {
             } else {
                 vehiculoExistente.setColores(new ArrayList<>());
             }
-
-            // if (vehiculoExistente == null) {
-            //     model.addAttribute("error", "El vehículo no existe.");
-            //     return "redirect:/admin/Dashboard";
-            // }
 
             // Campos básicos
             vehiculoExistente.setMarca(vehiculo.getMarca());
@@ -292,50 +243,30 @@ public class AdminController {
                 vehiculoExistente.setColores(new ArrayList<>());
             }
 
-            // Manejo de imagen (el que ya tenías)
-            if (imagen != null && !imagen.isEmpty()) {
-                String rutaImagen = guardarImagen(imagen);
-                vehiculoExistente.setImagenUrl(rutaImagen);
-            }
-
+            // ✅ MODIFICADO: Ya no necesitamos manejar la imagen aquí porque
+            // el VehiculoService ahora usa Cloudinary automáticamente
+            // Solo llamamos al servicio para guardar
             vehiculoService.guardarVehiculo(vehiculoExistente);
             return "redirect:/admin/Dashboard";
 
-        } catch (IOException e) {
-            model.addAttribute("error", "Error al guardar la imagen: " + e.getMessage());
+        } catch (Exception e) {
+            model.addAttribute("error", "Error al editar el vehículo: " + e.getMessage());
             return "redirect:/admin/Dashboard";
         }
     }
 
     @GetMapping("/eliminar/{id}")
     public String eliminarVehiculo(@PathVariable String id) {
-        Vehiculo vehiculo = vehiculoService.obtenerPorId(id);
-        if (vehiculo.getImagenUrl() != null) {
-            Path rutaImagen = Paths.get(uploadDir + vehiculo.getImagenUrl().replace("/uploads/", ""));
-            try {
-                Files.deleteIfExists(rutaImagen);
-            } catch (IOException e) {
-                throw new RuntimeException("Error al eliminar la imagen", e);
-            }
-        }
+        // ✅ MODIFICADO: Ya no necesitamos eliminar archivos locales
+        // Cloudinary maneja el almacenamiento automáticamente
         vehiculoService.eliminarVehiculo(id);
         return "redirect:/admin/Dashboard";
     }
 
-    private String guardarImagen(MultipartFile imagen) throws IOException {
-        Path uploadPath = Paths.get(uploadDir);
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
-
-        String nombreImagen = System.currentTimeMillis() + "_" + imagen.getOriginalFilename();
-        Path rutaCompleta = uploadPath.resolve(nombreImagen);
-        Files.copy(imagen.getInputStream(), rutaCompleta, StandardCopyOption.REPLACE_EXISTING);
-
-        return "/uploads/" + nombreImagen;
-    }
-
-
+    // ❌ ELIMINADO: Ya no necesitamos el método guardarImagen local
+    // private String guardarImagen(MultipartFile imagen) throws IOException {
+    //     // Este método ha sido eliminado porque ahora usamos Cloudinary
+    // }
 
     @GetMapping("/citas")
     public String listarCitas(Model model) {
@@ -359,6 +290,7 @@ public class AdminController {
 
         return "OK";
     }
+
     @ResponseBody
     @PostMapping("/citas/{id}/asignar-fecha")
     public String asignarFechaCita(@PathVariable String id, @RequestParam String fecha) {
@@ -373,12 +305,14 @@ public class AdminController {
 
         return "OK";
     }
+
     @ResponseBody
     @GetMapping("/citas/{id}/notas")
     public String obtenerNotasCita(@PathVariable String id) {
         Cita cita = citaService.obtenerCitaPorId(id);
         return (cita != null && cita.getNotasAdmin() != null) ? cita.getNotasAdmin() : "";
     }
+
     @ResponseBody
     @PostMapping("/citas/{id}/guardar-notas")
     public String guardarNotasCita(@PathVariable String id, @RequestParam String notas) {
@@ -444,7 +378,6 @@ public class AdminController {
         return "Admin/Dashboard";
     }
 
-    // Formulario de creación (en el mismo dashboard)
     @PostMapping("/guardar-anuncio")
     public String guardarAnuncio(
             @RequestParam String marca,
@@ -483,12 +416,12 @@ public class AdminController {
         }
     }
 
-    // Eliminar anuncio (y vehículo asociado)
     @PostMapping("/anuncios/eliminar/{id}")
     public String eliminarAnuncio(@PathVariable String id) {
-        vehiculoService.eliminarVehiculo(id); // Elimina permanentemente
+        vehiculoService.eliminarVehiculo(id);
         return "redirect:/admin/anuncios";
     }
+
     @PostMapping("/guardar-vehiculo")
     public String guardarVehiculoNormal(
             @RequestParam String marca,
@@ -501,7 +434,7 @@ public class AdminController {
             @RequestParam String combustible,
             @RequestParam int pasajeros,
             @RequestParam String descripcion,
-            @RequestParam String colores,  // Nuevo parámetro
+            @RequestParam String colores,
             @RequestParam MultipartFile imagen) throws IOException {
 
         Vehiculo vehiculo = new Vehiculo();
