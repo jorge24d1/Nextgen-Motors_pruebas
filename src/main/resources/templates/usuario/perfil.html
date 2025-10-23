@@ -1,41 +1,460 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>perfil</title>
-    <link th:href="@{/css/perfilst.css}" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <title>Mi Perfil - NextGenMotors</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-<style>
-    main section {
-        display: none;
-    }
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #f6f7f8;
+            color: #1e293b;
+            margin: 0;
+            padding: 0;
+        }
 
-    main section#bienvenida {
-        display: block;
-    }
-</style>
+        .dark body {
+            background-color: #101922;
+            color: #e2e8f0;
+        }
 
+        /* Animaciones personalizadas */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(15, 102, 189, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(15, 102, 189, 0.8); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .glowing {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease-out forwards;
+        }
+
+        /* Barra de navegación */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .dark .navbar {
+            background: rgba(16, 25, 34, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+        }
+
+        .logo-nexgen {
+            color: #0f66bd;
+        }
+
+        .logo-motors {
+            color: #1e293b;
+        }
+
+        .dark .logo-motors {
+            color: #f8fafc;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #475569;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .dark .nav-links a {
+            color: #cbd5e1;
+        }
+
+        .nav-links a:hover {
+            color: #0f66bd;
+        }
+
+        /* Layout principal */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Barra lateral */
+        #sidebar {
+            width: 280px;
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            padding: 2rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .dark #sidebar {
+            background: #1e293b;
+            border-right: 1px solid #334155;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #0f66bd, #1e40af);
+            color: white;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(15, 102, 189, 0.3);
+        }
+
+        .side-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .side-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .side-menu a {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            color: #475569;
+            text-decoration: none;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .dark .side-menu a {
+            color: #cbd5e1;
+        }
+
+        .side-menu a:hover {
+            background: #f1f5f9;
+            color: #0f66bd;
+        }
+
+        .dark .side-menu a:hover {
+            background: #334155;
+        }
+
+        .side-menu a i {
+            margin-right: 0.75rem;
+            font-size: 1.25rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .side-menu .logout {
+            color: #ef4444;
+        }
+
+        .side-menu .logout:hover {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .dark .side-menu .logout:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Contenido principal */
+        main {
+            flex: 1;
+            padding: 2rem;
+            background: #f8fafc;
+        }
+
+        .dark main {
+            background: #0f172a;
+        }
+
+        main section {
+            display: none;
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .dark main section {
+            background: #1e293b;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        main section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        main section#bienvenida {
+            display: block;
+            background: linear-gradient(135deg, #0f66bd, #1e40af);
+            color: white;
+        }
+
+        .dark main section#bienvenida {
+            background: linear-gradient(135deg, #0f66bd, #1e293b);
+        }
+
+        section h1, section h2 {
+            margin-top: 0;
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        .dark section h1, .dark section h2 {
+            color: #f1f5f9;
+        }
+
+        section#bienvenida h1, section#bienvenida p {
+            color: white;
+        }
+
+        section#bienvenida h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        section#bienvenida p {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Tabla de citas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background: linear-gradient(135deg, #0f66bd, #1e40af);
+            color: white;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .dark th, .dark td {
+            border-bottom: 1px solid #334155;
+        }
+
+        tbody tr {
+            transition: background 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: #f1f5f9;
+        }
+
+        .dark tbody tr:hover {
+            background: #334155;
+        }
+
+        /* Estados de citas */
+        .estado-pendiente {
+            background: #fef3c7;
+            color: #d97706;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .dark .estado-pendiente {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+
+        .estado-aprobada {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .dark .estado-aprobada {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .estado-rechazada {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .dark .estado-rechazada {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .notas-cell {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Botones */
+        .btn-nueva-cita {
+            display: inline-block;
+            background: linear-gradient(135deg, #0f66bd, #1e40af);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(15, 102, 189, 0.3);
+        }
+
+        .btn-nueva-cita:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(15, 102, 189, 0.4);
+        }
+
+        /* Tarjetas de información */
+        .info-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .dark .info-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+        }
+
+        .info-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            #sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
+            }
+
+            .dark #sidebar {
+                border-bottom: 1px solid #334155;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0f66bd",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        display: ["Manrope", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        };
+    </script>
 </head>
-<body>
-    // navbar
-    <nav class="navbar">
+<body class="dark:bg-background-dark">
+<!-- Barra de navegación -->
+<nav class="navbar">
     <div class="nav-logo">
         <span class="logo-nexgen">NexGen</span>
         <span class="logo-motors">Motors</span>
-
     </div>
     <div class="nav-links">
         <a th:href="@{/usuario/Inicio}">Inicio</a>
         <a href="/vehiculos">Vehículos</a>
         <a th:href="@{/usuario/agendamiento}">Agendamiento online</a>
-        <a href="/usuario/perfil"> perfil</a>
+        <a href="/usuario/perfil">Perfil</a>
     </div>
-    </nav>
+</nav>
 
-    //barra lateral
-    <!-- SIDEBAR LATERAL -->
+<!-- Contenedor principal -->
+<div class="main-container">
+    <!-- Barra lateral -->
     <section id="sidebar">
         <a href="#" class="brand">
             <span th:text="${nombreUsuario}">Nombre Usuario</span>
@@ -43,49 +462,50 @@
         <ul class="side-menu top">
             <li>
                 <a href="#bienvenida">
-                    <i class='bx bxs-shopping-bag-alt'></i>
+                    <i class='fas fa-home'></i>
                     <span class="text">Inicio</span>
                 </a>
             </li>
             <li>
                 <a href="#citas">
-                    <i class='bx bxs-calendar'></i>
+                    <i class='fas fa-calendar-check'></i>
                     <span class="text">Mis Citas</span>
                 </a>
             </li>
             <li>
                 <a href="#terminos">
-                    <i class='bx bxs-file-doc'></i>
+                    <i class='fas fa-file-contract'></i>
                     <span class="text">Términos</span>
                 </a>
             </li>
             <li>
                 <a href="/logout" class="logout">
-                    <i class='bx bxs-log-out-circle'></i>
+                    <i class='fas fa-sign-out-alt'></i>
                     <span class="text">Cerrar sesión</span>
                 </a>
             </li>
         </ul>
     </section>
-    
-    <!-- CONTENIDO PRINCIPAL -->
-    <main>
-    <!-- Bienvenida -->
-    <section id="bienvenida">
-        <h1>Bienvenido, <span th:text="${nombreUsuario}">Usuario</span></h1>
-        <p>Gracias por confiar en nuestro concesionario. Nos especializamos en ofrecerte la mejor experiencia en compra, mantenimiento y soporte de vehículos. Explora nuestros servicios desde este panel.</p>
-     </section>
-    
 
-    <!-- Sección Citas -->
-    <section id="citas">
-        <h2>Mis Citas</h2>
-        <div th:if="${citas.empty}">
-            <p>No tienes citas registradas.</p>
-        </div>
-        <div th:unless="${citas.empty}">
-            <table id="tabla-miscitas">
-                <thead>
+    <!-- Contenido principal -->
+    <main>
+        <!-- Bienvenida -->
+        <section id="bienvenida" class="slide-in">
+            <h1>Bienvenido, <span th:text="${nombreUsuario}">Usuario</span></h1>
+            <p>Gracias por confiar en nuestro concesionario. Nos especializamos en ofrecerte la mejor experiencia en compra, mantenimiento y soporte de vehículos. Explora nuestros servicios desde este panel.</p>
+        </section>
+
+        <!-- Sección Citas -->
+        <section id="citas">
+            <h2>Mis Citas</h2>
+            <div th:if="${citas.empty}">
+                <div class="info-card">
+                    <p>No tienes citas registradas.</p>
+                </div>
+            </div>
+            <div th:unless="${citas.empty}">
+                <table id="tabla-miscitas">
+                    <thead>
                     <tr>
                         <th>Tipo</th>
                         <th>Auto</th>
@@ -94,46 +514,83 @@
                         <th>Fecha Asignada</th>
                         <th>Notas del Administrador</th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     <tr th:each="cita : ${citas}">
                         <td th:text="${cita.tipo}"></td>
                         <td>
-                            <span th:if="${cita.vehiculo != null}"
-                            th:text="${cita.vehiculo.marca + ' ' + cita.vehiculo.modelo}"></span>
+                                    <span th:if="${cita.vehiculo != null}"
+                                          th:text="${cita.vehiculo.marca + ' ' + cita.vehiculo.modelo}"></span>
                             <span th:unless="${cita.vehiculo != null}" th:text="${cita.modelo}">N/A</span>
-                            
                         </td>
                         <td th:text="${#temporals.format(cita.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></td>
-                        
                         <td>
-                            <span th:text="${cita.estado}"
-                                  th:class="${cita.estado == 'Pendiente'} ? 'estado-pendiente' :
-                                            (${cita.estado == 'Aprobada'} ? 'estado-aprobada' : 'estado-rechazada')"></span>
+                                    <span th:text="${cita.estado}"
+                                          th:class="${cita.estado == 'Pendiente'} ? 'estado-pendiente' :
+                                                    (${cita.estado == 'Aprobada'} ? 'estado-aprobada' : 'estado-rechazada')"></span>
                         </td>
                         <td th:text="${cita.fechaAsignada != null} ?
-                                     ${#temporals.format(cita.fechaAsignada, 'dd/MM/yyyy HH:mm')} :
-                                     'Por asignar'"></td>
+                                             ${#temporals.format(cita.fechaAsignada, 'dd/MM/yyyy HH:mm')} :
+                                             'Por asignar'"></td>
                         <td th:text="${cita.notasAdmin ?: 'No hay notas'}" class="notas-cell"></td>
                     </tr>
-                </tbody>
-            </table>
-        </div>
-        <a th:href="@{/usuario/cita}" class="btn-nueva-cita">Solicitar Nueva Cita</a>
-    </section>
-    
+                    </tbody>
+                </table>
+            </div>
+            <a th:href="@{/usuario/cita}" class="btn-nueva-cita">Solicitar Nueva Cita</a>
+        </section>
 
-    <!-- Términos y condiciones -->
-    <section id="terminos">
-        <h2>Términos y Condiciones</h2>
-        <p>
-            Al utilizar los servicios de nuestro concesionario, aceptas nuestros términos de uso y política de privacidad. Nos reservamos el derecho de modificar los términos sin previo aviso. Consulta regularmente esta sección para estar al tanto de los cambios.
-        </p>
-    </section>
-
+        <!-- Términos y condiciones -->
+        <section id="terminos">
+            <h2>Términos y Condiciones</h2>
+            <div class="info-card">
+                <p>
+                    Al utilizar los servicios de nuestro concesionario, aceptas nuestros términos de uso y política de privacidad. Nos reservamos el derecho de modificar los términos sin previo aviso. Consulta regularmente esta sección para estar al tanto de los cambios.
+                </p>
+            </div>
+        </section>
+    </main>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-        <script th:src="@{/js/perfil.js}"></script>
+<script>
+    // Navegación entre secciones
+    document.addEventListener('DOMContentLoaded', function() {
+        // Ocultar todas las secciones excepto bienvenida
+        document.querySelectorAll('main section').forEach(section => {
+            section.style.display = 'none';
+        });
+        document.getElementById('bienvenida').style.display = 'block';
+
+        // Manejar clics en enlaces del menú lateral
+        document.querySelectorAll('.side-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+
+                    // Ocultar todas las secciones
+                    document.querySelectorAll('main section').forEach(section => {
+                        section.style.display = 'none';
+                    });
+
+                    // Mostrar la sección correspondiente
+                    const targetId = this.getAttribute('href').substring(1);
+                    document.getElementById(targetId).style.display = 'block';
+                }
+            });
+        });
+
+        // Inicializar DataTable si existe la tabla
+        if ($('#tabla-miscitas').length) {
+            $('#tabla-miscitas').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+                },
+                responsive: true
+            });
+        }
+    });
+</script>
 </body>
 </html>

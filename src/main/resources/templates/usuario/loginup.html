@@ -1,88 +1,708 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear una cuenta</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link th:href="@{/css/STloginup.css}" rel="stylesheet">
+    <title>Crear una cuenta - NextGenMotors</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                "FILL" 0,
+                "wght" 400,
+                "GRAD" 0,
+                "opsz" 24;
+        }
+
+        /* Animaciones personalizadas */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(15, 102, 189, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(15, 102, 189, 0.8); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .glowing {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease-out forwards;
+        }
+
+        /* Estilos para el proceso de registro */
+        .progress-container {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f5f9;
+            border: 3px solid #cbd5e1;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .step-circle.active {
+            background: #0f66bd;
+            border-color: #0f66bd;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .step-circle.completed {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .step-circle i {
+            font-size: 1.5rem;
+            color: #64748b;
+        }
+
+        .step-circle.active i, .step-circle.completed i {
+            color: white;
+        }
+
+        .step-text {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #64748b;
+            text-align: center;
+        }
+
+        .step-circle.active + .step-text {
+            color: #0f66bd;
+            font-weight: 600;
+        }
+
+        .step-circle.completed + .step-text {
+            color: #10b981;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 30px;
+            left: 10%;
+            width: 80%;
+            height: 4px;
+            background: #e2e8f0;
+            z-index: 1;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #0f66bd;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Estilos para las tarjetas de formulario */
+        .form-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, #0f66bd, #1e40af);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .form-body {
+            padding: 2rem;
+        }
+
+        /* NUEVO: Estilo mejorado para inputs con iconos a la izquierda */
+        .input-with-icon {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-with-icon .form-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3.5rem; /* Más espacio a la izquierda para el icono */
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        .input-with-icon .form-input:focus {
+            border-color: #0f66bd;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(15, 102, 189, 0.1);
+            outline: none;
+        }
+
+        .input-with-icon .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            transition: color 0.3s ease;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .input-with-icon .form-input:focus + .input-icon {
+            color: #0f66bd;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0f66bd, #1e40af);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(15, 102, 189, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+            border: 2px solid #e2e8f0;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .password-strength {
+            height: 6px;
+            border-radius: 3px;
+            margin-top: 0.5rem;
+            background: #e2e8f0;
+            overflow: hidden;
+        }
+
+        .password-strength-fill {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease, background 0.3s ease;
+        }
+
+        .password-weak .password-strength-fill {
+            background: #ef4444;
+            width: 33%;
+        }
+
+        .password-medium .password-strength-fill {
+            background: #f59e0b;
+            width: 66%;
+        }
+
+        .password-strong .password-strength-fill {
+            background: #10b981;
+            width: 100%;
+        }
+
+        .password-hints {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .password-hint {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.25rem;
+        }
+
+        .password-hint i {
+            margin-right: 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        .hint-valid {
+            color: #10b981;
+        }
+
+        .hint-invalid {
+            color: #ef4444;
+        }
+
+        /* Efectos visuales adicionales */
+        .floating-car {
+            position: absolute;
+            right: 5%;
+            top: 20%;
+            width: 300px;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .dark .feature-card {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .form-card {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        .dark .form-input {
+            background: #334155;
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+
+        .dark .form-input:focus {
+            background: #1e293b;
+            border-color: #0f66bd;
+        }
+
+        .dark .input-icon {
+            color: #94a3b8;
+        }
+
+        .dark .btn-secondary {
+            background: #334155;
+            color: #e2e8f0;
+            border-color: #475569;
+        }
+
+        .dark .btn-secondary:hover {
+            background: #475569;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0f66bd",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        display: ["Manrope", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        };
+    </script>
 </head>
-<body>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h2>CREAR UNA CUENTA</h2>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="flex min-h-screen flex-col">
+    <!-- Barra de navegación -->
+    <header class="sticky top-0 z-50 border-b border-gray-200/50 dark:border-gray-700/50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center gap-8">
+                    <a class="flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-white" th:href="@{/usuario/Inicio}">
+                        <div class="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">NG</span>
+                        </div>
+                        <span class="font-display">NextGenMotors</span>
+                    </a>
                 </div>
-                <div class="card-body">
-                    <div class="circle-container">
-                        <div class="circle-item">
-                            <div id="circle1" class="circle active">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail">
-                            </div>
-                            <div class="circle-text">Introducir email</div>
-                        </div>
-                        <div class="divider-line"></div>
-                        <div class="circle-item">
-                            <div id="circle2" class="circle">
-                                <img src="/images/candado.png" alt="Candado">
-                            </div>
-                            <div class="circle-text">Crear contraseña</div>
-                        </div>
-                        <div class="divider-line"></div>
-                        <div class="circle-item">
-                            <div id="circle3" class="circle">
-                                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="Usuario">
-                            </div>
-                            <div class="circle-text">Datos personales</div>
-                        </div>
+                <div class="flex items-center gap-4">
+                    <button class="rounded-full p-2 text-gray-600 dark:text-gray-300 hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors">
+                        <a class="fas fa-user" href="/login"></a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="flex-grow py-12">
+        <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Sección de información -->
+                <div class="space-y-8">
+                    <div class="slide-in">
+                        <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+                            Únete a la <span class="text-primary">Revolución</span> Automotriz
+                        </h1>
+                        <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">
+                            Crea tu cuenta y descubre un mundo de posibilidades con NextGenMotors. Accede a ofertas exclusivas, gestiona tus citas de servicio y mantente al día con las últimas novedades.
+                        </p>
                     </div>
 
-                    <div class="text-center">
-                        <p id="instruction-text">Introduzca su dirección de email.</p>
+                    <div class="space-y-4">
+                        <div class="feature-card floating">
+                            <div class="flex items-center">
+                                <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                                    <i class="fas fa-bolt text-primary"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900 dark:text-white">Acceso Rápido</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Registro en solo 3 pasos</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card floating" style="animation-delay: 0.5s;">
+                            <div class="flex items-center">
+                                <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                                    <i class="fas fa-shield-alt text-primary"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900 dark:text-white">Seguridad Garantizada</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Tus datos están protegidos</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card floating" style="animation-delay: 1s;">
+                            <div class="flex items-center">
+                                <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                                    <i class="fas fa-gift text-primary"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900 dark:text-white">Beneficios Exclusivos</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Ofertas y promociones especiales</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
 
-                    <div th:if="${error}" class="alert alert-danger text-center mb-3" th:text="${error}"></div>
-                    <div id="error-message" class="text-danger text-center mb-3" style="display: none;"></div>
+                <!-- Formulario de registro -->
+                <div class="form-card glowing">
+                    <div class="form-header">
+                        <h2 class="text-2xl font-bold">CREAR UNA CUENTA</h2>
+                        <p class="mt-2 opacity-90">Únete a la familia NextGenMotors</p>
+                    </div>
+                    <div class="form-body">
+                        <!-- Progreso del registro -->
+                        <div class="progress-container">
+                            <div class="progress-line">
+                                <div class="progress-fill" id="progress-fill"></div>
+                            </div>
+                            <div class="progress-step">
+                                <div id="step1" class="step-circle active">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="step-text">Email</div>
+                            </div>
+                            <div class="progress-step">
+                                <div id="step2" class="step-circle">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <div class="step-text">Contraseña</div>
+                            </div>
+                            <div class="progress-step">
+                                <div id="step3" class="step-circle">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="step-text">Datos</div>
+                            </div>
+                        </div>
 
-                    <form id="register-form" th:action="@{/registro}" method="post">
-                        <!-- Campos ocultos para recoger datos de pasos anteriores -->
-                        <input type="hidden" id="hidden-email" name="email">
-                        <input type="hidden" id="hidden-password" name="password">
+                        <!-- Mensajes de error -->
 
-                        <div class="mb-3" id="email-field">
-                            <input type="email" id="email" class="form-control" placeholder="Introducir email" required>
-                        </div>
-                        <div class="mb-3" id="password-field" style="display: none;">
-                            <input type="password" id="password" class="form-control" placeholder="Crear contraseña" required>
-                        </div>
-                        <div id="personal-data-section" style="display: none;">
-                            <div class="mb-3">
-                                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" required>
+                        <div id="error-message" class="text-center mb-3 p-3 rounded-lg bg-red-100 text-red-700" style="display: none;"></div>
+
+                        <!-- Formulario -->
+                        <form id="register-form" th:action="@{/registro}" method="post">
+                            <input type="hidden" id="hidden-email" name="email">
+                            <input type="hidden" id="hidden-password" name="password">
+
+                            <!-- Paso 1: Email -->
+                            <div id="step1-content">
+                                <div class="input-with-icon">
+                                    <input type="email" id="email" class="form-input" placeholder="Introduce tu email" required>
+                                    <div class="input-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                </div>
+                                <p class="text-center text-gray-600 dark:text-gray-400 mb-4">Te enviaremos un código de verificación a este email.</p>
                             </div>
-                            <div class="mb-3">
-                                <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Apellido" required>
+
+                            <!-- Paso 2: Contraseña -->
+                            <div id="step2-content" style="display: none;">
+                                <div class="input-with-icon">
+                                    <input type="password" id="password" class="form-input" placeholder="Crea una contraseña segura" required>
+                                    <div class="input-icon">
+                                        <i class="fas fa-lock"></i>
+                                    </div>
+                                </div>
+                                <div class="password-strength mt-2">
+                                    <div class="password-strength-fill"></div>
+                                </div>
+                                <div class="password-hints">
+                                    <div class="password-hint" id="hint-length">
+                                        <i class="fas fa-circle hint-invalid"></i>
+                                        <span>Mínimo 8 caracteres</span>
+                                    </div>
+                                    <div class="password-hint" id="hint-uppercase">
+                                        <i class="fas fa-circle hint-invalid"></i>
+                                        <span>Al menos una mayúscula</span>
+                                    </div>
+                                    <div class="password-hint" id="hint-number">
+                                        <i class="fas fa-circle hint-invalid"></i>
+                                        <span>Al menos un número</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <input type="text" id="identificacion" name="identificacion" class="form-control" placeholder="Identificación (CC)" required>
+
+                            <!-- Paso 3: Datos personales -->
+                            <div id="step3-content" style="display: none;">
+                                <div class="input-with-icon">
+                                    <input type="text" id="nombre" name="nombre" class="form-input" placeholder="Nombre" required>
+                                    <div class="input-icon">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                </div>
+                                <div class="input-with-icon">
+                                    <input type="text" id="apellido" name="apellido" class="form-input" placeholder="Apellido" required>
+                                    <div class="input-icon">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                </div>
+                                <div class="input-with-icon">
+                                    <input type="text" id="identificacion" name="identificacion" class="form-input" placeholder="Identificación (CC)" required>
+                                    <div class="input-icon">
+                                        <i class="fas fa-id-card"></i>
+                                    </div>
+                                </div>
                             </div>
+
+                            <!-- Botones de navegación -->
+                            <div class="space-y-3 mt-6">
+                                <button type="button" id="next-button" class="btn-primary">Siguiente</button>
+                                <button type="button" id="back-button" class="btn-secondary" style="display: none;">Atrás</button>
+                                <button type="submit" id="submit-button" class="btn-primary" style="display: none;">
+                                    <i class="fas fa-check-circle mr-2"></i>Crear Cuenta
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="text-center mt-6">
+                            <p class="text-gray-600 dark:text-gray-400">
+                                ¿Ya tienes una cuenta?
+                                <a th:href="@{/login}" class="text-primary font-semibold hover:underline">Inicia sesión</a>
+                            </p>
                         </div>
-                        <div class="d-grid gap-2">
-                            <button type="button" id="next-button" class="btn btn-primary">Siguiente</button>
-                            <button type="button" id="back-button" class="btn btn-secondary" style="display: none;">Retroceder</button>
-                            <button type="submit" id="submit-button" class="btn btn-success" style="display: none;">Registrarse</button>
-                        </div>
-                    </form>
-                    <div class="text-center mt-3">
-                        <a th:href="@{/login}">¿Ya tienes una cuenta? Inicia sesión</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-gray-800 mt-12">
+        <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-sm text-gray-500 dark:text-gray-400">&copy; 2023 NextGenMotors. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
 </div>
 
-<script th:src="@{/js/loginup.js}"></script>
+<!-- Script para el formulario de registro -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let currentStep = 1;
+        const totalSteps = 3;
+        const progressFill = document.getElementById('progress-fill');
+        const nextButton = document.getElementById('next-button');
+        const backButton = document.getElementById('back-button');
+        const submitButton = document.getElementById('submit-button');
+        const emailField = document.getElementById('email');
+        const passwordField = document.getElementById('password');
+        const hiddenEmail = document.getElementById('hidden-email');
+        const hiddenPassword = document.getElementById('hidden-password');
+        const errorMessage = document.getElementById('error-message');
+
+        // Actualizar progreso
+        function updateProgress() {
+            const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            progressFill.style.width = `${progress}%`;
+
+            // Actualizar estados de los pasos
+            document.querySelectorAll('.step-circle').forEach((circle, index) => {
+                circle.classList.remove('active', 'completed');
+                if (index + 1 < currentStep) {
+                    circle.classList.add('completed');
+                } else if (index + 1 === currentStep) {
+                    circle.classList.add('active');
+                }
+            });
+
+            // Mostrar/ocultar contenidos
+            document.querySelectorAll('[id$="-content"]').forEach((content, index) => {
+                content.style.display = index + 1 === currentStep ? 'block' : 'none';
+            });
+
+            // Mostrar/ocultar botones
+            nextButton.style.display = currentStep < totalSteps ? 'block' : 'none';
+            backButton.style.display = currentStep > 1 ? 'block' : 'none';
+            submitButton.style.display = currentStep === totalSteps ? 'block' : 'none';
+
+            // Actualizar texto del botón siguiente
+            if (currentStep === totalSteps - 1) {
+                nextButton.textContent = 'Finalizar';
+            } else {
+                nextButton.textContent = 'Siguiente';
+            }
+        }
+
+        // Validar email
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Validar contraseña
+        function validatePassword(password) {
+            const hasMinLength = password.length >= 8;
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasNumber = /\d/.test(password);
+
+            // Actualizar indicadores visuales
+            document.getElementById('hint-length').className = `password-hint ${hasMinLength ? 'hint-valid' : 'hint-invalid'}`;
+            document.getElementById('hint-uppercase').className = `password-hint ${hasUpperCase ? 'hint-valid' : 'hint-invalid'}`;
+            document.getElementById('hint-number').className = `password-hint ${hasNumber ? 'hint-valid' : 'hint-invalid'}`;
+
+            // Actualizar fuerza de contraseña
+            const strengthFill = document.querySelector('.password-strength-fill');
+            const strengthContainer = document.querySelector('.password-strength');
+
+            strengthContainer.classList.remove('password-weak', 'password-medium', 'password-strong');
+
+            if (hasMinLength && hasUpperCase && hasNumber) {
+                strengthContainer.classList.add('password-strong');
+            } else if ((hasMinLength && hasUpperCase) || (hasMinLength && hasNumber)) {
+                strengthContainer.classList.add('password-medium');
+            } else if (hasMinLength) {
+                strengthContainer.classList.add('password-weak');
+            }
+
+            return hasMinLength && hasUpperCase && hasNumber;
+        }
+
+        // Manejar clic en siguiente
+        nextButton.addEventListener('click', function() {
+            let isValid = true;
+
+            if (currentStep === 1) {
+                if (!validateEmail(emailField.value)) {
+                    errorMessage.textContent = 'Por favor, introduce un email válido.';
+                    errorMessage.style.display = 'block';
+                    isValid = false;
+                } else {
+                    hiddenEmail.value = emailField.value;
+                    errorMessage.style.display = 'none';
+                }
+            } else if (currentStep === 2) {
+                if (!validatePassword(passwordField.value)) {
+                    errorMessage.textContent = 'La contraseña no cumple con los requisitos de seguridad.';
+                    errorMessage.style.display = 'block';
+                    isValid = false;
+                } else {
+                    hiddenPassword.value = passwordField.value;
+                    errorMessage.style.display = 'none';
+                }
+            }
+
+            if (isValid && currentStep < totalSteps) {
+                currentStep++;
+                updateProgress();
+            }
+        });
+
+        // Manejar clic en atrás
+        backButton.addEventListener('click', function() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateProgress();
+                errorMessage.style.display = 'none';
+            }
+        });
+
+        // Validar contraseña en tiempo real
+        passwordField.addEventListener('input', function() {
+            validatePassword(passwordField.value);
+        });
+
+        // Inicializar
+        updateProgress();
+    });
+</script>
 </body>
 </html>

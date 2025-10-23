@@ -1,193 +1,367 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ubicaciones en Cartagena - NexGen Motors Concesionario Oficial</title>
+    <title>Ubicaciones en Cartagena - NextGenMotors Concesionario Oficial</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link th:href="@{/css/ubicaciones.css}" rel="stylesheet">
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                "FILL" 0,
+                "wght" 400,
+                "GRAD" 0,
+                "opsz" 24;
+        }
+
+        /* Estilos para los badges de ubicación */
+        .location-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #0f66bd;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Asegurar que el iframe del mapa sea responsive */
+        .map-container {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0f66bd",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        display: ["Manrope", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        };
+    </script>
 </head>
-<body>
-<nav id="mainNav">
-    <div class="nav-logo logo-container">
-        <span class="logo-nexgen">NexGen</span>
-        <span class="logo-motors">Motors</span>
-    </div>
-    <div class="nav-links">
-        <a th:href="@{/usuario/Inicio}">Inicio</a>
-        <a href="/vehiculos">Vehículos</a>
-        <a th:href="@{/usuario/agendamiento}">Agendamiento online</a>
-        <a href="/usuario/perfil">Mi perfil</a>
-    </div>
-</nav>
-
-<section class="hero">
-    <div class="hero-content">
-        <h1>Nuestras Ubicaciones en Cartagena</h1>
-        <p>Encuentra tu concesionario NexGen Motors más cercano en la hermosa ciudad de Cartagena</p>
-    </div>
-</section>
-
-<div class="main-content">
-    <h2 class="section-title">Concesionarios NexGen Motors Cartagena</h2>
-    <p class="section-subtitle">Visítanos en cualquiera de nuestras 4 ubicaciones estratégicas en la ciudad heroica</p>
-
-    <div class="locations-container">
-        <!-- Norte - Bocagrande -->
-        <div class="location-card">
-            <div class="location-map">
-                <div class="location-badge">Norte</div>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125715.64043749604!2d-75.54462260000001!3d10.3992244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef6251c1e6a8a3b%3A0x4a1e3b1b1b1b1b1b!2sBocagrande%2C%20Cartagena%2C%20Bol%C3%ADvar!5e0!3m2!1ses!2sco!4v1712345678901!5m2!1ses!2sco" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-            <div class="location-info">
-                <h3 class="location-name">NexGen Motors Bocagrande</h3>
-                <p class="location-address">
-                    Avenida San Martín #12-34<br>
-                    Bocagrande, Cartagena<br>
-                    Bolívar, Colombia
-                </p>
-                <p class="location-hours">
-                    <strong>Horario:</strong><br>
-                    Lunes a Viernes: 8:00 - 18:00<br>
-                    Sábados: 9:00 - 14:00
-                </p>
-                <p class="location-contact">
-                    <strong>Teléfono:</strong> +57 5 654 3210<br>
-                    <strong>Email:</strong> bocagrande@nexgenmotors.co
-                </p>
-                <a href="#" class="location-button">Cómo llegar</a>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="flex min-h-screen flex-col">
+    <!-- Barra de navegación -->
+    <header class="sticky top-0 z-50 border-b border-gray-200/50 dark:border-gray-700/50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center gap-8">
+                    <a class="flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-white" th:href="@{/usuario/Inicio}">
+                        <div class="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">NG</span>
+                        </div>
+                        <span class="font-display">NextGenMotors</span>
+                    </a>
+                    <nav class="hidden md:flex items-center gap-6">
+                        <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" th:href="@{/usuario/Inicio}">Inicio</a>
+                        <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="/vehiculos">Vehículos</a>
+                        <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" th:href="@{/usuario/agendamiento}">Agendamiento online</a>
+                        <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="/usuario/perfil">Mi perfil</a>
+                    </nav>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button class="rounded-full p-2 text-gray-600 dark:text-gray-300 hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors">
+                        <a class="fas fa-user" href="/usuario/perfil"></a>
+                    </button>
+                </div>
             </div>
         </div>
+    </header>
 
-        <!-- Sur - La Boquilla -->
-        <div class="location-card">
-            <div class="location-map">
-                <div class="location-badge">Sur</div>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125715.64043749604!2d-75.54462260000001!3d10.3992244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef6251c1e6a8a3b%3A0x4a1e3b1b1b1b1b1b!2sLa%20Boquilla%2C%20Cartagena%2C%20Bol%C3%ADvar!5e0!3m2!1ses!2sco!4v1712345678901!5m2!1ses!2sco" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-            <div class="location-info">
-                <h3 class="location-name">NexGen Motors La Boquilla</h3>
-                <p class="location-address">
-                    Calle 8 #10-15<br>
-                    La Boquilla, Cartagena<br>
-                    Bolívar, Colombia
-                </p>
-                <p class="location-hours">
-                    <strong>Horario:</strong><br>
-                    Lunes a Viernes: 8:00 - 18:00<br>
-                    Sábados: 9:00 - 14:00
-                </p>
-                <p class="location-contact">
-                    <strong>Teléfono:</strong> +57 5 678 9012<br>
-                    <strong>Email:</strong> boquilla@nexgenmotors.co
-                </p>
-                <a href="#" class="location-button">Cómo llegar</a>
+    <!-- Hero Section -->
+    <section class="relative h-[40vh] min-h-[300px] w-full bg-cover bg-center">
+        <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70"></div>
+        <div class="relative z-10 flex h-full flex-col items-center justify-center px-4 text-white sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">Nuestras Ubicaciones en Cartagena</h1>
+            <p class="mt-4 max-w-2xl text-lg text-gray-200">Encuentra tu concesionario NextGenMotors más cercano en la hermosa ciudad de Cartagena</p>
+        </div>
+    </section>
+
+    <!-- Contenido principal -->
+    <main class="flex-grow py-16">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold tracking-tight text-center text-gray-900 dark:text-white sm:text-4xl">Concesionarios NextGenMotors Cartagena</h2>
+            <p class="mt-4 text-lg leading-8 text-center text-gray-600 dark:text-gray-400">Visítanos en cualquiera de nuestras 4 ubicaciones estratégicas en la ciudad heroica</p>
+
+            <div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Norte - Bocagrande -->
+                <div class="flex flex-col rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark overflow-hidden hover:shadow-lg transition-all">
+                    <div class="map-container relative">
+                        <div class="location-badge">Norte</div>
+                        <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125715.64043749604!2d-75.54462260000001!3d10.3992244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef6251c1e6a8a3b%3A0x4a1e3b1b1b1b1b1b!2sBocagrande%2C%20Cartagena%2C%20Bol%C3%ADvar!5e0!3m2!1ses!2sco!4v1712345678901!5m2!1ses!2sco"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">NextGenMotors Bocagrande</h3>
+                        <div class="mt-4 space-y-3 text-gray-600 dark:text-gray-400">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt mt-1 mr-3 text-primary"></i>
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">Avenida San Martín #12-34</p>
+                                    <p>Bocagrande, Cartagena</p>
+                                    <p>Bolívar, Colombia</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-clock mt-1 mr-3 text-primary"></i>
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">Horario:</p>
+                                    <p>Lunes a Viernes: 8:00 - 18:00</p>
+                                    <p>Sábados: 9:00 - 14:00</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-phone mt-1 mr-3 text-primary"></i>
+                                <div>
+                                    <p><span class="font-medium text-gray-900 dark:text-white">Teléfono:</span> +57 5 654 3210</p>
+                                    <p><span class="font-medium text-gray-900 dark:text-white">Email:</span> bocagrande@nextgenmotors.co</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="mt-6 inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-primary/90 transition-colors">
+                            Cómo llegar
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Sur - La Boquilla -->
+                <div class="flex flex-col rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark overflow-hidden hover:shadow-lg transition-all">
+                    <div class="map-container relative">
+                        <div class="location-badge">Sur</div>
+                        <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125715.64043749604!2d-75.54462260000001!3d10.3992244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef6251c1e6a8a3b%3A0x4a1e3b1b1b1b1b1b!2sLa%20Boquilla%2C%20Cartagena%2C%20Bol%C3%ADvar!5e0!3m2!1ses!2sco!4v1712345678901!5m2!1ses!2sco"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">NextGenMotors La Boquilla</h3>
+                        <div class="mt-4 space-y-3 text-gray-600 dark:text-gray-400">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt mt-1 mr-3 text-primary"></i>
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">Calle 8 #10-15</p>
+                                    <p>La Boquilla, Cartagena</p>
+                                    <p>Bolívar, Colombia</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-clock mt-1 mr-3 text-primary"></i>
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">Horario:</p>
+                                    <p>Lunes a Viernes: 8:00 - 18:00</p>
+                                    <p>Sábados: 9:00 - 14:00</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-phone mt-1 mr-3 text-primary"></i>
+                                <div>
+                                    <p><span class="font-medium text-gray-900 dark:text-white">Teléfono:</span> +57 5 678 9012</p>
+                                    <p><span class="font-medium text-gray-900 dark:text-white">Email:</span> boquilla@nextgenmotors.co</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="mt-6 inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-primary/90 transition-colors">
+                            Cómo llegar
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Este - El Laguito -->
+                <div class="flex flex-col rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark overflow-hidden hover:shadow-lg transition-all">
+                    <div class="map-container relative">
+                        <div class="location-badge">Este</div>
+                        <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125715.64043749604!2d-75.54462260000001!3d10.3992244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef6251c1e6a8a3b%3A0x4a1e3b1b1b1b1b1b!2sEl%20Laguito%2C%20Cartagena%2C%20Bol%C3%ADvar!5e0!3m2!1ses!2sco!4v1712345678901!5m2!1ses!2sco"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">NextGenMotors El Laguito</h3>
+                        <div class="mt-4 space-y-3 text-gray-600 dark:text-gray-400">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt mt-1 mr-3 text-primary"></i>
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">Avenida del Retorno #5-67</p>
+                                    <p>El Laguito, Cartagena</p>
+                                    <p>Bolívar, Colombia</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-clock mt-1 mr-3 text-primary"></i>
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">Horario:</p>
+                                    <p>Lunes a Viernes: 8:00 - 18:00</p>
+                                    <p>Sábados: 9:00 - 14:00</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-phone mt-1 mr-3 text-primary"></i>
+                                <div>
+                                    <p><span class="font-medium text-gray-900 dark:text-white">Teléfono:</span> +57 5 789 0123</p>
+                                    <p><span class="font-medium text-gray-900 dark:text-white">Email:</span> laguito@nextgenmotors.co</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="mt-6 inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-primary/90 transition-colors">
+                            Cómo llegar
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Oeste - Manga -->
+                <div class="flex flex-col rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark overflow-hidden hover:shadow-lg transition-all">
+                    <div class="map-container relative">
+                        <div class="location-badge">Oeste</div>
+                        <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125715.64043749604!2d-75.54462260000001!3d10.3992244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef6251c1e6a8a3b%3A0x4a1e3b1b1b1b1b1b!2sManga%2C%20Cartagena%2C%20Bol%C3%ADvar!5e0!3m2!1ses!2sco!4v1712345678901!5m2!1ses!2sco"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">NextGenMotors Manga</h3>
+                        <div class="mt-4 space-y-3 text-gray-600 dark:text-gray-400">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt mt-1 mr-3 text-primary"></i>
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">Calle 30 #25-45</p>
+                                    <p>Barrio Manga, Cartagena</p>
+                                    <p>Bolívar, Colombia</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-clock mt-1 mr-3 text-primary"></i>
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">Horario:</p>
+                                    <p>Lunes a Viernes: 8:00 - 18:00</p>
+                                    <p>Sábados: 9:00 - 14:00</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-phone mt-1 mr-3 text-primary"></i>
+                                <div>
+                                    <p><span class="font-medium text-gray-900 dark:text-white">Teléfono:</span> +57 5 890 1234</p>
+                                    <p><span class="font-medium text-gray-900 dark:text-white">Email:</span> manga@nextgenmotors.co</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="mt-6 inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-primary/90 transition-colors">
+                            Cómo llegar
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
+    </main>
 
-        <!-- Este - El Laguito -->
-        <div class="location-card">
-            <div class="location-map">
-                <div class="location-badge">Este</div>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125715.64043749604!2d-75.54462260000001!3d10.3992244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef6251c1e6a8a3b%3A0x4a1e3b1b1b1b1b1b!2sEl%20Laguito%2C%20Cartagena%2C%20Bol%C3%ADvar!5e0!3m2!1ses!2sco!4v1712345678901!5m2!1ses!2sco" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <!-- Footer -->
+    <footer class="bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-gray-800">
+        <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="footer-column">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Vehículos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/vehiculos" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Nuevos modelos</a></li>
+                        <li><a href="/vehiculos" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Promociones</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Servicios</h3>
+                    <ul class="space-y-2">
+                        <li><a th:href="@{/usuario/Inicio}" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Agendar servicio</a></li>
+                        <li><a href="/garantias" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Garantías</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Concesionario</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/nosotros" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Sobre nosotros</a></li>
+                        <li><a href="/ubicaciones" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Ubicaciones</a></li>
+                        <li><a href="#contact" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Contáctanos</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/terminos" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Términos y condiciones</a></li>
+                        <li><a href="/cookies" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Cookies y Aviso legal</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="location-info">
-                <h3 class="location-name">NexGen Motors El Laguito</h3>
-                <p class="location-address">
-                    Avenida del Retorno #5-67<br>
-                    El Laguito, Cartagena<br>
-                    Bolívar, Colombia
-                </p>
-                <p class="location-hours">
-                    <strong>Horario:</strong><br>
-                    Lunes a Viernes: 8:00 - 18:00<br>
-                    Sábados: 9:00 - 14:00
-                </p>
-                <p class="location-contact">
-                    <strong>Teléfono:</strong> +57 5 789 0123<br>
-                    <strong>Email:</strong> laguito@nexgenmotors.co
-                </p>
-                <a href="#" class="location-button">Cómo llegar</a>
+
+            <div class="mt-12 flex justify-center space-x-6">
+                <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><i class="fab fa-youtube"></i></a>
+            </div>
+
+            <div class="mt-8 border-t border-gray-200 dark:border-gray-700 pt-8 text-center">
+                <p class="text-sm text-gray-500 dark:text-gray-400">&copy; 2023 NextGenMotors. Todos los derechos reservados.</p>
             </div>
         </div>
-
-        <!-- Oeste - Manga -->
-        <div class="location-card">
-            <div class="location-map">
-                <div class="location-badge">Oeste</div>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125715.64043749604!2d-75.54462260000001!3d10.3992244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef6251c1e6a8a3b%3A0x4a1e3b1b1b1b1b1b!2sManga%2C%20Cartagena%2C%20Bol%C3%ADvar!5e0!3m2!1ses!2sco!4v1712345678901!5m2!1ses!2sco" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-            <div class="location-info">
-                <h3 class="location-name">NexGen Motors Manga</h3>
-                <p class="location-address">
-                    Calle 30 #25-45<br>
-                    Barrio Manga, Cartagena<br>
-                    Bolívar, Colombia
-                </p>
-                <p class="location-hours">
-                    <strong>Horario:</strong><br>
-                    Lunes a Viernes: 8:00 - 18:00<br>
-                    Sábados: 9:00 - 14:00
-                </p>
-                <p class="location-contact">
-                    <strong>Teléfono:</strong> +57 5 890 1234<br>
-                    <strong>Email:</strong> manga@nexgenmotors.co
-                </p>
-                <a href="#" class="location-button">Cómo llegar</a>
-            </div>
-        </div>
-    </div>
+    </footer>
 </div>
 
-<footer>
-    <div class="footer-content">
-        <div class="footer-column">
-            <h3>Vehículos</h3>
-            <ul>
-                <li><a href="/vehiculos">Nuevos modelos</a></li>
-                <li><a href="/vehiculos">Promociones</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-column">
-            <h3>Servicios</h3>
-            <ul>
-                <li><a th:href="@{/usuario/Inicio#services}">Agendar servicio</a></li>
-                <li><a href="/garantias">Garantías</a></li>
-
-
-            </ul>
-        </div>
-
-        <div class="footer-column">
-            <h3>Concesionario</h3>
-            <ul>
-                <li><a href="/nosotros">Sobre nosotros</a></li>
-                <li><a href="/ubicaciones">Ubicaciones</a></li>
-                <li><a href="#contact">Contáctanos</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-column">
-            <h3>Legal</h3>
-            <ul>
-                <li><a href="/terminos">Términos y condiciones</a></li>
-                <li><a href="/cookies">Cookies y Aviso legal</a></li>
-            </ul>
-        </div>
-    </div>
-
-
-    <div class="copyright">
-        <p>&copy; 2023 Concesionario. Todos los derechos reservados.</p>
-    </div>
-</footer>
-
-<a href="https://wa.me/573123456789" class="whatsapp-float" target="_blank">
+<!-- Botón de WhatsApp -->
+<a href="https://wa.me/573123456789" class="fixed bottom-8 right-8 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg hover:bg-green-600 transition-colors z-50" target="_blank">
     <i class="fab fa-whatsapp"></i>
 </a>
 
 <script th:src="@{/js/ubicaciones.js}"></script>
+<script>
+    // Barra de navegación al hacer scroll
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('header');
+        if (window.scrollY > 50) {
+            header.classList.add('shadow-md');
+        } else {
+            header.classList.remove('shadow-md');
+        }
+    });
+</script>
 </body>
 </html>

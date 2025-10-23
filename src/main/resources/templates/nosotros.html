@@ -1,290 +1,417 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre Nosotros - NexGen Motors Concesionario Oficial</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link th:href="@{/css/nosotros.css}" rel="stylesheet">
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                "FILL" 0,
+                "wght" 400,
+                "GRAD" 0,
+                "opsz" 24;
+        }
+
+        /* Estilos personalizados para mantener la funcionalidad */
+        .logo-nexgen {
+            font-weight: 800;
+            color: #0f66bd;
+        }
+
+        .logo-motors {
+            font-weight: 400;
+            color: #333;
+        }
+
+        .dark .logo-motors {
+            color: #fff;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0f66bd",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        display: ["Manrope", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        };
+    </script>
 </head>
-<body>
-<nav>
-    <div class="nav-logo">
-        <span class="logo-nexgen">NexGen</span>
-        <span class="logo-motors">Motors</span>
-
-    </div>
-    <div class="nav-links">
-        <a href="/vehiculos">Vehículos</a>
-        <a th:href="@{/usuario/agendamiento}">Agendamiento online</a>
-        <a href="/login">Iniciar sesión</a>
-        <a href="/usuario/cita">Cita</a>
-    </div>
-</nav>
-
-<section class="hero">
-    <div class="hero-content">
-        <h1>Concesionario NexGen Motors Oficial</h1>
-        <p>Más de 20 años de experiencia brindando soluciones de movilidad con calidad, innovación y servicio excepcional.</p>
-    </div>
-</section>
-
-<section class="history">
-    <h2 class="section-title">Nuestra Historia</h2>
-    <p class="section-subtitle">Desde nuestros humildes comienzos hasta convertirnos en líderes del sector automotriz</p>
-
-    <div class="history-content">
-        <div class="history-text">
-            <p>Fundado en 2002, nuestro concesionario comenzó como un pequeño establecimiento con un sueño: revolucionar la experiencia de compra de autos en México. Lo que inició con un equipo de 10 apasionados por los automóviles, hoy es una organización con más de 150 colaboradores comprometidos con la excelencia.</p>
-            
-            <p>En 2010 nos convertimos en Concesionario Oficial NexGen Motors, marcando un hito en nuestra trayectoria. Este reconocimiento nos permitió ofrecer productos de mayor calidad y acceder a la tecnología innovadora que caracteriza a la marca.</p>
-            
-            <p>Hoy, con 3 sucursales en la Ciudad de México y más de 15,000 vehículos entregados, mantenemos nuestro compromiso con la satisfacción total del cliente, ofreciendo no solo autos excepcionales, sino una experiencia de compra y servicio que supera expectativas.</p>
-        </div>
-        <div class="history-image">
-            <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1400&q=80" alt="Historia de NexGen Motors">
-        </div>
-    </div>
-</section>
-
-<section class="values">
-    <h2 class="section-title">Nuestros Valores</h2>
-    <p class="section-subtitle">Principios que guían cada decisión y acción en nuestra organización</p>
-
-    <div class="values-grid">
-        <div class="value-card">
-            <div class="value-icon">
-                <i class="fas fa-handshake"></i>
-            </div>
-            <h3 class="value-title">Integridad</h3>
-            <p class="value-description">Actuamos con honestidad y transparencia en todas nuestras relaciones comerciales y personales.</p>
-        </div>
-
-        <div class="value-card">
-            <div class="value-icon">
-                <i class="fas fa-heart"></i>
-            </div>
-            <h3 class="value-title">Pasión</h3>
-            <p class="value-description">Nos apasiona lo que hacemos y eso se refleja en el servicio que brindamos cada día.</p>
-        </div>
-
-        <div class="value-card">
-            <div class="value-icon">
-                <i class="fas fa-lightbulb"></i>
-            </div>
-            <h3 class="value-title">Innovación</h3>
-            <p class="value-description">Buscamos constantemente mejoras y nuevas formas de sorprender a nuestros clientes.</p>
-        </div>
-
-        <div class="value-card">
-            <div class="value-icon">
-                <i class="fas fa-users"></i>
-            </div>
-            <h3 class="value-title">Trabajo en Equipo</h3>
-            <p class="value-description">Creemos en el poder de la colaboración para lograr resultados excepcionales.</p>
-        </div>
-
-        <div class="value-card">
-            <div class="value-icon">
-                <i class="fas fa-star"></i>
-            </div>
-            <h3 class="value-title">Excelencia</h3>
-            <p class="value-description">Nos esforzamos por superar expectativas en cada detalle de nuestro servicio.</p>
-        </div>
-
-        <div class="value-card">
-            <div class="value-icon">
-                <i class="fas fa-leaf"></i>
-            </div>
-            <h3 class="value-title">Sostenibilidad</h3>
-            <p class="value-description">Promovemos prácticas responsables con el medio ambiente y nuestra comunidad.</p>
-        </div>
-    </div>
-</section>
-
-<section class="team">
-    <h2 class="section-title">Nuestro Equipo</h2>
-    <p class="section-subtitle">Conoce a las personas que hacen posible nuestra excelencia en servicio</p>
-
-    <div class="team-grid">
-        <div class="team-member">
-            <div class="member-photo" style="background-image: url('https://randomuser.me/api/portraits/women/65.jpg');"></div>
-            <div class="member-info">
-                <h3 class="member-name">Laura Méndez</h3>
-                <p class="member-position">Directora General</p>
-                <p class="member-bio">Con 18 años en la industria automotriz, Laura lidera nuestra visión estratégica y crecimiento sostenible.</p>
-            </div>
-        </div>
-
-        <div class="team-member">
-            <div class="member-photo" style="background-image: url('https://randomuser.me/api/portraits/men/32.jpg');"></div>
-            <div class="member-info">
-                <h3 class="member-name">Carlos Rodríguez</h3>
-                <p class="member-position">Gerente de Ventas</p>
-                <p class="member-bio">Especialista en relaciones con clientes, Carlos asegura que cada compra sea una experiencia memorable.</p>
-            </div>
-        </div>
-
-        <div class="team-member">
-            <div class="member-photo" style="background-image: url('https://randomuser.me/api/portraits/women/44.jpg');"></div>
-            <div class="member-info">
-                <h3 class="member-name">Ana Sánchez</h3>
-                <p class="member-position">Gerente de Servicio</p>
-                <p class="member-bio">Con certificaciones internacionales, Ana garantiza que tu NexGen Motors reciba el mejor mantenimiento posible.</p>
-            </div>
-        </div>
-
-        <div class="team-member">
-            <div class="member-photo" style="background-image: url('https://randomuser.me/api/portraits/men/75.jpg');"></div>
-            <div class="member-info">
-                <h3 class="member-name">Javier López</h3>
-                <p class="member-position">Asesor Financiero</p>
-                <p class="member-bio">Experto en soluciones crediticias, Javier encuentra el plan perfecto para cada presupuesto.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="awards">
-    <h2 class="section-title">Reconocimientos</h2>
-    <p class="section-subtitle">Premios y certificaciones que respaldan nuestra excelencia</p>
-
-    <div class="awards-grid">
-        <div class="award-item">
-            <div class="award-image">
-                <img src="https://via.placeholder.com/150x100?text=Premio+Excelencia" alt="Premio Excelencia NexGen Motors">
-            </div>
-            <div class="award-title">Premio a la Excelencia NexGen Motors</div>
-            <div class="award-year">2023, 2021, 2019</div>
-        </div>
-
-        <div class="award-item">
-            <div class="award-image">
-                <img src="https://via.placeholder.com/150x100?text=Certificación+ISO" alt="Certificación ISO 9001">
-            </div>
-            <div class="award-title">Certificación ISO 9001</div>
-            <div class="award-year">Desde 2015</div>
-        </div>
-
-        <div class="award-item">
-            <div class="award-image">
-                <img src="https://via.placeholder.com/150x100?text=Mejor+Servicio" alt="Mejor Servicio al Cliente">
-            </div>
-            <div class="award-title">Mejor Servicio al Cliente</div>
-            <div class="award-year">Revista Automotriz 2022</div>
-        </div>
-
-        <div class="award-item">
-            <div class="award-image">
-                <img src="https://via.placeholder.com/150x100?text=Líder+en+Ventas" alt="Líder en Ventas">
-            </div>
-            <div class="award-title">Líder en Ventas Región Centro</div>
-            <div class="award-year">2020-2023</div>
-        </div>
-
-        <div class="award-item">
-            <div class="award-image">
-                <img src="https://via.placeholder.com/150x100?text=Premio+Innovación" alt="Premio Innovación">
-            </div>
-            <div class="award-title">Premio a la Innovación</div>
-            <div class="award-year">Asociación Mexicana Automotriz 2021</div>
-        </div>
-    </div>
-</section>
-
-<section class="testimonials">
-    <h2 class="section-title">Lo que dicen nuestros clientes</h2>
-    <p class="section-subtitle">Experiencias reales de personas que confiaron en nosotros</p>
-
-    <div class="testimonials-grid">
-        <div class="testimonial-card">
-            <p class="testimonial-text">"Compré mi primer NexGen Motors aquí hace 10 años y desde entonces no he cambiado de concesionario. El servicio postventa es excepcional y siempre me tratan como familia."</p>
-            <div class="testimonial-author">
-                <div class="author-avatar"></div>
-                <div class="author-info">
-                    <h4>Miguel Ángel Torres</h4>
-                    <p>Cliente desde 2013</p>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="flex min-h-screen flex-col">
+    <!-- Barra de navegación -->
+    <header class="sticky top-0 z-50 border-b border-gray-200/50 dark:border-gray-700/50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center gap-8">
+                    <a class="flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-white" th:href="@{/usuario/Inicio}">
+                            <span class="font-display">
+                                <span class="logo-nexgen">NexGen</span>
+                                <span class="logo-motors">Motors</span>
+                            </span>
+                    </a>
+                    <nav class="hidden md:flex items-center gap-6">
+                        <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="/vehiculos">Vehículos</a>
+                        <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" th:href="@{/usuario/agendamiento}">Agendamiento online</a>
+                        <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="/login">Iniciar sesión</a>
+                        <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="/usuario/cita">Cita</a>
+                    </nav>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button class="rounded-full p-2 text-gray-600 dark:text-gray-300 hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="rounded-full p-2 text-gray-600 dark:text-gray-300 hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                    <button class="rounded-full p-2 text-gray-600 dark:text-gray-300 hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors">
+                        <i class="fas fa-user"></i>
+                    </button>
                 </div>
             </div>
         </div>
+    </header>
 
-        <div class="testimonial-card">
-            <p class="testimonial-text">"Como mujer, a veces me sentía intimidada en otros concesionarios. Aquí me asesoraron con paciencia y profesionalismo, sin presiones. ¡Totalmente recomendado!"</p>
-            <div class="testimonial-author">
-                <div class="author-avatar"></div>
-                <div class="author-info">
-                    <h4>Daniela Ramírez</h4>
-                    <p>Dueña de NexGen Seltos 2022</p>
+    <!-- Hero Section -->
+    <section class="relative h-[50vh] min-h-[400px] w-full bg-cover bg-center">
+        <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70"></div>
+        <div class="relative z-10 flex h-full flex-col items-center justify-center px-4 text-white sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">Concesionario NexGen Motors Oficial</h1>
+            <p class="mt-4 max-w-2xl text-lg text-gray-200">Más de 20 años de experiencia brindando soluciones de movilidad con calidad, innovación y servicio excepcional.</p>
+        </div>
+    </section>
+
+    <!-- Nuestra Historia -->
+    <section class="py-16">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold tracking-tight text-center text-gray-900 dark:text-white sm:text-4xl">Nuestra Historia</h2>
+            <p class="mt-4 text-lg leading-8 text-center text-gray-600 dark:text-gray-400">Desde nuestros humildes comienzos hasta convertirnos en líderes del sector automotriz</p>
+
+            <div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 text-gray-600 dark:text-gray-400">
+                    <p>Fundado en 2002, nuestro concesionario comenzó como un pequeño establecimiento con un sueño: revolucionar la experiencia de compra de autos en México. Lo que inició con un equipo de 10 apasionados por los automóviles, hoy es una organización con más de 150 colaboradores comprometidos con la excelencia.</p>
+
+                    <p>En 2010 nos convertimos en Concesionario Oficial NexGen Motors, marcando un hito en nuestra trayectoria. Este reconocimiento nos permitió ofrecer productos de mayor calidad y acceder a la tecnología innovadora que caracteriza a la marca.</p>
+
+                    <p>Hoy, con 3 sucursales en la Ciudad de México y más de 15,000 vehículos entregados, mantenemos nuestro compromiso con la satisfacción total del cliente, ofreciendo no solo autos excepcionales, sino una experiencia de compra y servicio que supera expectativas.</p>
+                </div>
+                <div class="rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1400&q=80" alt="Historia de NexGen Motors" class="w-full h-full object-cover">
                 </div>
             </div>
         </div>
+    </section>
 
-        <div class="testimonial-card">
-            <p class="testimonial-text">"Para nuestra empresa, encontrar un concesionario confiable era crucial. Han superado nuestras expectativas en servicio y soporte para nuestra flotilla de 12 vehículos NexGen Motors."</p>
-            <div class="testimonial-author">
-                <div class="author-avatar"></div>
-                <div class="author-info">
-                    <h4>Ricardo Fernández</h4>
-                    <p>Director de Logística, Empresa XYZ</p>
+    <!-- Nuestros Valores -->
+    <section class="py-16 bg-background-light dark:bg-background-dark/50">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold tracking-tight text-center text-gray-900 dark:text-white sm:text-4xl">Nuestros Valores</h2>
+            <p class="mt-4 text-lg leading-8 text-center text-gray-600 dark:text-gray-400">Principios que guían cada decisión y acción en nuestra organización</p>
+
+            <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- Integridad -->
+                <div class="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark hover:shadow-lg transition-all">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 text-primary">
+                        <i class="fas fa-handshake text-xl"></i>
+                    </div>
+                    <h3 class="mt-5 text-lg font-semibold text-gray-900 dark:text-white">Integridad</h3>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Actuamos con honestidad y transparencia en todas nuestras relaciones comerciales y personales.</p>
+                </div>
+
+                <!-- Pasión -->
+                <div class="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark hover:shadow-lg transition-all">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 text-primary">
+                        <i class="fas fa-heart text-xl"></i>
+                    </div>
+                    <h3 class="mt-5 text-lg font-semibold text-gray-900 dark:text-white">Pasión</h3>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Nos apasiona lo que hacemos y eso se refleja en el servicio que brindamos cada día.</p>
+                </div>
+
+                <!-- Innovación -->
+                <div class="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark hover:shadow-lg transition-all">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 text-primary">
+                        <i class="fas fa-lightbulb text-xl"></i>
+                    </div>
+                    <h3 class="mt-5 text-lg font-semibold text-gray-900 dark:text-white">Innovación</h3>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Buscamos constantemente mejoras y nuevas formas de sorprender a nuestros clientes.</p>
+                </div>
+
+                <!-- Trabajo en Equipo -->
+                <div class="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark hover:shadow-lg transition-all">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 text-primary">
+                        <i class="fas fa-users text-xl"></i>
+                    </div>
+                    <h3 class="mt-5 text-lg font-semibold text-gray-900 dark:text-white">Trabajo en Equipo</h3>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Creemos en el poder de la colaboración para lograr resultados excepcionales.</p>
+                </div>
+
+                <!-- Excelencia -->
+                <div class="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark hover:shadow-lg transition-all">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 text-primary">
+                        <i class="fas fa-star text-xl"></i>
+                    </div>
+                    <h3 class="mt-5 text-lg font-semibold text-gray-900 dark:text-white">Excelencia</h3>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Nos esforzamos por superar expectativas en cada detalle de nuestro servicio.</p>
+                </div>
+
+                <!-- Sostenibilidad -->
+                <div class="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark hover:shadow-lg transition-all">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 text-primary">
+                        <i class="fas fa-leaf text-xl"></i>
+                    </div>
+                    <h3 class="mt-5 text-lg font-semibold text-gray-900 dark:text-white">Sostenibilidad</h3>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Promovemos prácticas responsables con el medio ambiente y nuestra comunidad.</p>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="cta">
-    <h2>¿Listo para vivir la experiencia NexGen Motors?</h2>
-    <p>Visítanos y descubre por qué somos el concesionario preferido por miles de familias y empresas en México.</p>
-    <a href="/usuario/cita" class="cta-button">Agendar una visita</a>
-</section>
+    <!-- Nuestro Equipo -->
+    <section class="py-16">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold tracking-tight text-center text-gray-900 dark:text-white sm:text-4xl">Nuestro Equipo</h2>
+            <p class="mt-4 text-lg leading-8 text-center text-gray-600 dark:text-gray-400">Conoce a las personas que hacen posible nuestra excelencia en servicio</p>
 
-<footer>
-    <div class="footer-content">
-        <div class="footer-column">
-            <h3>Vehículos</h3>
-            <ul>
-                <li><a href="/vehiculos">Nuevos modelos</a></li>
-                <li><a href="/vehiculos">Promociones</a></li>
-            </ul>
+            <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                <!-- Laura Méndez -->
+                <div class="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark hover:shadow-lg transition-all">
+                    <div class="h-24 w-24 rounded-full bg-cover bg-center mb-4" style="background-image: url('https://randomuser.me/api/portraits/women/65.jpg');"></div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Laura Méndez</h3>
+                    <p class="text-primary font-medium">Directora General</p>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Con 18 años en la industria automotriz, Laura lidera nuestra visión estratégica y crecimiento sostenible.</p>
+                </div>
+
+                <!-- Carlos Rodríguez -->
+                <div class="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark hover:shadow-lg transition-all">
+                    <div class="h-24 w-24 rounded-full bg-cover bg-center mb-4" style="background-image: url('https://randomuser.me/api/portraits/men/32.jpg');"></div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Carlos Rodríguez</h3>
+                    <p class="text-primary font-medium">Gerente de Ventas</p>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Especialista en relaciones con clientes, Carlos asegura que cada compra sea una experiencia memorable.</p>
+                </div>
+
+                <!-- Ana Sánchez -->
+                <div class="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark hover:shadow-lg transition-all">
+                    <div class="h-24 w-24 rounded-full bg-cover bg-center mb-4" style="background-image: url('https://randomuser.me/api/portraits/women/44.jpg');"></div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Ana Sánchez</h3>
+                    <p class="text-primary font-medium">Gerente de Servicio</p>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Con certificaciones internacionales, Ana garantiza que tu NexGen Motors reciba el mejor mantenimiento posible.</p>
+                </div>
+
+                <!-- Javier López -->
+                <div class="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark hover:shadow-lg transition-all">
+                    <div class="h-24 w-24 rounded-full bg-cover bg-center mb-4" style="background-image: url('https://randomuser.me/api/portraits/men/75.jpg');"></div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Javier López</h3>
+                    <p class="text-primary font-medium">Asesor Financiero</p>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Experto en soluciones crediticias, Javier encuentra el plan perfecto para cada presupuesto.</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="footer-column">
-            <h3>Servicios</h3>
-            <ul>
-                <li><a th:href="@{/usuario/Inicio#services}">Agendar servicio</a></li>
-                <li><a href="/garantias">Garantías</a></li>
+    <!-- Reconocimientos -->
+    <section class="py-16 bg-background-light dark:bg-background-dark/50">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold tracking-tight text-center text-gray-900 dark:text-white sm:text-4xl">Reconocimientos</h2>
+            <p class="mt-4 text-lg leading-8 text-center text-gray-600 dark:text-gray-400">Premios y certificaciones que respaldan nuestra excelencia</p>
 
+            <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5">
+                <!-- Premio Excelencia -->
+                <div class="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark">
+                    <div class="h-16 w-16 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-4">
+                        <i class="fas fa-trophy text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 dark:text-white">Premio a la Excelencia NexGen Motors</h3>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">2023, 2021, 2019</p>
+                </div>
 
-            </ul>
+                <!-- Certificación ISO -->
+                <div class="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark">
+                    <div class="h-16 w-16 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-4">
+                        <i class="fas fa-certificate text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 dark:text-white">Certificación ISO 9001</h3>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Desde 2015</p>
+                </div>
+
+                <!-- Mejor Servicio -->
+                <div class="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark">
+                    <div class="h-16 w-16 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-4">
+                        <i class="fas fa-medal text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 dark:text-white">Mejor Servicio al Cliente</h3>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Revista Automotriz 2022</p>
+                </div>
+
+                <!-- Líder en Ventas -->
+                <div class="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark">
+                    <div class="h-16 w-16 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-4">
+                        <i class="fas fa-chart-line text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 dark:text-white">Líder en Ventas Región Centro</h3>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">2020-2023</p>
+                </div>
+
+                <!-- Premio Innovación -->
+                <div class="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark">
+                    <div class="h-16 w-16 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-4">
+                        <i class="fas fa-lightbulb text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 dark:text-white">Premio a la Innovación</h3>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Asociación Mexicana Automotriz 2021</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="footer-column">
-            <h3>Concesionario</h3>
-            <ul>
-                <li><a href="/nosotros">Sobre nosotros</a></li>
-                <li><a href="/ubicaciones">Ubicaciones</a></li>
-                <li><a href="#contact">Contáctanos</a></li>
-            </ul>
+    <!-- Testimonios -->
+    <section class="py-16">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold tracking-tight text-center text-gray-900 dark:text-white sm:text-4xl">Lo que dicen nuestros clientes</h2>
+            <p class="mt-4 text-lg leading-8 text-center text-gray-600 dark:text-gray-400">Experiencias reales de personas que confiaron en nosotros</p>
+
+            <div class="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-3">
+                <!-- Testimonio 1 -->
+                <div class="flex flex-col p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark hover:shadow-lg transition-all">
+                    <p class="text-gray-600 dark:text-gray-400 italic">"Compré mi primer NexGen Motors aquí hace 10 años y desde entonces no he cambiado de concesionario. El servicio postventa es excepcional y siempre me tratan como familia."</p>
+                    <div class="mt-6 flex items-center">
+                        <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-sm font-semibold text-gray-900 dark:text-white">Miguel Ángel Torres</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Cliente desde 2013</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonio 2 -->
+                <div class="flex flex-col p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark hover:shadow-lg transition-all">
+                    <p class="text-gray-600 dark:text-gray-400 italic">"Como mujer, a veces me sentía intimidada en otros concesionarios. Aquí me asesoraron con paciencia y profesionalismo, sin presiones. ¡Totalmente recomendado!"</p>
+                    <div class="mt-6 flex items-center">
+                        <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-sm font-semibold text-gray-900 dark:text-white">Daniela Ramírez</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Dueña de NexGen Seltos 2022</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonio 3 -->
+                <div class="flex flex-col p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark hover:shadow-lg transition-all">
+                    <p class="text-gray-600 dark:text-gray-400 italic">"Para nuestra empresa, encontrar un concesionario confiable era crucial. Han superado nuestras expectativas en servicio y soporte para nuestra flotilla de 12 vehículos NexGen Motors."</p>
+                    <div class="mt-6 flex items-center">
+                        <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-sm font-semibold text-gray-900 dark:text-white">Ricardo Fernández</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Director de Logística, Empresa XYZ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="footer-column">
-            <h3>Legal</h3>
-            <ul>
-                <li><a href="/terminos">Términos y condiciones</a></li>
-                <li><a href="/cookies">Cookies y Aviso legal</a></li>
-            </ul>
+    <!-- Call to Action -->
+    <section class="py-16 bg-primary">
+        <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">¿Listo para vivir la experiencia NexGen Motors?</h2>
+            <p class="mt-4 text-lg leading-8 text-gray-200">Visítanos y descubre por qué somos el concesionario preferido por miles de familias y empresas en México.</p>
+            <a href="/usuario/cita" class="mt-8 inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 text-base font-semibold text-primary shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Agendar una visita</a>
         </div>
-    </div>
+    </section>
 
+    <!-- Footer -->
+    <footer class="bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-gray-800">
+        <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="footer-column">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Vehículos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/vehiculos" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Nuevos modelos</a></li>
+                        <li><a href="/vehiculos" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Promociones</a></li>
+                    </ul>
+                </div>
 
-    <div class="copyright">
-        <p>&copy; 2023 Concesionario. Todos los derechos reservados.</p>
-    </div>
-</footer>
+                <div class="footer-column">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Servicios</h3>
+                    <ul class="space-y-2">
+                        <li><a th:href="@{/usuario/Inicio}" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Agendar servicio</a></li>
+                        <li><a href="/garantias" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Garantías</a></li>
+                    </ul>
+                </div>
 
-<a href="https://wa.me/525512345678" class="whatsapp-float" target="_blank">
+                <div class="footer-column">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Concesionario</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/nosotros" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Sobre nosotros</a></li>
+                        <li><a href="/ubicaciones" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Ubicaciones</a></li>
+                        <li><a href="#contact" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Contáctanos</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/terminos" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Términos y condiciones</a></li>
+                        <li><a href="/cookies" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Cookies y Aviso legal</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-12 flex justify-center space-x-6">
+                <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><i class="fab fa-youtube"></i></a>
+            </div>
+
+            <div class="mt-8 border-t border-gray-200 dark:border-gray-700 pt-8 text-center">
+                <p class="text-sm text-gray-500 dark:text-gray-400">&copy; 2023 Concesionario NexGen Motors. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<!-- Botón de WhatsApp -->
+<a href="https://wa.me/525512345678" class="fixed bottom-8 right-8 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg hover:bg-green-600 transition-colors z-50" target="_blank">
     <i class="fab fa-whatsapp"></i>
 </a>
+
 <script th:src="@{/js/nosotros.js}"></script>
+<script>
+    // Barra de navegación al hacer scroll
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('header');
+        if (window.scrollY > 50) {
+            header.classList.add('shadow-md');
+        } else {
+            header.classList.remove('shadow-md');
+        }
+    });
+</script>
 </body>
 </html>

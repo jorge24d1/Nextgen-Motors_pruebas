@@ -1,142 +1,276 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aviso Legal | Cookies | Accesorios - NexGen Motors</title>
+    <title>Aviso Legal | Cookies | Accesorios - NextGenMotors</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link th:href="@{/css/cookies.css}" rel="stylesheet">
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                "FILL" 0,
+                "wght" 400,
+                "GRAD" 0,
+                "opsz" 24;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0f66bd",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        display: ["Manrope", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        };
+    </script>
 </head>
-<body>
-<nav id="mainNav">
-    <div class="nav-logo">
-        <img src="https://via.placeholder.com/150x50?text=NexGen+Motors" alt="NexGen Motors Logo">
-    </div>
-    <div class="nav-links">
-        <a th:href="@{/usuario/Inicio}">Inicio</a>
-        <a href="/vehiculos">Vehículos</a>
-        <a th:href="@{/usuario/agendamiento}">Agendamiento online</a>
-        <a href="/usuario/perfil">Mi perfil</a>
-    </div>
-</nav>
-
-<section class="hero">
-    <div class="hero-content">
-        <h1>Aviso Legal y Cookies</h1>
-        <p>Información legal y accesorios exclusivos para tu vehículo NexGen Motors</p>
-    </div>
-</section>
-
-<div class="main-content">
-    <!-- Aviso Legal -->
-    <div class="content-section">
-        <h2 class="section-title">Aviso Legal</h2>
-        <p class="section-subtitle">Información legal sobre el uso de nuestro sitio web y servicios</p>
-
-        <div class="content-section">
-            <h2>1. Identificación del titular</h2>
-            <p>NexGen Motors México S.A. de C.V. con domicilio en Av. Insurgentes Sur 1234, Col. Del Valle, Ciudad de México, C.P. 03100.</p>
-            <p>RFC: NGM230101ABC</p>
-        </div>
-
-        <div class="content-section">
-            <h2>2. Propiedad intelectual</h2>
-            <p>Todos los contenidos de este sitio web (textos, imágenes, logotipos, diseño) son propiedad exclusiva de NexGen Motors o de sus licenciantes y están protegidos por las leyes de propiedad intelectual.</p>
-        </div>
-
-        <div class="content-section">
-            <h2>3. Limitación de responsabilidad</h2>
-            <p>NexGen Motors no se hace responsable por:</p>
-            <ul>
-                <li>Daños derivados de la imposibilidad de acceso al sitio web</li>
-                <li>Errores u omisiones en los contenidos</li>
-                <li>Uso indebido de los contenidos por parte de los usuarios</li>
-                <li>Problemas técnicos fuera de nuestro control</li>
-            </ul>
-        </div>
-
-        <div class="content-section">
-            <h2>4. Legislación aplicable</h2>
-            <p>Este aviso legal se rige por la legislación mexicana, específicamente por la Ley Federal de Protección al Consumidor y la Ley Federal del Derecho de Autor.</p>
-        </div>
-    </div>
-
-    <!-- Política de Cookies -->
-    <div class="content-section">
-        <h2 class="section-title">Política de Cookies</h2>
-        <p class="section-subtitle">Cómo utilizamos las cookies en nuestro sitio web</p>
-
-        <div class="content-section">
-            <h2>1. ¿Qué son las cookies?</h2>
-            <p>Las cookies son pequeños archivos de texto que se almacenan en su dispositivo cuando visita nuestro sitio web.</p>
-        </div>
-
-        <div class="content-section">
-            <h2>2. Tipos de cookies que utilizamos</h2>
-            <ul>
-                <li><strong>Cookies técnicas:</strong> Necesarias para el funcionamiento básico del sitio</li>
-                <li><strong>Cookies de preferencias:</strong> Recuerdan sus configuraciones</li>
-                <li><strong>Cookies analíticas:</strong> Nos ayudan a mejorar el sitio</li>
-                <li><strong>Cookies de marketing:</strong> Para mostrar anuncios relevantes</li>
-            </ul>
-        </div>
-
-        <div class="content-section">
-            <h2>3. Gestión de cookies</h2>
-            <p>Puede configurar su navegador para rechazar todas o algunas cookies. Sin embargo, esto puede afectar la funcionalidad de nuestro sitio.</p>
-            <p>Para más información sobre cómo gestionar cookies, consulte la ayuda de su navegador.</p>
-        </div>
-    </div>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>Vehículos</h3>
-                <ul>
-                    <li><a href="/vehiculos">Nuevos modelos</a></li>
-                    <li><a href="/vehiculos">Promociones</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-column">
-                <h3>Servicios</h3>
-                <ul>
-                    <li><a th:href="@{/usuario/Inicio#services}">Agendar servicio</a></li>
-                    <li><a href="/garantias">Garantías</a></li>
-
-
-                </ul>
-            </div>
-
-            <div class="footer-column">
-                <h3>Concesionario</h3>
-                <ul>
-                    <li><a href="/nosotros">Sobre nosotros</a></li>
-                    <li><a href="/ubicaciones">Ubicaciones</a></li>
-                    <li><a href="#contact">Contáctanos</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-column">
-                <h3>Legal</h3>
-                <ul>
-                    <li><a href="/terminos">Términos y condiciones</a></li>
-                    <li><a href="/cookies">Cookies y Aviso legal</a></li>
-                </ul>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="flex min-h-screen flex-col">
+    <!-- Barra de navegación -->
+    <header class="sticky top-0 z-50 border-b border-gray-200/50 dark:border-gray-700/50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center gap-8">
+                    <a class="flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-white" th:href="@{/usuario/Inicio}">
+                        <div class="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">NG</span>
+                        </div>
+                        <span class="font-display">NextGenMotors</span>
+                    </a>
+                    <nav class="hidden md:flex items-center gap-6">
+                        <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" th:href="@{/usuario/Inicio}">Inicio</a>
+                        <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="/vehiculos">Vehículos</a>
+                        <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" th:href="@{/usuario/agendamiento}">Agendamiento online</a>
+                        <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="/usuario/perfil">Mi perfil</a>
+                    </nav>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button class="rounded-full p-2 text-gray-600 dark:text-gray-300 hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors">
+                        <a class="fas fa-user" href="/usuario/perfil"></a>
+                    </button>
+                </div>
             </div>
         </div>
+    </header>
 
+    <!-- Hero Section -->
+    <section class="relative h-[40vh] min-h-[300px] w-full bg-cover bg-center">
+        <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70"></div>
+        <div class="relative z-10 flex h-full flex-col items-center justify-center px-4 text-white sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">Aviso Legal y Cookies</h1>
+            <p class="mt-4 max-w-2xl text-lg text-gray-200">Información legal y accesorios exclusivos para tu vehículo</p>
+        </div>
+    </section>
 
-        <div class="copyright">
-            <p>&copy; 2023 Concesionario. Todos los derechos reservados.</p>
+    <!-- Contenido principal -->
+    <main class="flex-grow py-16">
+        <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <!-- Aviso Legal -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold tracking-tight text-center text-gray-900 dark:text-white sm:text-4xl">Aviso Legal</h2>
+                <p class="mt-4 text-lg leading-8 text-center text-gray-600 dark:text-gray-400">Información legal sobre el uso de nuestro sitio web y servicios</p>
+
+                <div class="mt-12 space-y-12">
+                    <div class="p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">1. Identificación del titular</h3>
+                        <p class="text-gray-600 dark:text-gray-400">NextGenMotors S.A. de C.V. con domicilio en Av. Insurgentes Sur 1234, Col. Del Valle, Ciudad de México, C.P. 03100.</p>
+                        <p class="mt-2 text-gray-600 dark:text-gray-400">RFC: NGM230101XYZ</p>
+                    </div>
+
+                    <div class="p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">2. Propiedad intelectual</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Todos los contenidos de este sitio web (textos, imágenes, logotipos, diseño) son propiedad exclusiva de NextGenMotors o de sus licenciantes y están protegidos por las leyes de propiedad intelectual.</p>
+                    </div>
+
+                    <div class="p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">3. Limitación de responsabilidad</h3>
+                        <p class="text-gray-600 dark:text-gray-400">NextGenMotors no se hace responsable por:</p>
+                        <ul class="mt-4 space-y-2 text-gray-600 dark:text-gray-400">
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs mt-1 mr-3 text-primary"></i>
+                                <span>Daños derivados de la imposibilidad de acceso al sitio web</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs mt-1 mr-3 text-primary"></i>
+                                <span>Errores u omisiones en los contenidos</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs mt-1 mr-3 text-primary"></i>
+                                <span>Uso indebido de los contenidos por parte de los usuarios</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs mt-1 mr-3 text-primary"></i>
+                                <span>Problemas técnicos fuera de nuestro control</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">4. Legislación aplicable</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Este aviso legal se rige por la legislación mexicana, específicamente por la Ley Federal de Protección al Consumidor y la Ley Federal del Derecho de Autor.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Política de Cookies -->
+            <div>
+                <h2 class="text-3xl font-bold tracking-tight text-center text-gray-900 dark:text-white sm:text-4xl">Política de Cookies</h2>
+                <p class="mt-4 text-lg leading-8 text-center text-gray-600 dark:text-gray-400">Cómo utilizamos las cookies en nuestro sitio web</p>
+
+                <div class="mt-12 space-y-12">
+                    <div class="p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">1. ¿Qué son las cookies?</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Las cookies son pequeños archivos de texto que se almacenan en su dispositivo cuando visita nuestro sitio web.</p>
+                    </div>
+
+                    <div class="p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">2. Tipos de cookies que utilizamos</h3>
+                        <ul class="space-y-4 text-gray-600 dark:text-gray-400">
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center mt-0.5 mr-3">
+                                    <i class="fas fa-cookie text-xs text-primary"></i>
+                                </div>
+                                <div>
+                                    <span class="font-medium text-gray-900 dark:text-white">Cookies técnicas:</span> Necesarias para el funcionamiento básico del sitio
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center mt-0.5 mr-3">
+                                    <i class="fas fa-cookie text-xs text-primary"></i>
+                                </div>
+                                <div>
+                                    <span class="font-medium text-gray-900 dark:text-white">Cookies de preferencias:</span> Recuerdan sus configuraciones
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center mt-0.5 mr-3">
+                                    <i class="fas fa-cookie text-xs text-primary"></i>
+                                </div>
+                                <div>
+                                    <span class="font-medium text-gray-900 dark:text-white">Cookies analíticas:</span> Nos ayudan a mejorar el sitio
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center mt-0.5 mr-3">
+                                    <i class="fas fa-cookie text-xs text-primary"></i>
+                                </div>
+                                <div>
+                                    <span class="font-medium text-gray-900 dark:text-white">Cookies de marketing:</span> Para mostrar anuncios relevantes
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">3. Gestión de cookies</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Puede configurar su navegador para rechazar todas o algunas cookies. Sin embargo, esto puede afectar la funcionalidad de nuestro sitio.</p>
+                        <p class="mt-4 text-gray-600 dark:text-gray-400">Para más información sobre cómo gestionar cookies, consulte la ayuda de su navegador.</p>
+                        <div class="mt-6 p-4 bg-primary/5 rounded-lg">
+                            <p class="text-sm text-primary font-medium">Configuración de cookies actual: <span class="text-green-600">Aceptadas</span></p>
+                            <button class="mt-3 text-sm text-primary hover:text-primary/80 font-medium">Cambiar configuración de cookies</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-gray-800">
+        <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="footer-column">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Vehículos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/vehiculos" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Nuevos modelos</a></li>
+                        <li><a href="/vehiculos" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Promociones</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Servicios</h3>
+                    <ul class="space-y-2">
+                        <li><a th:href="@{/usuario/Inicio}" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Agendar servicio</a></li>
+                        <li><a href="/garantias" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Garantías</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Concesionario</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/nosotros" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Sobre nosotros</a></li>
+                        <li><a href="/ubicaciones" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Ubicaciones</a></li>
+                        <li><a href="#contact" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Contáctanos</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/terminos" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Términos y condiciones</a></li>
+                        <li><a href="/cookies" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Cookies y Aviso legal</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-12 flex justify-center space-x-6">
+                <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><i class="fab fa-youtube"></i></a>
+            </div>
+
+            <div class="mt-8 border-t border-gray-200 dark:border-gray-700 pt-8 text-center">
+                <p class="text-sm text-gray-500 dark:text-gray-400">&copy; 2023 NextGenMotors. Todos los derechos reservados.</p>
+            </div>
         </div>
     </footer>
+</div>
 
-    <a href="https://wa.me/525512345678" class="whatsapp-float" target="_blank">
+<!-- Botón de WhatsApp -->
+<a href="https://wa.me/525512345678" class="fixed bottom-8 right-8 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg hover:bg-green-600 transition-colors z-50" target="_blank">
     <i class="fab fa-whatsapp"></i>
 </a>
-    <script th:src="@{/js/cookies.js}"></script>
 
+<script th:src="@{/js/cookies.js}"></script>
+<script>
+    // Barra de navegación al hacer scroll
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('header');
+        if (window.scrollY > 50) {
+            header.classList.add('shadow-md');
+        } else {
+            header.classList.remove('shadow-md');
+        }
+    });
+
+    // Configuración de cookies
+    document.addEventListener('DOMContentLoaded', function() {
+        const cookieSettingsBtn = document.querySelector('button');
+        if (cookieSettingsBtn) {
+            cookieSettingsBtn.addEventListener('click', function() {
+                alert('Aquí se abriría el panel de configuración de cookies. Esta funcionalidad se implementaría según los requisitos específicos.');
+            });
+        }
+    });
+</script>
 </body>
 </html>

@@ -1,139 +1,233 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agendamiento Online - Concesionario NexGen Motors</title>
+  <title>Agendamiento Online - NextGenMotors</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link th:href="@{/css/agendamiento.css}" rel="stylesheet">
-  <link th:href="@{/css/stilechatbot.css}" rel="stylesheet">
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings:
+        "FILL" 0,
+        "wght" 400,
+        "GRAD" 0,
+        "opsz" 24;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#0f66bd",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101922",
+          },
+          fontFamily: {
+            display: ["Manrope", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px",
+          },
+        },
+      },
+    };
+  </script>
 </head>
-<body>
-<!-- Barra de navegación -->
-<nav id="mainNav">
-  <div class="nav-logo">
-    <span class="logo-nexgen">NexGen</span>
-    <span class="logo-motors">Motors</span>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="flex min-h-screen flex-col">
+  <!-- Barra de navegación -->
+  <header class="sticky top-0 z-50 border-b border-gray-200/50 dark:border-gray-700/50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 items-center justify-between">
+        <div class="flex items-center gap-8">
+          <a class="flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-white" th:href="@{/usuario/Inicio}">
+            <!-- Logo actualizado con imagen -->
+            <div class="h-20 w-20 rounded-lg flex items-center justify-center overflow-hidden">
+              <img src="/images/LOGO.png" alt="NextGenMotors" class="h-full w-full object-contain">
+            </div>
+            <span class="font-display"><span class="text-primary">NextGen</span>Motors</span>
+          </a>
+          <nav class="hidden md:flex items-center gap-6">
 
-  </div>
-  <div class="nav-links">
-    <a th:href="@{/usuario/Inicio}">Inicio</a>
-    <a href="/vehiculos">Vehículos</a>
-    <a th:href="@{/usuario/agendamiento}">Agendamiento online</a>
-    <!-- <a href="/login">Iniciar sesión</a> -->
-    <!-- <a href="/usuario/cita">Cita</a> -->
-    <a href="/usuario/perfil"> perfil</a>
-  </div>
-</nav>
+            <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="/vehiculos">Nuestros Modelos</a>
+            <a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" th:href="@{/usuario/agendamiento}">Agendamiento online</a>
 
-<!-- Hero Section -->
-<section class="hero">
-  <h1 class="hero-title">Agendamiento Online</h1>
-  <p class="hero-subtitle">Programa tu servicio con facilidad y comodidad</p>
-</section>
-
-<!-- Contenido principal -->
-<main class="main-content">
-  <h2 class="section-title">Proceso en 3 Pasos</h2>
-
-  <div class="steps-container">
-    <div class="step-card">
-      <div class="step-number">1</div>
-      <h3 class="step-title">Crea tu cuenta</h3>
-      <p class="step-content">Comienza tu registro para acceder a ofertas exclusivas.</p>
-      <a href="#" class="step-action">Iniciar sesión</a>
+          </nav>
+        </div>
+        <div class="flex items-center gap-4">
+          <button class="rounded-full p-2 text-gray-600 dark:text-gray-300 hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors">
+            <a class="fas fa-user" href="/usuario/perfil"></a>
+          </button>
+        </div>
+      </div>
     </div>
+  </header>
 
-    <div class="step-card">
-      <div class="step-number">2</div>
-      <h3 class="step-title">Diligencia tus datos</h3>
-      <p class="step-content">Acepta términos, condiciones y política de privacidad.</p>
+  <!-- Resto del código permanece igual -->
+  <!-- Hero Section -->
+  <section class="relative h-[50vh] min-h-[400px] w-full bg-cover bg-center">
+    <div class="absolute inset-0 bg-cover bg-center" style='background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/jpg.jpeg");'></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-background-dark/80 via-background-dark/30 to-transparent"></div>
+    <div class="relative z-10 flex h-full flex-col items-center justify-center px-4 text-white sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">Agendamiento Online</h1>
+      <p class="mt-4 max-w-2xl text-lg text-gray-200">Programa tu servicio con facilidad y comodidad</p>
     </div>
+  </section>
 
-    <div class="step-card">
-      <div class="step-number">3</div>
-      <h3 class="step-title">Confirma tu cita</h3>
-      <p class="step-content">Selecciona fecha, hora y tipo de servicio.</p>
-      <p class="success-message">¡Listo para tu servicio!</p>
+  <!-- Contenido principal -->
+  <main class="flex-grow py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold tracking-tight text-center text-gray-900 dark:text-white sm:text-4xl">Proceso en 3 Pasos</h2>
+      <p class="mt-4 text-lg leading-8 text-center text-gray-600 dark:text-gray-400">Sigue estos sencillos pasos para agendar tu servicio</p>
+
+      <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- Paso 1 -->
+        <div class="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark hover:shadow-lg hover:border-primary/50 dark:hover:border-primary/50 transition-all">
+          <div class="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 dark:bg-primary/20 text-primary text-2xl font-bold">
+            1
+          </div>
+          <h3 class="mt-5 text-lg font-semibold text-gray-900 dark:text-white">Crea tu cuenta</h3>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Comienza tu registro para acceder a ofertas exclusivas.</p>
+          <a href="#" class="mt-4 text-sm font-medium text-primary hover:text-primary/80 transition-colors">Iniciar sesión</a>
+        </div>
+
+        <!-- Paso 2 -->
+        <div class="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark hover:shadow-lg hover:border-primary/50 dark:hover:border-primary/50 transition-all">
+          <div class="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 dark:bg-primary/20 text-primary text-2xl font-bold">
+            2
+          </div>
+          <h3 class="mt-5 text-lg font-semibold text-gray-900 dark:text-white">Diligencia tus datos</h3>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Acepta términos, condiciones y política de privacidad.</p>
+        </div>
+
+        <!-- Paso 3 -->
+        <div class="flex flex-col items-center text-center p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark hover:shadow-lg hover:border-primary/50 dark:hover:border-primary/50 transition-all">
+          <div class="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 dark:bg-primary/20 text-primary text-2xl font-bold">
+            3
+          </div>
+          <h3 class="mt-5 text-lg font-semibold text-gray-900 dark:text-white">Confirma tu cita</h3>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Selecciona fecha, hora y tipo de servicio.</p>
+          <p class="mt-2 text-sm font-medium text-green-600 dark:text-green-400">¡Listo para tu servicio!</p>
+        </div>
+      </div>
+
+      <!-- Sección de agendamiento -->
+      <div class="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="rounded-xl overflow-hidden shadow-lg">
+          <img src="f1.jpg" alt="Servicio NextGenMotors" class="w-full h-full object-cover">
+        </div>
+
+        <div class="p-8 rounded-xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Tú eliges <span class="text-primary">el momento perfecto</span> para el cuidado de tu vehículo</h2>
+          <p class="mt-4 text-gray-600 dark:text-gray-400">Nuestro sistema de <strong>Agendamiento Online</strong> te permite programar el mantenimiento de tu vehículo de manera rápida y sencilla, adaptándose a tu horario.</p>
+
+          <p class="mt-6 font-medium text-gray-900 dark:text-white">Beneficios exclusivos:</p>
+
+          <ul class="mt-4 space-y-3">
+            <li class="flex items-center">
+              <i class="fas fa-check text-green-500 mr-3"></i>
+              <span class="text-gray-600 dark:text-gray-400">Reserva en cualquier momento, las 24 horas</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check text-green-500 mr-3"></i>
+              <span class="text-gray-600 dark:text-gray-400">Selección de asesor especializado</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check text-green-500 mr-3"></i>
+              <span class="text-gray-600 dark:text-gray-400">Confirmación inmediata</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check text-green-500 mr-3"></i>
+              <span class="text-gray-600 dark:text-gray-400">Recordatorio automático</span>
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check text-green-500 mr-3"></i>
+              <span class="text-gray-600 dark:text-gray-400">Transparencia en costos</span>
+            </li>
+          </ul>
+
+          <a th:href="@{/usuario/cita}" class="mt-8 inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Agendar Servicio Ahora</a>
+        </div>
+      </div>
     </div>
-  </div>
+  </main>
 
-  <!-- Sección de agendamiento -->
-  <div class="scheduling-section">
-    <div class="scheduling-image">
-      <img src="f1.jpg" alt="Servicio NexGen Motors">
+  <footer class="bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-gray-800">
+    <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="footer-column">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Vehículos</h3>
+          <ul class="space-y-2">
+            <li><a href="/vehiculos" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Nuevos modelos</a></li>
+            <li><a href="/vehiculos" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Promociones</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Servicios</h3>
+          <ul class="space-y-2">
+            <li><a th:href="@{/usuario/Inicio}" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Agendar servicio</a></li>
+            <li><a href="/garantias" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Garantías</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Concesionario</h3>
+          <ul class="space-y-2">
+            <li><a href="/nosotros" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Sobre nosotros</a></li>
+            <li><a href="/ubicaciones" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Ubicaciones</a></li>
+            <li><a href="#contact" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Contáctanos</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Legal</h3>
+          <ul class="space-y-2">
+            <li><a href="/terminos" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Términos y condiciones</a></li>
+            <li><a href="/cookies" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">Cookies y Aviso legal</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-12 flex justify-center space-x-6">
+        <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><i class="fab fa-youtube"></i></a>
+      </div>
+
+      <div class="mt-8 border-t border-gray-200 dark:border-gray-700 pt-8 text-center">
+        <p class="text-sm text-gray-500 dark:text-gray-400">&copy; 2023 NextGenMotors. Todos los derechos reservados.</p>
+      </div>
     </div>
-
-    <div class="scheduling-content">
-      <h2 class="scheduling-title">Tú eliges <span class="scheduling-highlight">el momento perfecto</span> para el cuidado de tu Vehiculo</h2>
-      <p class="scheduling-text">Nuestro sistema de <strong>Agendamiento Online</strong> te permite programar el mantenimiento de tu vehículo de manera rápida y sencilla, adaptándose a tu horario.</p>
-
-      <p class="scheduling-text">Beneficios exclusivos:</p>
-
-      <ul class="benefits-list">
-        <li>Reserva en cualquier momento, las 24 horas</li>
-        <li>Selección de asesor especializado</li>
-        <li>Confirmación inmediata</li>
-        <li>Recordatorio automático</li>
-        <li>Transparencia en costos</li>
-      </ul>
-
-      <a th:href="@{/usuario/cita}" class="btn btn-secondary">Agendar Servicio Ahora</a>
-    </div>
-  </div>
-</main>
-
-<!-- Footer -->
-<footer>
-  <div class="footer-content">
-    <div class="footer-column">
-      <h3>Vehículos</h3>
-      <ul>
-        <li><a href="/vehiculos">Nuevos modelos</a></li>
-        <li><a href="/vehiculos">Promociones</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-column">
-      <h3>Servicios</h3>
-      <ul>
-        <li><a th:href="@{/usuario/Inicio#services}">Agendar servicio</a></li>
-        <li><a href="/garantias">Garantías</a></li>
-
-
-      </ul>
-    </div>
-
-    <div class="footer-column">
-      <h3>Concesionario</h3>
-      <ul>
-        <li><a href="/nosotros">Sobre nosotros</a></li>
-        <li><a href="/ubicaciones">Ubicaciones</a></li>
-        <li><a href="#contact">Contáctanos</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-column">
-      <h3>Legal</h3>
-      <ul>
-        <li><a href="/terminos">Términos y condiciones</a></li>
-        <li><a href="/cookies">Cookies y Aviso legal</a></li>
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="copyright">
-    <p>&copy; 2023 Concesionario. Todos los derechos reservados.</p>
-  </div>
-</footer>
+  </footer>
+</div>
 
 <!-- Botón de WhatsApp -->
+<a href="https://wa.me/525512345678" class="fixed bottom-8 right-8 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg hover:bg-green-600 transition-colors z-50" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
 
-<div th:replace="~{fragments/chatbot :: chatbot}"></div>
 
-
-<script th:src="@{/js/chatbot.js}"></script>
-<script th:src="@{/js/agendamiento.js}"></script>
+<script>
+  // Barra de navegación al hacer scroll
+  window.addEventListener('scroll', function() {
+    const header = document.querySelector('header');
+    if (window.scrollY > 50) {
+      header.classList.add('shadow-md');
+    } else {
+      header.classList.remove('shadow-md');
+    }
+  });
+</script>
 </body>
 </html>

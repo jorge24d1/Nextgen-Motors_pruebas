@@ -1,111 +1,625 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión - NexGen Motors Concesionario Oficial</title>
-
+    <title>Iniciar Sesión - NextGenMotors</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link th:href="@{/css/login.css}" rel="stylesheet">
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                "FILL" 0,
+                "wght" 400,
+                "GRAD" 0,
+                "opsz" 24;
+        }
+
+        /* Animaciones personalizadas */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(15, 102, 189, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(15, 102, 189, 0.8); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .glowing {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease-out forwards;
+        }
+
+        /* Estilos para las tarjetas de formulario */
+        .form-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, #0f66bd, #1e40af);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .form-body {
+            padding: 2rem;
+        }
+
+        /* Estilo mejorado para inputs con iconos a la izquierda */
+        .input-with-icon {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-with-icon .form-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3.5rem; /* Más espacio a la izquierda para el icono */
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        .input-with-icon .form-input:focus {
+            border-color: #0f66bd;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(15, 102, 189, 0.1);
+            outline: none;
+        }
+
+        .input-with-icon .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            transition: color 0.3s ease;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .input-with-icon .form-input:focus + .input-icon {
+            color: #0f66bd;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0f66bd, #1e40af);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(15, 102, 189, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+            border: 2px solid #e2e8f0;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        /* Efectos visuales adicionales */
+        .floating-car {
+            position: absolute;
+            right: 5%;
+            top: 20%;
+            width: 300px;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .dark .feature-card {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .form-card {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        .dark .form-input {
+            background: #334155;
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+
+        .dark .form-input:focus {
+            background: #1e293b;
+            border-color: #0f66bd;
+        }
+
+        .dark .input-icon {
+            color: #94a3b8;
+        }
+
+        .dark .btn-secondary {
+            background: #334155;
+            color: #e2e8f0;
+            border-color: #475569;
+        }
+
+        .dark .btn-secondary:hover {
+            background: #475569;
+        }
+
+        /* Estilos para la barra de navegación */
+        #mainNav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .dark #mainNav {
+            background: rgba(16, 25, 34, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #mainNav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark #mainNav.scrolled {
+            background: rgba(16, 25, 34, 0.95);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+        }
+
+        .logo-nexgen {
+            color: #0f66bd;
+        }
+
+        .logo-motors {
+            color: #1e293b;
+        }
+
+        .dark .logo-motors {
+            color: #f8fafc;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #475569;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .dark .nav-links a {
+            color: #cbd5e1;
+        }
+
+        .nav-links a:hover {
+            color: #0f66bd;
+        }
+
+        /* Estilos para el footer */
+        footer {
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 3rem;
+        }
+
+        .dark footer {
+            background: #1e293b;
+            border-top: 1px solid #334155;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .footer-column h3 {
+            color: #1e293b;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .dark .footer-column h3 {
+            color: #f1f5f9;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-column a {
+            color: #64748b;
+            transition: color 0.3s ease;
+        }
+
+        .dark .footer-column a {
+            color: #94a3b8;
+        }
+
+        .footer-column a:hover {
+            color: #0f66bd;
+        }
+
+        .copyright {
+            text-align: center;
+            padding: 1rem 0;
+            border-top: 1px solid #e2e8f0;
+            color: #64748b;
+        }
+
+        .dark .copyright {
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+        }
+
+        /* Botón de WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: #25d366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Estilos para alertas */
+        .alert {
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .alert:not(.success) {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .dark .alert:not(.success) {
+            background: rgba(220, 38, 38, 0.1);
+            color: #fca5a5;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+        }
+
+        .alert.success {
+            background: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
+
+        .dark .alert.success {
+            background: rgba(22, 163, 74, 0.1);
+            color: #4ade80;
+            border: 1px solid rgba(22, 163, 74, 0.2);
+        }
+
+        /* Estilos para enlaces del formulario */
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 1.5rem;
+        }
+
+        .forgot-password a {
+            color: #0f66bd;
+            font-size: 0.875rem;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #1e40af;
+            text-decoration: underline;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e2e8f0;
+            margin: 1.5rem 0;
+        }
+
+        .dark .divider {
+            background: #334155;
+        }
+
+        .create-account {
+            text-align: center;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .dark .create-account {
+            color: #94a3b8;
+        }
+
+        .create-account a {
+            color: #0f66bd;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .create-account a:hover {
+            color: #1e40af;
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0f66bd",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        display: ["Manrope", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        };
+    </script>
 </head>
-<body>
-<!-- Barra de navegación -->
-<nav id="mainNav">
-    <!-- este va con lo del logo arriba --> 
-    <!--<div class="nav-logo logo-container">
-        <span class="logo-nexgen">NexGen</span>
-        <span class="logo-motors">Motors</span>
-    </div> -->
-    <div class="nav-logo">
-        <span class="logo-nexgen">NexGen</span>
-        <span class="logo-motors">Motors</span>
-
-    </div>
-    <div class="nav-links">
-        <a href="/vehiculos">Vehículos</a>
-        <!-- <a th:href="@{/usuario/agendamiento}">Agendamiento online</a> -->
-        <a href="/login">Iniciar sesión</a>
-        <a href="/usuario/cita">Cita</a>
-    </div>
-</nav>
-
-<!-- Contenedor de login -->
-<div class="login-container">
-    <div class="login-card">
-        <div class="card-header">
-            <h2>Iniciar Sesión</h2>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="flex min-h-screen flex-col">
+    <!-- Barra de navegación -->
+    <nav id="mainNav" class="sticky top-0 z-50">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="nav-logo">
+                    <span class="logo-nexgen">NexGen</span>
+                    <span class="logo-motors">Motors</span>
+                </div>
+                <div class="nav-links">
+                    <a href="/vehiculos">Vehículos</a>
+                    <a href="/login">Iniciar sesión</a>
+                    <a href="/usuario/cita">Cita</a>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            <div th:if="${error}" class="alert" th:text="${error}"></div>
-            <div th:if="${success}" class="alert success" th:text="${success}"></div>
+    </nav>
 
-            <form th:action="@{/login}" method="post">
-                <div class="form-group">
-                    <input type="email" id="username" name="username" placeholder="Correo" required>
+    <!-- Contenido principal -->
+    <main class="flex-grow py-12">
+        <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Sección de información -->
+                <div class="space-y-8">
+                    <div class="slide-in">
+                        <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+                            Bienvenido de <span class="text-primary">Vuelta</span>
+                        </h1>
+                        <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">
+                            Accede a tu cuenta para gestionar tus citas de servicio, ver el historial de mantenimiento y disfrutar de beneficios exclusivos para clientes.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="feature-card floating">
+                            <div class="flex items-center">
+                                <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                                    <i class="fas fa-history text-primary"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900 dark:text-white">Historial Completo</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Consulta todo el historial de servicios de tu vehículo</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card floating" style="animation-delay: 0.5s;">
+                            <div class="flex items-center">
+                                <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                                    <i class="fas fa-calendar-check text-primary"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900 dark:text-white">Gestión de Citas</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Programa y modifica tus citas de servicio fácilmente</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card floating" style="animation-delay: 1s;">
+                            <div class="flex items-center">
+                                <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                                    <i class="fas fa-bell text-primary"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900 dark:text-white">Recordatorios</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Recibe alertas para próximos servicios y mantenimientos</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <input type="password" id="password" name="password" placeholder="Contraseña" required>
+
+                <!-- Formulario de login -->
+                <div class="form-card glowing">
+                    <div class="form-header">
+                        <h2 class="text-2xl font-bold">INICIAR SESIÓN</h2>
+                        <p class="mt-2 opacity-90">Accede a tu cuenta NextGenMotors</p>
+                    </div>
+                    <div class="form-body">
+                        <!-- Mensajes de error y éxito -->
+                        <div th:if="${error}" class="alert" th:text="${error}"></div>
+                        <div th:if="${success}" class="alert success" th:text="${success}"></div>
+
+                        <form th:action="@{/login}" method="post">
+                            <div class="input-with-icon">
+                                <input type="email" id="username" name="username" class="form-input" placeholder="Correo electrónico" required>
+                                <div class="input-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                            </div>
+
+                            <div class="input-with-icon">
+                                <input type="password" id="password" name="password" class="form-input" placeholder="Contraseña" required>
+                                <div class="input-icon">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                            </div>
+
+                            <div class="forgot-password">
+                                <a th:href="@{/auth/forgot-password}">¿Olvidaste tu contraseña?</a>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Ingresar</button>
+                            </div>
+
+                            <div class="divider"></div>
+
+                            <div class="create-account">
+                                <span>¿No tienes una cuenta? </span>
+                                <a th:href="@{/registro}">Registrarse</a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="forgot-password">
-                    <a th:href="@{/auth/forgot-password}">¿Olvidaste tu contraseña?</a>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Ingresar</button>
-                </div>
-                <div class="divider"></div>
-                <div class="create-account">
-                    <span>¿No tienes una cuenta? </span>
-                    <a th:href="@{/registro}">Registrarse</a>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Vehículos</h3>
+                    <ul>
+                        <li><a href="/vehiculos">Nuevos modelos</a></li>
+                        <li><a href="/vehiculos">Promociones</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Servicios</h3>
+                    <ul>
+                        <li><a th:href="@{/usuario/Inicio#services}">Agendar servicio</a></li>
+                        <li><a href="/garantias">Garantías</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Concesionario</h3>
+                    <ul>
+                        <li><a href="/nosotros">Sobre nosotros</a></li>
+                        <li><a href="/ubicaciones">Ubicaciones</a></li>
+                        <li><a href="#contact">Contáctanos</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="/terminos">Términos y condiciones</a></li>
+                        <li><a href="/cookies">Cookies y Aviso legal</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2023 NextGenMotors. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
 </div>
-
-<!-- Footer -->
-<footer>
-    <div class="footer-content">
-        <div class="footer-column">
-            <h3>Vehículos</h3>
-            <ul>
-                <li><a href="/vehiculos">Nuevos modelos</a></li>
-                <li><a href="/vehiculos">Promociones</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-column">
-            <h3>Servicios</h3>
-            <ul>
-                <li><a th:href="@{/usuario/Inicio#services}">Agendar servicio</a></li>
-                <li><a href="/garantias">Garantías</a></li>
-
-
-            </ul>
-        </div>
-
-        <div class="footer-column">
-            <h3>Concesionario</h3>
-            <ul>
-                <li><a href="/nosotros">Sobre nosotros</a></li>
-                <li><a href="/ubicaciones">Ubicaciones</a></li>
-                <li><a href="#contact">Contáctanos</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-column">
-            <h3>Legal</h3>
-            <ul>
-                <li><a href="/terminos">Términos y condiciones</a></li>
-                <li><a href="/cookies">Cookies y Aviso legal</a></li>
-            </ul>
-        </div>
-    </div>
-
-
-    <div class="copyright">
-        <p>&copy; 2023 Concesionario. Todos los derechos reservados.</p>
-    </div>
-</footer>
 
 <!-- Botón de WhatsApp -->
 <a href="https://wa.me/525512345678" class="whatsapp-float" target="_blank">
